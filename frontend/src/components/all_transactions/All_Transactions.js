@@ -15,7 +15,10 @@ class All_Transactions extends Component {
     componentDidMount = () => {
         console.log("all transactions componentDidMount");
         this.props.checkLogin();
-        axios.get(`/budget/all_transactions`)
+        axios.get(`/budget/all_transactions`, {headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${Cookies.get("token")}`
+          }})
           .then(res => {
             this.setState({
                 transactions: res.data

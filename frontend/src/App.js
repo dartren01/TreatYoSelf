@@ -89,17 +89,27 @@ class App extends Component {
            />
         <Switch>
           <Route exact path = "/" render = {props => (
-              <Home {...props}
-                username = {this.state.username}
-                isLoggedIn = {this.state.isLoggedIn}
-                checkLogin = {this.checkLogin}/>
-            )}/>
-           <Route exact path = "/budget/all_transactions" render = {props => (
-              <All_Transactions {...props}
-                username = {this.state.username}
-                isLoggedIn = {this.state.isLoggedIn}
-                checkLogin = {this.checkLogin}/>
-            )}/>
+            <Home {...props}
+              username = {this.state.username}
+              isLoggedIn = {this.state.isLoggedIn}
+              checkLogin = {this.checkLogin}/>
+          )}/>
+          <Route exact path = "/budget/all_transactions" render = {props => (
+            <All_Transactions {...props}
+              username = {this.state.username}
+              isLoggedIn = {this.state.isLoggedIn}
+              checkLogin = {this.checkLogin}/>
+          )}/>
+          <Route exact path = "/budget/create/income" render = {props => (
+            <All_Transactions {...props}
+              isLoggedIn = {this.state.isLoggedIn}
+              transactionType = 'income'/>
+          )}/>
+          <Route exact path = "/budget/create/expense" render = {props => (
+            <All_Transactions {...props}
+              isLoggedIn = {this.state.isLoggedIn}
+              transactionType = 'expense'/>
+          )}/>
           <Route path = "/register" render = {props => (
             <Register {...props} 
                       setLogin = {this.setLogin}

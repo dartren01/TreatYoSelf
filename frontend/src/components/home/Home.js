@@ -12,7 +12,7 @@ class Home extends Component {
     }
 
     componentDidMount = () => {
-        console.log("Home componentDidMount")
+        console.log("Home componentDidMount");
         this.props.checkLogin()
     }
 
