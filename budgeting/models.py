@@ -1,6 +1,8 @@
 from djongo import models  # databases!
 from django.contrib.auth.models import User
 from django.urls import reverse
+
+
 class Categories(models.Model):
     category = models.CharField(max_length=30)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -32,7 +34,7 @@ class Transaction(models.Model):
     date_posted = models.DateField("Transaction Date (mm/dd/yyyy)",
                                    auto_now_add=False, auto_now=False, blank=False, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    in_history = models.BooleanField(default=False)
+    in_history = models.BooleanField(default=False, null=True)
     year = models.IntegerField(null=True)
     month = models.IntegerField(null=True)
 

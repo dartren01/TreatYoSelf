@@ -4,7 +4,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from .serializers import AllTransactionSerializer, TransactionSerializer
 
-# transaction viewset
+# this file is basically views.py
 
 class AllTransactionViewSet(generics.ListAPIView):
     permission_classes = [
@@ -22,12 +22,25 @@ class AllTransactionViewSet(generics.ListAPIView):
         return queryset.order_by('date_posted')
 
 
-class TransactionViewSet(generics.RetrieveUpdateDestroyAPIView):
+class TransactionCreateViewSet(generics.CreateAPIView):
     permission_classes = [
         permissions.IsAuthenticated
     ]
 
     serializer_class = TransactionSerializer
 
-    # create, get, update, delete
+    # create
+
+
+class TransactionUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    serializer_class = TransactionSerializer
+
+    # update, get, delete
+    def delete(self, request, *args, **kwargs):
+        Transaction.objects.get(id=self.kwargs.get('id')).delete()
+        return Response()
 

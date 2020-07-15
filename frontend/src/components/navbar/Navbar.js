@@ -29,9 +29,9 @@ class Navbar extends Component {
                 {this.props.isLoggedIn ?
                     <React.Fragment>
                         <Link to="/total" className="navbar-brand"> Total </Link>
-                        <Link to = "/budget/all_transactions" className = "navbar-brand">All Transactions</Link>
-                        <Link to = "/budget/create/income" className = "navbar-brand">Income</Link>
-                        <Link to = "/budget/create/expense" className = "navbar-brand">Expense</Link>
+                        <Link to = "/budget/all_transactions/" className = "navbar-brand">All Transactions</Link>
+                        <Link to = "/budget/income/" className = "navbar-brand">Income</Link>
+                        <Link to = "/budget/expense/" className = "navbar-brand">Expense</Link>
                     </React.Fragment>
                     :
                     <React.Fragment/>
@@ -41,11 +41,6 @@ class Navbar extends Component {
                     <ul className = "navbar-nav ml-auto">
                         {this.props.isLoggedIn ?
                             <React.Fragment>
-                                <li className = "navbar-item">
-                                    <Link to = "/total" className = "nav-link" >
-                                        Total
-                                    </Link>
-                                </li>
                                 <li className = "navbar-item">
                                     <button className = "logoutButton"
                                             onClick = {() => this.handleLogout()}>
