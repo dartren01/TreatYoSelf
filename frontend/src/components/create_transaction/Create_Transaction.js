@@ -107,7 +107,7 @@ class Create_Transaction extends Component {
                             onChange={(e) => this.handleChange(e)} />
                     </Form.Group>
 
-                    <Form.Group controlId="formAmount">
+                    <Form.Group controlId="formDate">
                         <Form.Label>Date</Form.Label>
                         <Form.Control
                             type="date"

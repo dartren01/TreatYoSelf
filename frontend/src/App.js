@@ -18,7 +18,7 @@ import Register from "./components/register/Register"
 import Total from "./components/total/Total"
 import All_Transactions from "./components/all_transactions/All_Transactions"
 import Create_Transaction from "./components/create_transaction/Create_Transaction";
-
+import Update_Transaction from "./components/update_transaction/Update_Transaction";
 
 
 
@@ -126,6 +126,10 @@ class App extends Component {
                 <Create_Transaction {...props}
                   isLoggedIn={this.state.isLoggedIn}
                   transactionType='Expense' />
+              )} />
+              <Route exact path="/budget/update" render={props => (
+                <Update_Transaction {...props}
+                  isLoggedIn={this.state.isLoggedIn} />
               )} />
               <Route path="/register" render={props => (
                 <Register {...props}

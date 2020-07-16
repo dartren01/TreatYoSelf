@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom"
+import { Link, Route } from "react-router-dom"
 import Cookies from "js-cookie"
 import axios from "axios";
 import { withAlert } from 'react-alert';
@@ -10,6 +10,7 @@ class All_Transactions extends Component {
         this.state = {
             transactions: [],
             showSuccessDeleteAlert: false,
+            loading: true
         }
     }
 
@@ -24,7 +25,8 @@ class All_Transactions extends Component {
         })
             .then(res => {
                 this.setState({
-                    transactions: res.data
+                    transactions: res.data,
+                    loading: false
                 });
             })
             .catch(err => {
@@ -55,37 +57,51 @@ class All_Transactions extends Component {
             })
     }
 
+    handleUpdateRedirect = (id) => {
+        this.props.history.push({
+            pathname: '/budget/update',
+            state: {
+                transactionId: id
+            }
+        })
+    }
+
 
     render() {
         return (
             <div>
                 <h1>
-                    {console.log("transactions Render")}
-                    {console.log(this.props.username)}
-                      Transaction Page
+                    Transaction Page
                 </h1>
-                <ul>
-                    {this.state.transactions.map((transaction) => (
-                        <Fragment key={transaction.id}>
-                            <li>
-                                {transaction.source}
-                                <br />
-                                {transaction.t_type}
-                                <br />
-                                Amount: {transaction.amount}
-                                <br />
-                                Category: {transaction.category}
-                                <br />
-                                Date: {transaction.date_posted}
-                                <br />
-                                Notes: {transaction.notes}
-                            </li>
-                            <div>
-                                <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
-                            </div>
-                        </Fragment>
-                    ))}
-                </ul>
+                {this.state.loading === true ?
+                    <h1>
+                        Loading
+                    </h1> :
+                    <div>
+                        <ul>
+                            {this.state.transactions.map((transaction) => (
+                                <Fragment key={transaction.id}>
+                                    <li>
+                                        {transaction.source}
+                                        <br />
+                                        {transaction.t_type}
+                                        <br />
+                                    Amount: {transaction.amount}
+                                        <br />
+                                    Category: {transaction.category}
+                                        <br />
+                                    Date: {transaction.date_posted}
+                                        <br />
+                                    Notes: {transaction.notes}
+                                    </li>
+                                    <div>
+                                        <button onClick={() => this.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>
+                                        <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
+                                    </div>
+                                </Fragment>
+                            ))}
+                        </ul>
+                    </div>}
             </div>
         )
     }
