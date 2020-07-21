@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from budgeting.models import *
+from datetime import datetime
 
 
 class AllTransactionSerializer(serializers.ModelSerializer):
@@ -9,9 +10,11 @@ class AllTransactionSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Transaction
-        fields = ('t_type', 'category', 'source', 'amount', 'notes', 'date_posted')
+        fields = ('t_type', 'category', 'source',
+                  'amount', 'notes', 'date_posted')
 
     # might need to change create and update func, and create a delete func
 
@@ -32,3 +35,16 @@ class TransactionSerializer(serializers.ModelSerializer):
         transaction.save()
         return transaction
 
+    def update(self, instance, validated_data):
+        transactionDate = datetime.strptime(
+            str(validated_data.get("date_posted")), '%Y-%m-%d')
+        instance.category = validated_data.get("category")
+        instance.source = validated_data.get("source")
+        instance.amount = validated_data.get("amount")
+        instance.date_posted = validated_data.get("date_posted")
+        instance.notes = validated_data.get("notes")
+        instance.year = transactionDate.year
+        instance.month = transactionDate.month
+
+        instance.save()
+        return instance

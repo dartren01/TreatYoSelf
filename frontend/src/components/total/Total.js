@@ -1,12 +1,12 @@
-import React, {Component} from "react"
+import React, { Component } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
 
-class Total extends Component{
-    constructor(props){
+class Total extends Component {
+    constructor(props) {
         super(props);
         this.state = {
-            total_amount:0
+            total_amount: ""
         }
 
         this.totalChange = this.totalChange.bind(this)
@@ -16,7 +16,7 @@ class Total extends Component{
 
     totalChange = (e) => {
         this.setState({
-            total_amount:e.target.value
+            total_amount: e.target.value
         })
         console.log(this.state.total_amount)
     }
@@ -26,16 +26,20 @@ class Total extends Component{
         console.log("New Handle Total");
         const totalBudget = {
             initial_amount: this.state.total_amount,
-            total_amount: this.state.total_amount
+            total_amount: this.state.total_amount,
+            total_amount_gained: "0",
+            total_amount_spent: "0"
         };
         console.log(totalBudget);
-        axios.post("api/total", totalBudget, {headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Token ${Cookies.get("token")}`
-          }})
+        axios.post("api/total", totalBudget, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        })
             .then(res => {
                 console.log(res)
-                this.props.history.push("/") 
+                this.props.history.push("/")
             })
             .catch(err => {
                 console.log("Budgeting Total Error ", err);
@@ -44,27 +48,27 @@ class Total extends Component{
 
 
 
-    render(){
-        return(
-            <div className = "container">
-                <fieldset className = "form-group">
-                    <legend className = "border-bottom mb-4">
+    render() {
+        return (
+            <div className="container">
+                <fieldset className="form-group">
+                    <legend className="border-bottom mb-4">
                         Enter Current Balance
                     </legend>
-                    <div className = "form-group">
+                    <div className="form-group">
                         <label>
                             Initial Balance*
                         </label>
-                        <input type = "number" name = "total" className = "numberinput form-control"
-                                placeholder = "Total Amount" onChange = {(e) => this.totalChange(e)} />
+                        <input type="number" name="total" className="numberinput form-control"
+                            placeholder="Total Amount" onChange={(e) => this.totalChange(e)} />
                     </div>
 
                 </fieldset>
-                <div className = "form-group">
-                    <button className = "btn btn-outline-info" type = "submit" onClick = {(e) => this.handleTotal(e)}>
+                <div className="form-group">
+                    <button className="btn btn-outline-info" type="submit" onClick={(e) => this.handleTotal(e)}>
                         Confirm Current Balance
                     </button>
-                    
+
                 </div>
             </div>
         )

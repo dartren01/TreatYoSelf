@@ -4,8 +4,11 @@ from rest_framework import generics
 from rest_framework.response import Response
 from .serializers import AllTransactionSerializer, TransactionSerializer
 from datetime import datetime
+from users.models import Profile
+from users.serializers import TotalSerializer
 
 # this file is basically views.py
+
 
 class AllTransactionViewSet(generics.ListAPIView):
     permission_classes = [
@@ -31,6 +34,26 @@ class TransactionCreateViewSet(generics.CreateAPIView):
     serializer_class = TransactionSerializer
 
     # create
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        transaction = serializer.save()
+        profile = Profile.objects.get(user=self.request.user)
+        print(profile.pk)
+        if request.data.get("t_type") == "Expense":
+            profile.total_amount = float(
+                profile.total_amount) - float(request.data.get("amount"))
+            profile.total_amount_spent = float(
+                profile.total_amount_spent) + float(request.data.get("amount"))
+            profile.save()
+        else:
+            profile.total_amount = float(
+                profile.total_amount) + float(request.data.get("amount"))
+            profile.total_amount_gained = float(
+                profile.total_amount_gained) + float(request.data.get("amount"))
+            profile.save()
+
+        return Response()
 
 
 class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
@@ -50,29 +73,17 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
-    
+
     def delete(self, request, *args, **kwargs):
         Transaction.objects.get(id=self.kwargs.get('pk')).delete()
         return Response()
 
     def update(self, request, *args, **kwargs):
         # update transaction
-        partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        transactionDate = datetime.strptime(request.data.get("date_posted"), '%Y-%m-%d')
-        instance.category = request.data.get("category")
-        instance.source = request.data.get("source")
-        instance.amount = request.data.get("amount")
-        instance.date_posted = request.data.get("date_posted")
-        instance.notes = request.data.get("notes")
-        instance.year = transactionDate.year
-        instance.month = transactionDate.month
-
-        instance.save()
-
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer = self.get_serializer(
+            instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
         return Response(serializer.data)
-

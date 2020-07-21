@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .api import RegistrationAPI, LoginAPI, UserAPI, CreateTotalAPI
+from .api import RegistrationAPI, LoginAPI, UserAPI, CreateTotalAPI, TotalAPI
 from knox import views as knox_views
 
 urlpatterns = [
@@ -9,10 +9,12 @@ urlpatterns = [
     path('auth/register', RegistrationAPI.as_view()),
     path('auth/login', LoginAPI.as_view()),
     path('auth/user', UserAPI.as_view()),
-    path('auth/logout', knox_views.LogoutView.as_view(), name = 'knox_logout'), #clears the token, so users have to log back in
-    path('total',CreateTotalAPI.as_view()),
+    # clears the token, so users have to log back in
+    path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
+    path('total', CreateTotalAPI.as_view()),
+    path('total/get', TotalAPI.as_view())
 
 ]
 
-#Register, Login, Logout post requests
-#User get request
+# Register, Login, Logout post requests
+# User get request
