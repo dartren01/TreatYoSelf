@@ -38,8 +38,14 @@ class TransactionCreateViewSet(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         transaction = serializer.save()
+        self.createTransactionAddTotal(request)
+
+        return Response()
+
+    # helper method for post. When transaction is created, the total model is
+    # changed with new transaction added.
+    def createTransactionAddTotal(self, request):
         profile = Profile.objects.get(user=self.request.user)
-        print(profile.pk)
         if request.data.get("t_type") == "Expense":
             profile.total_amount = float(
                 profile.total_amount) - float(request.data.get("amount"))
@@ -53,8 +59,6 @@ class TransactionCreateViewSet(generics.CreateAPIView):
                 profile.total_amount_gained) + float(request.data.get("amount"))
             profile.save()
 
-        return Response()
-
 
 class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [
@@ -64,22 +68,30 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TransactionSerializer
 
     # update, get, delete
+    # gets a set of transaction under the user
     def get_queryset(self):
         user = self.request.user
         queryset = Transaction.objects.filter(author=user)
         return queryset
 
+    # gets a specific transaction
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
+    # deletes a transaction. Updates the delete from the total
     def delete(self, request, *args, **kwargs):
-        Transaction.objects.get(id=self.kwargs.get('pk')).delete()
+        transaction = Transaction.objects.get(id=self.kwargs.get('pk'))
+        self.deleteTransactionFromTotal(request, transaction)
+        transaction.delete()
+        # add a response
         return Response()
 
+    # update a transaction. Updates total with regards to transaction updated.
     def update(self, request, *args, **kwargs):
         # update transaction
+        self.updateTransactiontoTotal(request)
         instance = self.get_object()
         serializer = self.get_serializer(
             instance, data=request.data)
@@ -87,3 +99,37 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
+    # changing total model
+    # delete transaction amount from total
+    def deleteTransactionFromTotal(self, request, transaction):
+        profile = Profile.objects.get(user=self.request.user)
+        if transaction.t_type == "Expense":
+            profile.total_amount = float(
+                profile.total_amount) + float(transaction.amount)
+            profile.total_amount_spent = float(
+                profile.total_amount_spent) - float(transaction.amount)
+            profile.save()
+        else:
+            profile.total_amount = float(
+                profile.total_amount) - float(transaction.amount)
+            profile.total_amount_gained = float(
+                profile.total_amount_gained) - float(transaction.amount)
+            profile.save()
+
+    # update transaction amount to total
+    def updateTransactiontoTotal(self, request):
+        profile = Profile.objects.get(user=self.request.user)
+        transaction = Transaction.objects.get(id=self.kwargs.get('pk'))
+        if transaction.t_type == "Expense":
+            profile.total_amount = float(profile.total_amount) + \
+                (float(transaction.amount) - float(request.data.get("amount")))
+            profile.total_amount_spent = float(profile.total_amount_spent) - (
+                float(transaction.amount) - float(request.data.get("amount")))
+            profile.save()
+        else:
+            profile.total_amount = float(profile.total_amount) - \
+                (float(transaction.amount) - float(request.data.get("amount")))
+            profile.total_amount_gained = float(profile.total_amount_gained) - (
+                float(transaction.amount) - float(request.data.get("amount")))
+            profile.save()

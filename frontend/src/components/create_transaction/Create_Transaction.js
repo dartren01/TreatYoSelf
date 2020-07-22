@@ -24,8 +24,6 @@ class Create_Transaction extends Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-        console.log(this.state);
-        console.log(typeof (this.state.date));
     };
 
     handleCreate = (e) => {
@@ -48,7 +46,7 @@ class Create_Transaction extends Component {
                 console.log("transaction success");
                 const alert = this.props.alert;
                 alert.success('Successfully created income transaction');
-                this.props.history.push("/")
+                this.props.history.push("/budget/all_transactions/")
             })
             .catch(err => {
                 console.log("transaction post error: " + err)

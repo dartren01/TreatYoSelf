@@ -11,7 +11,8 @@ class Home extends Component {
             totalAmount: "",
             totalSpent: "",
             totalGained: "",
-            loading: true
+            loading: true,
+            isLoggedIn: false
         }
 
     }
@@ -31,16 +32,50 @@ class Home extends Component {
                     totalAmount: res.data[0].total_amount,
                     totalSpent: res.data[0].total_amount_spent,
                     totalGained: res.data[0].total_amount_gained,
-                    loading: false
+                    loading: false,
+                    isLoggedIn: true
                 });
                 console.log(res.data)
             })
             .catch(err => {
                 console.log("total get error: " + err)
+                this.setState({
+                    loading: false,
+                    isLoggedIn: false
+                });
             })
     };
 
     render() {
+        // we can render another component when the user is not logged in, like a front page
+        // when user is logged in, we can render this or a separate home page.
+
+        let totalText;
+        if (this.state.loading && !this.state.isLoggedIn) {
+            totalText = <h1>Loading</h1>;
+        } else if (!this.state.loading && this.state.isLoggedIn) {
+            totalText =
+                <div>
+                    <h1>
+                        Current Balance
+                            </h1>
+                    <br />
+                    <h2>
+                        ${this.state.totalAmount}
+                    </h2>
+                    <br />
+                    <p>
+                        Total spent: ${this.state.totalSpent}
+                    </p>
+                    <br />
+                    <p>
+                        Total gained: ${this.state.totalGained}
+                    </p>
+                </div>;
+        } else {
+            totalText = <h1>Please Log In.</h1>;
+        }
+
         return (
             <div>
                 <h1>
@@ -48,27 +83,7 @@ class Home extends Component {
                     {console.log(this.props.username)}
                 </h1>
                 Home Page
-                {this.state.loading === true ?
-                    <h1>
-                        Loading
-                    </h1> :
-                    <div>
-                        <h1>
-                            Current Balance
-                        </h1>
-                        <br />
-                        <h2>
-                            ${this.state.totalAmount}
-                        </h2>
-                        <br />
-                        <p>
-                            Total spent: ${this.state.totalSpent}
-                        </p>
-                        <br />
-                        <p>
-                            Total gained: ${this.state.totalGained}
-                        </p>
-                    </div>}
+                {totalText}
             </div>
 
         )

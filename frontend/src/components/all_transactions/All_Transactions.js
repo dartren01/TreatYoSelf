@@ -35,6 +35,9 @@ class All_Transactions extends Component {
         console.log(this.state.transactions);
     };
 
+    // calls delete, passing in transaction id.
+    // on success, sets state with new transaction array with the 
+    // deleted transaction removed from array
     handleDelete = (id) => {
         console.log("Delete transaction ", id);
         axios.delete(`/budget/transaction/delete/${id}`, {
@@ -57,6 +60,7 @@ class All_Transactions extends Component {
             })
     }
 
+    // redirects user to update form, passing in transaction id as state.
     handleUpdateRedirect = (id) => {
         this.props.history.push({
             pathname: '/budget/update',

@@ -43,6 +43,7 @@ class Update_Transaction extends Component {
         catch (err) {
             console.log(err);
         }
+        // gets the transaction by passed id, then updates state variables to transaction.
         axios.get(`/budget/transaction/get/${this.props.location.state.transactionId}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -68,6 +69,8 @@ class Update_Transaction extends Component {
             })
     };
 
+    // calls a put to backend, sending updated info for transaction.
+    // on success, go back to all transactions.
     handleUpdate = () => {
         console.log("Update transaction ", this.state.id);
         const transactionObj = {
