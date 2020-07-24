@@ -16,7 +16,6 @@ class All_Transactions extends Component {
 
     componentDidMount = () => {
         console.log("all transactions componentDidMount");
-        this.props.checkLogin();
         axios.get(`/budget/all_transactions`, {
             headers: {
                 "Content-Type": "application/json",
@@ -72,6 +71,7 @@ class All_Transactions extends Component {
 
 
     render() {
+        // have a separate page for transaction details?.
         return (
             <div>
                 <h1>
@@ -82,26 +82,35 @@ class All_Transactions extends Component {
                         Loading
                     </h1> :
                     <div>
-                        <ul>
+                        <ul className="list-group">
                             {this.state.transactions.map((transaction) => (
                                 <Fragment key={transaction.id}>
-                                    <li>
-                                        {transaction.source}
-                                        <br />
-                                        {transaction.t_type}
-                                        <br />
-                                    Amount: {transaction.amount}
-                                        <br />
-                                    Category: {transaction.category}
-                                        <br />
-                                    Date: {transaction.date_posted}
-                                        <br />
-                                    Notes: {transaction.notes}
+                                    <li className="list-group-item">
+                                        <div className="row">
+                                            <div className="col-sm">
+                                                <div className="text-black-50">
+                                                    {transaction.date_posted}
+                                                </div>
+                                                <h1>{transaction.source}</h1>
+                                            </div>
+                                            <div className="col-sm">
+                                                {transaction.category}
+                                            </div>
+                                            <div className="col-sm text-right">
+                                                <div className="text-right text-black-50">
+                                                    {transaction.t_type}
+                                                </div>
+                                                {transaction.t_type === "Expense" ?
+                                                    <h1 style={{ color: "red" }}>${transaction.amount}</h1>
+                                                    :
+                                                    <h1 style={{ color: "limegreen" }}>${transaction.amount}</h1>}
+                                            </div>
+                                        </div>
+                                        <div className="col-sm">
+                                            <button onClick={() => this.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>
+                                            <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
+                                        </div>
                                     </li>
-                                    <div>
-                                        <button onClick={() => this.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>
-                                        <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
-                                    </div>
                                 </Fragment>
                             ))}
                         </ul>

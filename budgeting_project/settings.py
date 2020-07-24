@@ -43,15 +43,15 @@ INSTALLED_APPS = [
     'crispy_forms',
 
 
-    #Django use these apps
+    # Django use these apps
     'budgeting.apps.BudgetingConfig',
     'users.apps.UsersConfig',
-    'frontend', #enables frontend app
+    'frontend',  # enables frontend app
 
-    #Necessary for Django rest Framework
+    # Necessary for Django rest Framework
     'rest_framework',
-    'knox' #User authentification (Token Auth)
-    
+    'knox'  # User authentification (Token Auth)
+
 ]
 
 MIDDLEWARE = [
@@ -89,13 +89,13 @@ WSGI_APPLICATION = 'budgeting_project.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    #'HOST': 'mongodb+srv://burger:burgercheese@treatyoself-8nrgu.mongodb.net/test?retryWrites=true&w=majority',
+    # 'HOST': 'mongodb+srv://burger:burgercheese@treatyoself-8nrgu.mongodb.net/test?retryWrites=true&w=majority',
 
     'default': {
         'ENGINE':   'djongo',
         'NAME':     'TreatYoSelf',
         'CLIENT': {
-            'host': "mongodb+srv://burger:burgercheese@treatyoself-8nrgu.mongodb.net/test?retryWrites=true&w=majority"
+            'host': "mongodb+srv://burger:burgercheese@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority"
         },
     }
 }
@@ -156,8 +156,6 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
 
 
-
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -169,5 +167,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
     ],
-    
+
 }

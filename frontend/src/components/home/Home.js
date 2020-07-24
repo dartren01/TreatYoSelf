@@ -19,7 +19,6 @@ class Home extends Component {
 
     componentDidMount = () => {
         console.log("Home componentDidMount");
-        this.props.checkLogin()
         axios.get(`/api/total/get`, {
             headers: {
                 "Content-Type": "application/json",
