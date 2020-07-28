@@ -16,7 +16,6 @@ class All_Transactions extends Component {
 
     componentDidMount = () => {
         console.log("all transactions componentDidMount");
-        this.props.checkLogin();
         axios.get(`/budget/all_transactions`, {
             headers: {
                 "Content-Type": "application/json",
@@ -73,6 +72,7 @@ class All_Transactions extends Component {
 
 
     render() {
+        // have a separate page for transaction details?.
         return (
             <div>
                 <h1>
@@ -83,26 +83,42 @@ class All_Transactions extends Component {
                         Loading
                     </h1> :
                     <div>
-                        <ul>
+                        <ul className="list-group flex-column ">
                             {this.state.transactions.map((transaction) => (
                                 <Fragment key={transaction.id}>
-                                    <li>
-                                        {transaction.source}
-                                        <br />
-                                        {transaction.t_type}
-                                        <br />
-                                    Amount: {transaction.amount}
-                                        <br />
-                                    Category: {transaction.category}
-                                        <br />
-                                    Date: {transaction.date_posted}
-                                        <br />
-                                    Notes: {transaction.notes}
+                                    <li className="list-group-item flex-grow-1 align-items-stretch">
+                                        <div className="row">
+                                            <div className="col-sm">
+                                                <h1>{transaction.source}</h1>
+                                            </div>
+                                            <div className="col-sm text-center">
+                                                <h1>{transaction.category}</h1>
+                                            </div>
+                                            <div className="col-sm text-right">
+                                                {transaction.t_type === "Expense" ?
+                                                    <h1 style={{ color: "red" }}>-${transaction.amount}</h1>
+                                                    :
+                                                    <h1 style={{ color: "limegreen" }}>+${transaction.amount}</h1>}
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-sm text-black-50">
+                                                {transaction.date_posted}
+                                            </div>
+                                            <div className="col-sm text-right text-black-50">
+                                                {transaction.t_type}
+                                            </div>
+                                        </div>
+                                        <div className="row pt-2">
+                                            <div className="col-lg text-black-50 text-wrap">
+                                                {transaction.notes}
+                                            </div>
+                                            <div>
+                                                <button onClick={() => this.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>
+                                                <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
+                                            </div>
+                                        </div>
                                     </li>
-                                    <div>
-                                        <button onClick={() => this.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>
-                                        <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
-                                    </div>
                                 </Fragment>
                             ))}
                         </ul>

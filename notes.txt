@@ -1,0 +1,4 @@
+Andrew:
+    1.) Fix category errors,
+            Get request shows error since the category object is not created
+            Let User be able to create new categories

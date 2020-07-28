@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import Cookies from "js-cookie"
-import axios from "axios"
+import Cookies from "js-cookie";
+import axios from "axios";
+
+import Recent_Transactions from "../recent_transactions/Recent_Transactions";
 
 
 class Home extends Component {
@@ -19,8 +21,12 @@ class Home extends Component {
 
     componentDidMount = () => {
         console.log("Home componentDidMount");
+<<<<<<< HEAD
         this.props.checkLogin()
         axios.get(`/api/total/get`, { //This should only be called when User is logged in, this is being called all the time.
+=======
+        axios.get(`/api/total/get`, {
+>>>>>>> 9dba6c10e2b9ef4bfac07f1c6176d2136e3b9462
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${Cookies.get("token")}`
@@ -77,15 +83,30 @@ class Home extends Component {
         }
 
         return (
-            <div>
-                <h1>
-                    {console.log("Home Render")}
-                    {console.log(this.props.username)}
-                </h1>
-                Home Page
-                {totalText}
+            <div d-flex>
+                <div className="row">
+                    <h1>
+                        {console.log("Home Render")}
+                        {console.log(this.props.username)}
+                        Monthly Overview
+                    </h1>
+                </div>
+                <div className="row">
+                    {totalText}
+                </div>
+                <div className="row">
+                    <div>
+                        <h2>Spending vs. Budgeting Goal</h2>
+                        Add graph component here (bar graph with budget, donut graph)
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="flex-fill">
+                        <h2>Recent Transactions</h2>
+                        <Recent_Transactions />
+                    </div>
+                </div>
             </div>
-
         )
     }
 }

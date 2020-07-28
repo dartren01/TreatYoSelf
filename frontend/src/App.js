@@ -21,7 +21,6 @@ import Create_Transaction from "./components/create_transaction/Create_Transacti
 import Update_Transaction from "./components/update_transaction/Update_Transaction";
 
 
-
 // Notes: Need to figure out how to login in before rendering components.
 class App extends Component {
   constructor(props) {
@@ -84,7 +83,6 @@ class App extends Component {
         })
     }
   };
-
 
   componentDidMount = () => {
     console.log("App componentDidMount");

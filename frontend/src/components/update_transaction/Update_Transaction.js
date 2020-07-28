@@ -152,7 +152,8 @@ class Update_Transaction extends Component {
                             <Form.Group controlId="formNotes">
                                 <Form.Label>Notes</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    as="textarea"
+                                    rows="3"
                                     name="notes"
                                     defaultValue={this.state.notes}
                                     onChange={(e) => this.handleChange(e)} />
