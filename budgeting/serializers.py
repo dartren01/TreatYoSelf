@@ -2,6 +2,25 @@ from rest_framework import serializers
 from budgeting.models import *
 from datetime import datetime
 
+class AllCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        fields = "__all__"
+
+
+class CategoriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Categories
+        fields = ("category",)
+    
+    def create(self,validated_data):
+        categories = Categories.objects.create(
+            category    = validated_data["category"],
+            author      = self.context["request"].user,
+        )
+
+        categories.save()
+        return categories
 
 class AllTransactionSerializer(serializers.ModelSerializer):
     class Meta:

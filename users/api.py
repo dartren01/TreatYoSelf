@@ -64,12 +64,9 @@ class CreateTotalAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         total = serializer.save()
-        return Response()
-        '''
         return Response({
-            "total": TotalSerializer(total, context = self.get_serializer_context()).data
+            #Reponse is not necessary.
         })
-        '''
 
 
 class TotalAPI(generics.ListAPIView):

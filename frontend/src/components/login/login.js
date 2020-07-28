@@ -29,7 +29,7 @@ class Login extends Component{
 
         axios.post("api/auth/login", loginUser,{"Content-Type": "application/json"})
             .then(res => {
-                Cookies.set("token",res.data.token, {expires:7})
+                Cookies.set("token",res.data.token, {expires:1})
                 console.log("Login Success")
                 console.log(res)
                 this.props.setLogin(res)

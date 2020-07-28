@@ -40,16 +40,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CreateTotalSerializer(serializers.ModelSerializer):
-    # user = serializers.SerializerMethodField('get_user')
 
     class Meta:
         model = Profile
         fields = ("initial_amount", "total_amount",
                   "total_amount_gained", "total_amount_spent")
-
-    # def get_user(self, total):
-    #     user = total.user
-    #     return user
 
     def create(self, validated_data):
         instance = Profile.objects.update_or_create(user=self.context['request'].user,

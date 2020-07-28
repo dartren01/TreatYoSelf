@@ -24,6 +24,7 @@ class All_Transactions extends Component {
             }
         })
             .then(res => {
+                console.log(res.data)
                 this.setState({
                     transactions: res.data,
                     loading: false

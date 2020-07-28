@@ -20,7 +20,7 @@ class Home extends Component {
     componentDidMount = () => {
         console.log("Home componentDidMount");
         this.props.checkLogin()
-        axios.get(`/api/total/get`, {
+        axios.get(`/api/total/get`, { //This should only be called when User is logged in, this is being called all the time.
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${Cookies.get("token")}`

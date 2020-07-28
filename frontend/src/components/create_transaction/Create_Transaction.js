@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Button, Form } from "react-bootstrap";
@@ -9,7 +9,12 @@ class Create_Transaction extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            category: "",
+            categories: {
+                Entertainment: 0,
+                Utility: 0,
+                Food: 0,
+            },
+            category:"",
             source: "",
             amount: "",
             date: "",
@@ -28,6 +33,13 @@ class Create_Transaction extends Component {
 
     handleCreate = (e) => {
         e.preventDefault();
+
+        const headerObj = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        }
         const transactionObj = {
             t_type: this.props.transactionType,
             category: this.state.category,
@@ -36,12 +48,7 @@ class Create_Transaction extends Component {
             date_posted: this.state.date,
             notes: this.state.notes
         };
-        axios.post(`/budget/create/${this.props.transactionType.toLowerCase()}/`, transactionObj, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
-        })
+        axios.post(`/budget/create/${this.props.transactionType.toLowerCase()}/`, transactionObj, headerObj)
             .then(res => {
                 console.log("transaction success");
                 const alert = this.props.alert;
@@ -51,6 +58,20 @@ class Create_Transaction extends Component {
             .catch(err => {
                 console.log("transaction post error: " + err)
             });
+
+        const categoryObj = {
+            category: this.state.categories
+        }
+        axios.post("budget/create/category/", categoryObj, headerObj)
+            .then(res => {
+                console.log("Category Added")
+            })
+            .catch(err => {
+                console.log("Category post error: " + err)
+            })
+
+        
+        
     };
 
     componentDidMount = () => {
@@ -59,6 +80,23 @@ class Create_Transaction extends Component {
         try {
             if (this.props.isLoggedIn) {
                 console.log("Authorized");
+                axios.get("budget/get/category/", {
+                    headers: {
+                      "Content-Type": "application/json",
+                      "Authorization": `Token ${Cookies.get("token")}`
+                    }
+                  })
+                    .then(res => {
+                        console.log(res.data[0])
+                        if (Object.keys(res.data[0].category).length > 0){
+                            this.setState({
+                                categories: res.data[0].category
+                                // Gotta include the category here
+                            })
+                        }
+
+                        
+                    })
             } else {
                 throw "Not Logged In";
             }
@@ -90,7 +128,12 @@ class Create_Transaction extends Component {
                     <Form.Group controlId="formCategorySelect">
                         <Form.Label>Category</Form.Label>
                         <Form.Control as="select">
-                            <option>figure this out</option>
+                            {Object.keys(this.state.categories).map((cat) => 
+                                <Fragment key = {cat}>
+                                    <option>{cat}</option>
+                                </Fragment>
+                            )}
+
 
                         </Form.Control>
                     </Form.Group>

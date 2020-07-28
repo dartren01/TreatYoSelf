@@ -1,14 +1,42 @@
-from budgeting.models import Transaction
+from budgeting.models import Transaction, Categories
 from rest_framework import viewsets, permissions
 from rest_framework import generics
 from rest_framework.response import Response
-from .serializers import AllTransactionSerializer, TransactionSerializer
+from .serializers import AllTransactionSerializer, TransactionSerializer, CategoriesSerializer, AllCategorySerializer
 from datetime import datetime
 from users.models import Profile
 from users.serializers import TotalSerializer
 
 # this file is basically views.py
 
+class AllCategoriesViewSet(generics.ListAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    serializer_class = AllCategorySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_anonymous:
+            raise Exception("Unauthorized Access")
+        # queryset = Transaction.objects.filter(author=user)
+        queryset = Categories.objects.filter(author=user)
+        return queryset
+
+
+class CategoriesCreateViewSet(generics.CreateAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    serializer_class = CategoriesSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data = request.data)
+        serializer.is_valid(raise_exception = True)
+        categories = serializer.save()
+        return Response()
 
 class AllTransactionViewSet(generics.ListAPIView):
     permission_classes = [

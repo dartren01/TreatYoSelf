@@ -65,6 +65,7 @@ class App extends Component {
 
   checkLogin = () => {
     if (Cookies.get("token") && !this.state.isLoggedIn) {
+      console.log("Cookie has been found and User is not logged in")
       axios.get("/api/auth/user", {
         headers: {
           "Content-Type": "application/json",
@@ -76,10 +77,10 @@ class App extends Component {
             username: res.data.username,
             isLoggedIn: true
           });
-          console.log("User has Logged In (App)")
+          console.log("CheckLogin: User has Logged In (App)")
         })
         .catch(err => {
-          console.log("Checking Logged In Error" + err)
+          console.log("CheckLogin: Checking Logged In Error" + err)
         })
     }
   };
