@@ -28,6 +28,7 @@ class App extends Component {
     this.state = {
       username: "",
       isLoggedIn: false,
+      loadPage: null
     };
     this.options = {
       // you can also just use 'bottom center'
@@ -74,12 +75,16 @@ class App extends Component {
         .then(res => {
           this.setState({
             username: res.data.username,
-            isLoggedIn: true
+            isLoggedIn: true,
+            loadPage: true
           });
           console.log("CheckLogin: User has Logged In (App)")
         })
         .catch(err => {
-          console.log("CheckLogin: Checking Logged In Error" + err)
+          console.log("Checking Logged In Error" + err)
+          this.setState({
+            loadPage: true
+          })
         })
     }
   };
@@ -92,6 +97,10 @@ class App extends Component {
 
   // Maybe we can use private routes
   render() {
+    if (!this.state.loadPage) {
+      return <div></div>
+    }
+
     return (
       <AlertProvider template={AlertTemplate} {...this.options}>
         <Router>
@@ -147,7 +156,7 @@ class App extends Component {
             </Switch>
           </div>
         </Router>
-      </AlertProvider>
+      </AlertProvider >
 
     )
   }

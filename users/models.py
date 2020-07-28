@@ -1,5 +1,6 @@
 from djongo import models
 from django.contrib.auth.models import User
+from jsonfield import JSONField
 
 # Create your models here.
 
@@ -13,6 +14,20 @@ class Profile(models.Model):
     total_amount = models.CharField(max_length=100, default="0")
     total_amount_gained = models.CharField(max_length=100, default="0")
     total_amount_spent = models.CharField(max_length=100, default="0")
+
+    '''
+    monthly_data = {
+        '072020': {
+            'monthly_gained': 0.0,
+            'monthly_spend': 0.0
+        },
+        '082020': {
+            'monthly_gained': 0.0,
+            'monthly_spend': 0.0
+        }
+    }
+    '''
+    monthly_data = JSONField(null=True)
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)

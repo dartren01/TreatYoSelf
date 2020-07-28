@@ -47,7 +47,6 @@ class TransactionSerializer(serializers.ModelSerializer):
             notes=validated_data['notes'],
             date_posted=validated_data['date_posted'],
             author=self.context['request'].user,
-            in_history=False,
             year=validated_data['date_posted'].year,
             month=validated_data['date_posted'].month,
         )

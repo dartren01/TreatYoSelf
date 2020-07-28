@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 
 from .models import Profile
-from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, CreateTotalSerializer, TotalSerializer
+from .serializers import CreateUserSerializer, UserSerializer, LoginUserSerializer, CreateProfileSerializer, ProfileSerializer
 
 
 class RegistrationAPI(generics.GenericAPIView):
@@ -53,8 +53,8 @@ class UserAPI(generics.RetrieveAPIView):
         return self.request.user
 
 
-class CreateTotalAPI(generics.GenericAPIView):
-    serializer_class = CreateTotalSerializer
+class CreateProfileAPI(generics.GenericAPIView):
+    serializer_class = CreateProfileSerializer
 
     permission_classes = [
         permissions.IsAuthenticated,
@@ -69,8 +69,8 @@ class CreateTotalAPI(generics.GenericAPIView):
         })
 
 
-class TotalAPI(generics.ListAPIView):
-    serializer_class = TotalSerializer
+class ProfileAPI(generics.ListAPIView):
+    serializer_class = ProfileSerializer
 
     permission_classes = [
         permissions.IsAuthenticated

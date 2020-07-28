@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers import AllTransactionSerializer, TransactionSerializer, CategoriesSerializer, AllCategorySerializer
 from datetime import datetime
 from users.models import Profile
-from users.serializers import TotalSerializer
+from users.serializers import ProfileSerializer
 
 # this file is basically views.py
 
@@ -73,18 +73,54 @@ class TransactionCreateViewSet(generics.CreateAPIView):
     # helper method for post. When transaction is created, the total model is
     # changed with new transaction added.
     def createTransactionAddTotal(self, request):
+
+        # get the profile for the user
         profile = Profile.objects.get(user=self.request.user)
+
+        # get date
+        dateObj = datetime.strptime(
+            request.data.get("date_posted"), "%Y-%m-%d").date()
+        transactionDate = '{}{}'.format(dateObj.month, dateObj.year)
+
         if request.data.get("t_type") == "Expense":
+            # add to total
             profile.total_amount = float(
                 profile.total_amount) - float(request.data.get("amount"))
             profile.total_amount_spent = float(
                 profile.total_amount_spent) + float(request.data.get("amount"))
+
+            # add to monthly data
+            if profile.monthly_data[transactionDate]:
+                prevExpense = profile.monthly_data[transactionDate]["monthly_spent"]
+                profile.monthly_data[transactionDate]["monthly_spent"] = prevExpense + \
+                    float(request.data.get("amount"))
+            else:
+                profile.monthly_data[transactionDate] = {
+                    "monthly_gained": 0.0,
+                    "monthly_spent": float(request.data.get("amount"))
+                }
+            profile.total_amount = round(profile.total_amount, 2)
+            profile.total_amount_spent = round(profile.total_amount_spent, 2)
             profile.save()
         else:
+            # add to total
             profile.total_amount = float(
                 profile.total_amount) + float(request.data.get("amount"))
             profile.total_amount_gained = float(
                 profile.total_amount_gained) + float(request.data.get("amount"))
+
+            # add to monthly data
+            if profile.monthly_data[transactionDate]:
+                prevGain = profile.monthly_data[transactionDate]["monthly_gained"]
+                profile.monthly_data[transactionDate]["monthly_gained"] = prevGain + \
+                    float(request.data.get("amount"))
+            else:
+                profile.monthly_data[transactionDate] = {
+                    "monthly_gained": float(request.data.get("amount")),
+                    "monthly_spent": 0.0
+                }
+            profile.total_amount = round(profile.total_amount, 2)
+            profile.total_amount_gained = round(profile.total_amount_gained, 2)
             profile.save()
 
 
@@ -130,34 +166,110 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
 
     # changing total model
     # delete transaction amount from total
+
     def deleteTransactionFromTotal(self, request, transaction):
         profile = Profile.objects.get(user=self.request.user)
+
+        transactionDate = '{}{}'.format(
+            transaction.date_posted.month, transaction.date_posted.year)
+
         if transaction.t_type == "Expense":
+            # delete from total
             profile.total_amount = float(
                 profile.total_amount) + float(transaction.amount)
             profile.total_amount_spent = float(
                 profile.total_amount_spent) - float(transaction.amount)
+
+            # delete from monthly data
+            prevExpense = profile.monthly_data[transactionDate]["monthly_spent"]
+            profile.monthly_data[transactionDate]["monthly_spent"] = prevExpense - \
+                float(transaction.amount)
+
+            profile.total_amount = round(profile.total_amount, 2)
             profile.save()
+
         else:
+            # delete from total
             profile.total_amount = float(
                 profile.total_amount) - float(transaction.amount)
             profile.total_amount_gained = float(
                 profile.total_amount_gained) - float(transaction.amount)
+
+            # delete from monthly data
+            prevGain = profile.monthly_data[transactionDate]["monthly_gained"]
+            profile.monthly_data[transactionDate]["monthly_gained"] = prevGain - \
+                float(transaction.amount)
+
+            profile.total_amount = round(profile.total_amount, 2)
             profile.save()
 
     # update transaction amount to total
     def updateTransactiontoTotal(self, request):
         profile = Profile.objects.get(user=self.request.user)
         transaction = Transaction.objects.get(id=self.kwargs.get('pk'))
+
+        oldTransactionDate = '{}{}'.format(
+            transaction.date_posted.month, transaction.date_posted.year)
+
+        dateObj = datetime.strptime(
+            request.data.get("date_posted"), '%Y-%m-%d').date()
+        newTransactionDate = '{}{}'.format(dateObj.month, dateObj.year)
+
         if transaction.t_type == "Expense":
             profile.total_amount = float(profile.total_amount) + \
                 (float(transaction.amount) - float(request.data.get("amount")))
             profile.total_amount_spent = float(profile.total_amount_spent) - (
                 float(transaction.amount) - float(request.data.get("amount")))
+
+            # update monthly
+            # delete transaction amount from current transaction month year
+            prevExpense = profile.monthly_data[oldTransactionDate]["monthly_spent"]
+            profile.monthly_data[oldTransactionDate]["monthly_spent"] = prevExpense - \
+                float(transaction.amount)
+
+            # if the new date exists
+            if profile.monthly_data[newTransactionDate]:
+                # get the expenses for that month year
+                prevExpenseNew = profile.monthly_data[newTransactionDate]["monthly_spent"]
+                # update monthly_spend for that month year with new amount
+                profile.monthly_data[newTransactionDate]["monthly_spent"] = prevExpenseNew + \
+                    float(request.data.get("amount"))
+
+            else:
+                # add new date to data with amount
+                profile.monthly_data[newTransactionDate] = {
+                    "monthly_gained": 0.0,
+                    "monthly_spent": float(request.data.get("amount"))
+                }
+
+            profile.total_amount = round(profile.total_amount, 2)
             profile.save()
         else:
             profile.total_amount = float(profile.total_amount) - \
                 (float(transaction.amount) - float(request.data.get("amount")))
             profile.total_amount_gained = float(profile.total_amount_gained) - (
                 float(transaction.amount) - float(request.data.get("amount")))
+
+            # update monthly
+            # delete transaction amount from current transaction month year
+            prevGain = profile.monthly_data[oldTransactionDate]["monthly_gained"]
+            profile.monthly_data[oldTransactionDate]["monthly_gained"] = prevGain - \
+                float(transaction.amount)
+
+            # if the new date exists
+            if profile.monthly_data[newTransactionDate]:
+                # get the expenses for that month year
+                prevGainNew = profile.monthly_data[newTransactionDate]["monthly_gained"]
+                # update monthly_spend for that month year with new amount
+                profile.monthly_data[newTransactionDate]["monthly_gained"] = prevGainNew + \
+                    float(request.data.get("amount"))
+
+            else:
+                # add new date to data with amount
+                profile.monthly_data[newTransactionDate] = {
+                    "monthly_gained": float(request.data.get("amount")),
+                    "monthly_spent": 0.0
+                }
+
+            profile.total_amount = round(profile.total_amount, 2)
             profile.save()

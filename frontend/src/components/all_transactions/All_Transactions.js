@@ -80,7 +80,7 @@ class All_Transactions extends Component {
                 </h1>
                 {this.state.loading === true ?
                     <h1>
-                        Loading
+                        Loading . . .
                     </h1> :
                     <div>
                         <ul className="list-group flex-column ">
