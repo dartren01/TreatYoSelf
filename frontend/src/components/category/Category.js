@@ -14,15 +14,17 @@ class Category extends Component {
             categories_monthly:{},
             new_category: "",
             budget_category:"",
+            delete_category:"",
             budget:0,
             id: "",
             
         }
 
-        this.handleChange = this.handleChange.bind(this)
+        this.handleCategoryChange = this.handleCategoryChange.bind(this)
         this.handleAddCategory = this.handleAddCategory.bind(this)
         this.changebudgetCategory = this.changebudgetCategory.bind(this)
         this.getBudgetAxios = this.getBudgetAxios.bind(this)
+        this.handleDeleteCategory = this.handleDeleteCategory.bind(this)
         this.updateCategoryAxios = this.updateCategoryAxios.bind(this)
     }
 
@@ -39,6 +41,7 @@ class Category extends Component {
                         categories_monthly: res.data[0].categories_monthly,
                         budget_category: Object.keys(res.data[0].categories_budget)[0],
                         budget: res.data[0].categories_budget[Object.keys(res.data[0].categories_budget)[0]],
+                        delete_category: Object.keys(res.data[0].categories_budget)[0],
                         id: res.data[0].id
                     })
                 
@@ -48,7 +51,7 @@ class Category extends Component {
             })
     }
 
-    handleChange = (e) => {
+    handleCategoryChange = (e) => {
         this.setState({
             [e.target.name]:e.target.value
         })
@@ -111,6 +114,22 @@ class Category extends Component {
         }, this.updateCategoryAxios)
     }
 
+    handleDeleteCategory = (e) => {
+        e.preventDefault
+        let tempCategories = this.state.categories
+        let tempBudget = this.state.categories_budget
+        let tempMonthly = this.state.categories_monthly
+        delete tempCategories[this.state.delete_category]
+        delete tempBudget[this.state.delete_category]
+        delete tempMonthly[this.state.delete_category]
+        this.setState({
+            categories: tempCategories,
+            categories_budget: tempBudget,
+            categories_monthly: tempMonthly
+        }, this.updateCategoryAxios)
+
+    }
+
 
     updateCategoryAxios = () => {
         console.log("Category Axios6")
@@ -126,7 +145,7 @@ class Category extends Component {
             }
         })
             .then(res => {
-                console.log("Category has been Added")
+                console.log("Category has been Updated")
             })
             .catch(err => {
                 console.log("Error for category added" + err)
@@ -149,7 +168,7 @@ class Category extends Component {
                             type="new_category" 
                             name = "new_category"
                             placeholder="Category"
-                            onChange = {(e) => this.handleChange(e)} />
+                            onChange = {(e) => this.handleCategoryChange(e)} />
                     </Form.Group>
                     <Button className = "categoryButton"
                         variant="outline-secondary"
@@ -165,6 +184,8 @@ class Category extends Component {
                                 <Form.Label>Category Budget</Form.Label>
                                     <Form.Control 
                                             as="select"
+                                            type = "budget_category"
+                                            name = "budget_category"
                                             onChange = {(e) => this.changebudgetCategory(e)}>
                                         {Object.keys(this.state.categories_budget).map((cat) => 
                                             <Fragment key = {cat}>
@@ -176,7 +197,7 @@ class Category extends Component {
                         </div>
                         
                         <div className = "form-group name2 col-md-6">
-                            <Form.Group controlId="formBasicCategory">
+                            <Form.Group controlId="formBasicBudget">
                             <Form.Label>Budget</Form.Label>
                             <Form.Control 
                                 type="budget" 
@@ -194,16 +215,38 @@ class Category extends Component {
                     </div>
                     
                 </Form>
-                {console.log(this.state.budget_category)}
-                {console.log(this.state.budget)}
+               
                 
-                {/* {Object.entries(this.state.categories).map((category) => (
-                    <div> {category[0]} </div>
-                ))} */}
+                
 
-                
-                
+
+                <div className = "form-group name1 col-md-12"> 
+                    <Form.Group controlId="formCategoryDelete">
+                        <Form.Label>Delete Category</Form.Label>
+                            <Form.Control 
+                                    as="select"
+                                    type = "delete_category"
+                                    name = "delete_category"
+                                    onChange = {(e) => this.handleCategoryChange(e)}>
+                                {Object.keys(this.state.categories_budget).map((cat) => 
+                                    <Fragment key = {cat}>
+                                        <option>{cat}</option>
+                                    </Fragment>
+                                )}
+                            </Form.Control>
+                        
+                        <Button 
+                            className = "categoryButton"
+                            variant="outline-secondary"
+                            onClick = {(e) => this.handleDeleteCategory(e)}>
+                            Delete
+                        </Button>
+                    </Form.Group>
+                </div>
+
             </div>
+
+
             
         )
     }
