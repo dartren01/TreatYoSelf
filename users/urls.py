@@ -12,7 +12,7 @@ urlpatterns = [
     # clears the token, so users have to log back in
     path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('total', CreateProfileAPI.as_view()),
-    path('total/get', ProfileAPI.as_view())
+    path('total/get', ProfileAPI.as_view()),
 
 ]
 

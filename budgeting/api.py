@@ -38,6 +38,33 @@ class CategoriesCreateViewSet(generics.CreateAPIView):
         categories = serializer.save()
         return Response()
 
+class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CategoriesSerializer
+
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        return Response(serializer.data)
+
+    def get_queryset(self):
+        user = self.request.user
+        print(user)
+        if user.is_anonymous:
+            raise Exception("Unauthorized Access")
+        # queryset = Transaction.objects.filter(author=user)
+        queryset = Categories.objects.filter(author=user)
+        return queryset.order_by('date_posted')
+
+
+
 class AllTransactionViewSet(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated

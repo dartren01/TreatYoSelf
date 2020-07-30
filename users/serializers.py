@@ -59,8 +59,17 @@ class CreateProfileSerializer(serializers.ModelSerializer):
                                                         monthYear: {
                                                             "monthly_gained": 0.0,
                                                             "monthly_spent": 0.0
-                                                        }
-        })
+                                                        }}
+                                                   )
+        return instance
+    
+    def update(self, instance, validated_data):
+        instance.initial_amount = validated_data.get("initial_amount")
+        instance.total_amount = validated_data.get("total_amount")
+        instance.total_amount_gained = validated_data.get("total_amount_gained")
+        instance.total_amount_spent = validated_data.get("total_amount_spent")
+        
+        instance.save()
         return instance
 
 

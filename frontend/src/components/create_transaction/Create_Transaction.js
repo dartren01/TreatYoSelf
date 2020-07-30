@@ -9,11 +9,7 @@ class Create_Transaction extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories: {
-                Entertainment: 0,
-                Utility: 0,
-                Food: 0,
-            },
+            categories: {},
             category:"",
             source: "",
             amount: "",
@@ -59,41 +55,27 @@ class Create_Transaction extends Component {
                 console.log("transaction post error: " + err)
             });
 
-        const categoryObj = {
-            category: this.state.categories
-        }
-        axios.post("budget/create/category/", categoryObj, headerObj)
-            .then(res => {
-                console.log("Category Added")
-            })
-            .catch(err => {
-                console.log("Category post error: " + err)
-            })
-
-        
-        
     };
 
     componentDidMount = () => {
-        console.log("Create transaction mount");
+        console.log("Create_Transaction ComoponentDidMount");
         // check authentication. currently it calls this after render
         try {
             if (this.props.isLoggedIn) {
                 console.log("Authorized");
-                axios.get("budget/get/category/", {
+                axios.get("budget/category/get/", {
                     headers: {
                       "Content-Type": "application/json",
                       "Authorization": `Token ${Cookies.get("token")}`
                     }
                   })
                     .then(res => {
-                        console.log(res.data[0])
-                        if (Object.keys(res.data[0].category).length > 0){
-                            this.setState({
-                                categories: res.data[0].category
-                                // Gotta include the category here
-                            })
-                        }
+                        console.log(res.data[0].categories)
+                        this.setState({
+                            categories: res.data[0].categories
+                            // Gotta include the category here
+                        })
+                        
 
                         
                     })

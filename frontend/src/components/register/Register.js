@@ -55,6 +55,8 @@ class Register extends Component {
                         errorCheck: "Dupilcate Registration"
                     })
                 })
+            
+            
         }
 
 

@@ -1,4 +1,12 @@
 Andrew:
     1.) Fix category errors,
-            Get request shows error since the category object is not created
-            Let User be able to create new categories
+            Don't Allow duplicate Categories to be made
+            Let Users Create and Delete categories
+            ComponentDidMount only called once in life cycle
+                This messes up category showing when refreshed
+
+    2.) ComponentDidMount doesn't get called on while re-rendering
+    3.) Child ComponentDidMount calls before parents
+
+
+            

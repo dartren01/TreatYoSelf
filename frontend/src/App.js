@@ -19,6 +19,7 @@ import Total from "./components/total/Total"
 import All_Transactions from "./components/all_transactions/All_Transactions"
 import Create_Transaction from "./components/create_transaction/Create_Transaction";
 import Update_Transaction from "./components/update_transaction/Update_Transaction";
+import Category from "./components/category/Category"
 
 
 // Notes: Need to figure out how to login in before rendering components.
@@ -90,21 +91,22 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    console.log("App componentDidMount");
+    console.log("App Component componentDidMount");
     this.checkLogin();
   };
 
 
   // Maybe we can use private routes
   render() {
-    if (!this.state.loadPage) {
-      return <div></div>
-    }
+    // if (!this.state.loadPage) {
+    //   return <div></div>
+    // }
 
     return (
       <AlertProvider template={AlertTemplate} {...this.options}>
+        <span>Welcome {this.state.username}</span>
         <Router>
-          {console.log("App Render")}
+          {console.log("App Component Render")}
           <Navbar
             {...this.props}
             isLoggedIn={this.state.isLoggedIn}
@@ -151,6 +153,10 @@ class App extends Component {
               )} />
               <Route path="/total" render={props => (
                 <Total {...props}
+                />
+              )} />
+              <Route path = "/category" render = {props => (
+                <Category {...props} 
                 />
               )} />
             </Switch>

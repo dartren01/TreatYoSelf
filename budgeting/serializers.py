@@ -11,16 +11,41 @@ class AllCategorySerializer(serializers.ModelSerializer):
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
-        fields = ("category",)
+        fields = ("categories","categories_budget", "categories_monthly")
     
     def create(self,validated_data):
         categories = Categories.objects.create(
-            category    = validated_data["category"],
             author      = self.context["request"].user,
+            categories = {
+                            "Entertainment": 0,
+                            "Utilities": 0,
+                            "Food": 0,
+                        },
+            categories_budget = {
+                "Entertainment": 0,
+                "Utilities": 0,
+                "Food": 0,
+            },
+            categories_monthly = {
+                "Enterainment":{},
+                "Utilities": {},
+                "Food": {},
+
+            }
+            
         )
 
         categories.save()
         return categories
+
+    def update(self, instance, validated_data):
+        instance.categories = validated_data.get("categories")
+        instance.categories_budget = validated_data.get("categories_budget")
+        instance.categories_monthly = validated_data.get("categories_monthly")
+
+        instance.save()
+        return instance
+
 
 class AllTransactionSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,5 +1,5 @@
 from django.urls import path
-from .api import AllTransactionViewSet, TransactionCreateViewSet, TransactionGetUpdateDestroyViewSet, CategoriesCreateViewSet, AllCategoriesViewSet
+from .api import AllTransactionViewSet, TransactionCreateViewSet, TransactionGetUpdateDestroyViewSet, CategoriesCreateViewSet, AllCategoriesViewSet, CategoriesGetUpdateDestroyViewSet
 
 
 urlpatterns = [
@@ -10,5 +10,6 @@ urlpatterns = [
      path('transaction/update/<int:pk>', TransactionGetUpdateDestroyViewSet.as_view()),
      path('transaction/get/<int:pk>', TransactionGetUpdateDestroyViewSet.as_view()),
      path("create/category/", CategoriesCreateViewSet.as_view()),
-     path("get/category/", AllCategoriesViewSet.as_view())
+     path("category/get/", AllCategoriesViewSet.as_view()),
+     path("category/update/<int:pk>", CategoriesGetUpdateDestroyViewSet.as_view())
 ]

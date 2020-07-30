@@ -5,7 +5,9 @@ import jsonfield
 
 
 class Categories(models.Model):
-    category = jsonfield.JSONField({"Entertainment":0})
+    categories = jsonfield.JSONField()
+    categories_budget = jsonfield.JSONField()
+    categories_monthly = jsonfield.JSONField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     # current_monthly_spent = models.CharField(max_length=100, default="0")
     # current_monthly_income = models.CharField(max_length=100, default="0")
@@ -14,9 +16,6 @@ class Categories(models.Model):
     # # current spent/income for view REPRESENTATION OF CURRENT_MONTHLY_SPENT/INCOME
     # monthly_amount = models.CharField(max_length=100, default="0")
     # is_expense = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.category
 
     def save(self, *args, **kwargs):
         super(Categories, self).save(*args, **kwargs)

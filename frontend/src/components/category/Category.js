@@ -1,0 +1,212 @@
+import React, {Component, Fragment} from "react"
+import Cookies from "js-cookie"
+import axios from "axios"
+import {Form, Button} from "react-bootstrap"
+
+import "./Category.css"
+
+class Category extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            categories:{},
+            categories_budget:{},
+            categories_monthly:{},
+            new_category: "",
+            budget_category:"",
+            budget:0,
+            id: "",
+            
+        }
+
+        this.handleChange = this.handleChange.bind(this)
+        this.handleAddCategory = this.handleAddCategory.bind(this)
+        this.changebudgetCategory = this.changebudgetCategory.bind(this)
+        this.getBudgetAxios = this.getBudgetAxios.bind(this)
+        this.updateCategoryAxios = this.updateCategoryAxios.bind(this)
+    }
+
+    componentDidMount = () => {
+        console.log("Category componentDidMount")
+        axios.get( "budget/category/get/", {headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${Cookies.get("token")}`
+        }})
+            .then(res => {
+                    this.setState({
+                        categories: res.data[0].categories,
+                        categories_budget: res.data[0].categories_budget,
+                        categories_monthly: res.data[0].categories_monthly,
+                        budget_category: Object.keys(res.data[0].categories_budget)[0],
+                        budget: res.data[0].categories_budget[Object.keys(res.data[0].categories_budget)[0]],
+                        id: res.data[0].id
+                    })
+                
+            })
+            .catch(err => {
+                console.log("Catgory Error componentDidMount " + err)
+            })
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+
+    handleAddCategory = (e) =>{
+        e.preventDefault()
+        console.log("Adding Category")
+        if (this.state.new_category != "" && this.state.id != ""){
+            this.setState({
+                categories: {
+                    ...this.state.categories,
+                    [`${this.state.new_category}`]: 0
+                },
+                categories_budget: {
+                    ...this.state.categories_budget,
+                    [`${this.state.new_category}`]: 0
+                },
+                categories_monthly: {
+                    ...this.state.categories_monthly,
+                    [`${this.state.new_category}`]:{}
+                },
+                new_category: ""
+            }, this.updateCategoryAxios)
+            // Call back for setState
+            
+        }
+
+
+    }
+
+
+    changebudgetCategory = (e) => {
+        e.preventDefault
+        // State may not change first
+        this.setState({
+            budget_category: e.target.value
+        }, this.getBudgetAxios)
+    }
+
+    getBudgetAxios = () => {
+        axios.get("budget/category/get/", {headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${Cookies.get("token")}`
+        }})
+            .then(res => {
+                this.setState({
+                    budget: res.data[0].categories_budget[this.state.budget_category]
+                })
+            })
+    }
+
+    handleAddBudget = (e) => {
+        e.preventDefault
+        this.setState({
+            categories_budget: {
+                ...this.state.categories_budget,
+                [`${this.state.budget_category}`]:`${this.state.budget}`
+            }
+        }, this.updateCategoryAxios)
+    }
+
+
+    updateCategoryAxios = () => {
+        console.log("Category Axios6")
+        let categoryBody = {
+            "categories":this.state.categories,
+            "categories_budget": this.state.categories_budget,
+            "categories_monthly": this.state.categories_monthly
+        }
+        axios.put(`budget/category/update/${this.state.id}`, categoryBody, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        })
+            .then(res => {
+                console.log("Category has been Added")
+            })
+            .catch(err => {
+                console.log("Error for category added" + err)
+            })
+    }
+
+
+
+
+    render() {
+        console.log("Category Render")
+        return (
+            <div>
+                <h1>Category Page</h1>
+
+                <Form className = "form-group name1 col-md-12">
+                    <Form.Group controlId="formBasicCategory">
+                        <Form.Label>Add Category</Form.Label>
+                        <Form.Control 
+                            type="new_category" 
+                            name = "new_category"
+                            placeholder="Category"
+                            onChange = {(e) => this.handleChange(e)} />
+                    </Form.Group>
+                    <Button className = "categoryButton"
+                        variant="outline-secondary"
+                        onClick = {(e) => this.handleAddCategory(e)}>
+                        Add
+                    </Button>
+                </Form>
+
+                <Form>
+                    <div className = "budgetForm">
+                        <div className = "form-group name1 col-md-6"> 
+                            <Form.Group controlId="formCategoryBudget">
+                                <Form.Label>Category Budget</Form.Label>
+                                    <Form.Control 
+                                            as="select"
+                                            onChange = {(e) => this.changebudgetCategory(e)}>
+                                        {Object.keys(this.state.categories_budget).map((cat) => 
+                                            <Fragment key = {cat}>
+                                                <option>{cat}</option>
+                                            </Fragment>
+                                        )}
+                                    </Form.Control>
+                            </Form.Group>
+                        </div>
+                        
+                        <div className = "form-group name2 col-md-6">
+                            <Form.Group controlId="formBasicCategory">
+                            <Form.Label>Budget</Form.Label>
+                            <Form.Control 
+                                type="budget" 
+                                name = "budget"
+                                value = {`${this.state.budget}`}
+                                onChange = {(e) => this.handleChange(e)} />
+                            </Form.Group>
+                            <Button 
+                                className = "categoryButton"
+                                variant="outline-secondary"
+                                onClick = {(e) => this.handleAddBudget(e)}>
+                                Change
+                            </Button>
+                        </div>
+                    </div>
+                    
+                </Form>
+                {console.log(this.state.budget_category)}
+                {console.log(this.state.budget)}
+                
+                {/* {Object.entries(this.state.categories).map((category) => (
+                    <div> {category[0]} </div>
+                ))} */}
+
+                
+                
+            </div>
+            
+        )
+    }
+}
+
+export default Category;

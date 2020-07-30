@@ -67,7 +67,7 @@ class CreateProfileAPI(generics.GenericAPIView):
         return Response({
             #Reponse is not necessary.
         })
-
+    
 
 class ProfileAPI(generics.ListAPIView):
     serializer_class = ProfileSerializer

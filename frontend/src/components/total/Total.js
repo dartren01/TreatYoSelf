@@ -24,6 +24,12 @@ class Total extends Component {
     handleTotal = (e) => {
         e.preventDefault()
         console.log("New Handle Total");
+        const header = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        }
         const totalBudget = {
             initial_amount: this.state.total_amount,
             total_amount: this.state.total_amount,
@@ -31,18 +37,25 @@ class Total extends Component {
             total_amount_spent: "0"
         };
         console.log(totalBudget);
-        axios.post("api/total", totalBudget, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
-        })
+        axios.post("api/total", totalBudget, header)
             .then(res => {
                 console.log(res)
                 this.props.history.push("/")
             })
             .catch(err => {
                 console.log("Budgeting Total Error ", err);
+            })
+        
+        // Creates default categories when total is created
+        const categoryObj = {
+            categories: this.state.categories
+        }
+        axios.post("budget/create/category/", categoryObj, header)
+            .then(res => {
+                console.log("Category Added")
+            })
+            .catch(err => {
+                console.log("Category post error: " + err)
             })
     }
 
