@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Link, Route } from "react-router-dom"
+
 import Cookies from "js-cookie"
 import axios from "axios";
 import { withAlert } from 'react-alert';

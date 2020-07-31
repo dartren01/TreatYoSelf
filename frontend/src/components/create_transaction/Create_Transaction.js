@@ -9,8 +9,9 @@ class Create_Transaction extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            transactionType: "Income",
             categories: {},
-            category:"",
+            category: "",
             source: "",
             amount: "",
             date: "",
@@ -22,10 +23,15 @@ class Create_Transaction extends Component {
     // takes care of form info
     handleChange = (e) => {
         // Changes state with current information
+        console.log(e.target.value);
         this.setState({
             [e.target.name]: e.target.value
         });
     };
+
+    handleTypeChange = (event) => {
+        this.setState({ transactionType: event.target.value });
+    }
 
     handleCreate = (e) => {
         e.preventDefault();
@@ -37,14 +43,14 @@ class Create_Transaction extends Component {
             }
         }
         const transactionObj = {
-            t_type: this.props.transactionType,
+            t_type: this.state.transactionType,
             category: this.state.category,
             source: this.state.source,
             amount: this.state.amount,
             date_posted: this.state.date,
             notes: this.state.notes
         };
-        axios.post(`/budget/create/${this.props.transactionType.toLowerCase()}/`, transactionObj, headerObj)
+        axios.post(`/budget/create/${this.state.transactionType.toLowerCase()}/`, transactionObj, headerObj)
             .then(res => {
                 console.log("transaction success");
                 const alert = this.props.alert;
@@ -65,19 +71,19 @@ class Create_Transaction extends Component {
                 console.log("Authorized");
                 axios.get("budget/category/get/", {
                     headers: {
-                      "Content-Type": "application/json",
-                      "Authorization": `Token ${Cookies.get("token")}`
+                        "Content-Type": "application/json",
+                        "Authorization": `Token ${Cookies.get("token")}`
                     }
-                  })
+                })
                     .then(res => {
                         console.log(res.data[0].categories)
                         this.setState({
                             categories: res.data[0].categories
                             // Gotta include the category here
                         })
-                        
 
-                        
+
+
                     })
             } else {
                 throw "Not Logged In";
@@ -107,16 +113,25 @@ class Create_Transaction extends Component {
                             onChange={(e) => this.handleChange(e)} />
                     </Form.Group>
 
+                    <Form.Group controlId="formTypeSelect">
+                        <Form.Label>Transaction Type</Form.Label>
+                        <Form.Control
+                            as="select"
+                            value={this.state.transactionType}
+                            onChange={(e) => this.handleChange(e)}>
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                        </Form.Control>
+                    </Form.Group>
+
                     <Form.Group controlId="formCategorySelect">
                         <Form.Label>Category</Form.Label>
                         <Form.Control as="select">
-                            {Object.keys(this.state.categories).map((cat) => 
-                                <Fragment key = {cat}>
+                            {Object.keys(this.state.categories).map((cat) =>
+                                <Fragment key={cat}>
                                     <option>{cat}</option>
                                 </Fragment>
                             )}
-
-
                         </Form.Control>
                     </Form.Group>
 
