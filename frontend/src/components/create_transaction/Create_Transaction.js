@@ -10,6 +10,7 @@ class Create_Transaction extends Component {
         super(props);
         this.state = {
             transactionType: "Income",
+            t_type: ["Income", "Expense"],
             categories: {},
             category: "",
             source: "",
@@ -23,15 +24,10 @@ class Create_Transaction extends Component {
     // takes care of form info
     handleChange = (e) => {
         // Changes state with current information
-        console.log(e.target.value);
         this.setState({
             [e.target.name]: e.target.value
         });
     };
-
-    handleTypeChange = (event) => {
-        this.setState({ transactionType: event.target.value });
-    }
 
     handleCreate = (e) => {
         e.preventDefault();
@@ -117,10 +113,12 @@ class Create_Transaction extends Component {
                         <Form.Label>Transaction Type</Form.Label>
                         <Form.Control
                             as="select"
-                            value={this.state.transactionType}
                             onChange={(e) => this.handleChange(e)}>
-                            <option value="Income">Income</option>
-                            <option value="Expense">Expense</option>
+                            {this.state.t_type.map((type) =>
+                                <Fragment key={type}>
+                                    <option value={type}>{type}</option>
+                                </Fragment>
+                            )}
                         </Form.Control>
                     </Form.Group>
 
