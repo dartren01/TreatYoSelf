@@ -17,6 +17,11 @@ class Category extends Component {
             delete_category:"",
             budget:0,
             id: "",
+
+            //This variables are for backend to know what update.
+            adding:0,
+            budgeting:0,
+            deleting:0
             
         }
 
@@ -62,6 +67,7 @@ class Category extends Component {
         console.log("Adding Category")
         if (this.state.new_category != "" && this.state.id != "" && !(this.state.new_category in this.state.categories)){
             this.setState({
+                adding: 1,
                 categories: {
                     ...this.state.categories,
                     [`${this.state.new_category}`]: 0
@@ -74,9 +80,7 @@ class Category extends Component {
                     ...this.state.categories_monthly,
                     [`${this.state.new_category}`]:{}
                 },
-                new_category: ""
             }, this.updateCategoryAxios)
-            e.value = ""
             
         }
 
@@ -87,10 +91,10 @@ class Category extends Component {
 
     }
 
-
     changebudgetCategory = (e) => {
         e.preventDefault
-        // State may not change first
+        // Not using handleChange because budget of category
+        // needs to be found for the placeholder
         this.setState({
             budget_category: e.target.value
         }, this.getBudgetAxios)
@@ -111,6 +115,7 @@ class Category extends Component {
     handleAddBudget = (e) => {
         e.preventDefault
         this.setState({
+            budgeting:1,
             categories_budget: {
                 ...this.state.categories_budget,
                 [`${this.state.budget_category}`]:`${this.state.budget}`
@@ -127,12 +132,10 @@ class Category extends Component {
         delete tempBudget[this.state.delete_category]
         delete tempMonthly[this.state.delete_category]
         this.setState({
+            deleting:1,
             categories: tempCategories,
             categories_budget: tempBudget,
             categories_monthly: tempMonthly,
-            budget_category: Object.keys(tempCategories)[0],
-            delete_category: Object.keys(tempCategories)[0],
-            budget: Object.values(tempBudget)[0]
             //Need to Update the States to match the categories
         }, this.updateCategoryAxios)
 
@@ -140,11 +143,15 @@ class Category extends Component {
 
 
     updateCategoryAxios = () => {
-        console.log("Category Axios7")
+        console.log("Category Axios5")
         let categoryBody = {
-            "categories":this.state.categories,
-            "categories_budget": this.state.categories_budget,
-            "categories_monthly": this.state.categories_monthly
+            "new_category": this.state.new_category,
+            "budget_category": this.state.budget_category,
+            "delete_category": this.state.delete_category,
+            "budget": this.state.budget,
+            "adding": this.state.adding,
+            "budgeting": this.state.budgeting,
+            "deleting": this.state.deleting
         }
         axios.put(`budget/category/update/${this.state.id}`, categoryBody, {
             headers: {
@@ -158,6 +165,17 @@ class Category extends Component {
             .catch(err => {
                 console.log("Error for category added" + err)
             })
+
+        // Need to set new_category back to empty input field
+        this.setState({
+            new_category:"",
+            adding:0,
+            budgeting:0,
+            deleting:0,
+            budget_category: Object.keys(this.state.categories)[0],
+            delete_category: Object.keys(this.state.categories)[0],
+            budget: Object.values(this.state.categories_budget)[0]
+        })
     }
 
 

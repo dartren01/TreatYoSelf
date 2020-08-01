@@ -50,10 +50,45 @@ class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
         serializer = self.get_serializer(
             instance, data=request.data)
         serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
+        #self.perform_update(serializer)
+            #Not using this because I am updating myself.
+        if request.data.get("new_category") and request.data.get("adding"):
+            self.addNewCategory(request)
+        elif request.data.get("budget_category") and request.data.get("budgeting"):
+            self.addBudgetCategory(request)
+        elif request.data.get("delete_category") and request.data.get("deleting"):
+            self.deleteCategory(request)
 
         return Response(serializer.data)
 
+    #Updates Category by adding a new category
+    def addNewCategory(self, request):
+        categories = Categories.objects.get(author = self.request.user)
+        newCategory = request.data.get("new_category")
+        categories.categories[newCategory] = 0
+        categories.categories_budget[newCategory] = 0
+        categories.categories_monthly[newCategory] = {}
+        categories.save()
+
+    #Updates Category budget
+    def addBudgetCategory(self,request):
+        categories = Categories.objects.get(author = self.request.user)
+        budgetCategory = request.data.get("budget_category")
+        budget = request.data.get("budget")
+        categories.categories_budget[budgetCategory] = budget
+        categories.save()
+    
+    #Delete Category
+    def deleteCategory(self,request):
+        categories = Categories.objects.get(author = self.request.user)
+        deleteCategory = request.data.get("delete_category")
+        
+        del categories.categories[deleteCategory]
+        del categories.categories_budget[deleteCategory]
+        del categories.categories_monthly[deleteCategory]
+        categories.save()
+        
+        
     def get_queryset(self):
         user = self.request.user
         print(user)
@@ -94,6 +129,7 @@ class TransactionCreateViewSet(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         transaction = serializer.save()
         self.createTransactionAddTotal(request)
+        self.addTransactionCategory(request)
 
         return Response()
 
@@ -117,7 +153,7 @@ class TransactionCreateViewSet(generics.CreateAPIView):
                 profile.total_amount_spent) + float(request.data.get("amount"))
 
             # add to monthly data
-            if profile.monthly_data[transactionDate]:
+            if transactionDate in profile.monthly_data:
                 prevExpense = profile.monthly_data[transactionDate]["monthly_spent"]
                 profile.monthly_data[transactionDate]["monthly_spent"] = prevExpense + \
                     float(request.data.get("amount"))
@@ -137,7 +173,7 @@ class TransactionCreateViewSet(generics.CreateAPIView):
                 profile.total_amount_gained) + float(request.data.get("amount"))
 
             # add to monthly data
-            if profile.monthly_data[transactionDate]:
+            if transactionDate in profile.monthly_data:
                 prevGain = profile.monthly_data[transactionDate]["monthly_gained"]
                 profile.monthly_data[transactionDate]["monthly_gained"] = prevGain + \
                     float(request.data.get("amount"))
@@ -149,6 +185,30 @@ class TransactionCreateViewSet(generics.CreateAPIView):
             profile.total_amount = round(profile.total_amount, 2)
             profile.total_amount_gained = round(profile.total_amount_gained, 2)
             profile.save()
+
+    def addTransactionCategory(self, request):
+        requestCategory = request.data.get("category")
+        requestAmount = request.data.get("amount")
+        categories = Categories.objects.get(author = self.request.user)
+        dateObj = datetime.strptime(
+            request.data.get("date_posted"), "%Y-%m-%d").date()
+        categoryDate = '{}{}'.format(dateObj.month, dateObj.year)
+        """
+         categories_monthly = {"Food" : {"00-00-00":1000}}
+        """
+        #Update categories, run this
+        categories.categories[requestCategory] += float(requestAmount)
+
+        #Update categories_monthly
+        if categoryDate in categories.categories_monthly[requestCategory]:
+            categories.categories_monthly[requestCategory][categoryDate] += float(requestAmount)
+        else:
+            categories.categories_monthly[requestCategory][categoryDate] = float(requestAmount)
+        
+        
+        categories.save()
+
+
 
 
 class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
@@ -175,9 +235,23 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
         transaction = Transaction.objects.get(id=self.kwargs.get('pk'))
         self.deleteTransactionFromTotal(request, transaction)
+        self.deleteTransactionFromCategory(request,transaction)
         transaction.delete()
         # add a response
         return Response()
+
+    def deleteTransactionFromCategory(self, request, transaction):
+        categories = Categories.objects.get(author = self.request.user)
+        now_date = "{}{}".format(transaction.month,transaction.year)
+        transCategory = transaction.category
+        transAmount = transaction.amount
+        categories.categories[transCategory] -= float(transAmount)
+        categories.categories_monthly[transCategory][now_date] -= float(transAmount)
+        if categories.categories_monthly[transCategory][now_date] == 0:
+            del categories.categories_monthly[transCategory][now_date]
+        
+        categories.save()
+
 
     # update a transaction. Updates total with regards to transaction updated.
     def update(self, request, *args, **kwargs):

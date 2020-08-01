@@ -11,12 +11,13 @@ class Create_Transaction extends Component {
         this.state = {
             transactionType: "Income",
             t_type: ["Income", "Expense"],
-            categories: {},
             category: "",
             source: "",
             amount: "",
             date: "",
             notes: "",
+            categories: {},
+            categories_monthly: {},
         }
 
     }
@@ -59,11 +60,12 @@ class Create_Transaction extends Component {
 
     };
 
+
     componentDidMount = () => {
         console.log("Create_Transaction ComoponentDidMount");
         // check authentication. currently it calls this after render
         try {
-            if (this.props.isLoggedIn) {
+            if (Cookies.get("token")) {
                 console.log("Authorized");
                 axios.get("budget/category/get/", {
                     headers: {
@@ -74,7 +76,9 @@ class Create_Transaction extends Component {
                     .then(res => {
                         console.log(res.data[0].categories)
                         this.setState({
-                            categories: res.data[0].categories
+                            categories: res.data[0].categories,
+                            categories_monthly: res.data[0].categories_monthly,
+                            category: Object.keys(res.data[0].categories)[0]
                             // Gotta include the category here
                         })
 
@@ -124,7 +128,11 @@ class Create_Transaction extends Component {
 
                     <Form.Group controlId="formCategorySelect">
                         <Form.Label>Category</Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control 
+                                as="select"
+                                type = "category"
+                                name = "category"
+                                onChange={(e) => this.handleChange(e)} >
                             {Object.keys(this.state.categories).map((cat) =>
                                 <Fragment key={cat}>
                                     <option>{cat}</option>

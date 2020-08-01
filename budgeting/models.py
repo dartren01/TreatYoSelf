@@ -27,8 +27,7 @@ class Categories(models.Model):
 
 class Transaction(models.Model):
     t_type = models.CharField("Income/Expense", max_length=15, null=True)
-    category = models.ForeignKey(
-        Categories, on_delete=models.SET_NULL, null=True)
+    category = models.CharField(max_length = 100)
     source = models.CharField("Title", max_length=30)
     amount = models.CharField(max_length=100, default="0")
     notes = models.TextField("Additional Information", blank=True, null=True)

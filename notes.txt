@@ -7,7 +7,7 @@ Andrew:
                 a.) Just change the values
 
             Category Monthly
-                Added the month when the transaction is added.s
+                Added the month when the transaction is added
 
     2.) ComponentDidMount doesn't get called on while re-rendering
     3.) Child ComponentDidMount calls before parents

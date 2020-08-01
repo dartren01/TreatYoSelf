@@ -67,7 +67,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         transaction = Transaction.objects.create(
             t_type=validated_data['t_type'],
-            category=None,
+            category=validated_data["category"],
             source=validated_data['source'],
             amount=validated_data['amount'],
             notes=validated_data['notes'],
