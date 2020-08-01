@@ -17,17 +17,18 @@ class CategoriesSerializer(serializers.ModelSerializer):
         categories = Categories.objects.create(
             author      = self.context["request"].user,
             categories = {
-                            "Entertainment": 0,
-                            "Utilities": 0,
-                            "Food": 0,
+                            "Entertainment": 0.0,
+                            "Utilities": 0.0,
+                            "Food": 0.0,
                         },
             categories_budget = {
-                "Entertainment": 0,
-                "Utilities": 0,
-                "Food": 0,
+                "Entertainment": 0.0,
+                "Utilities": 0.0,
+                "Food": 0.0,
             },
+            
             categories_monthly = {
-                "Enterainment":{},
+                "Entertainment":{},
                 "Utilities": {},
                 "Food": {},
 

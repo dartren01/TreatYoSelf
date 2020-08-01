@@ -1,9 +1,13 @@
 Andrew:
     1.) Fix category errors,
             Don't Allow duplicate Categories to be made
-            Let Users Create and Delete categories
-            ComponentDidMount only called once in life cycle
-                This messes up category showing when refreshed
+                a.) need to worry about capitalization
+            
+            Need to reset the input fields when button is clicked
+                a.) Just change the values
+
+            Category Monthly
+                Added the month when the transaction is added.s
 
     2.) ComponentDidMount doesn't get called on while re-rendering
     3.) Child ComponentDidMount calls before parents

@@ -20,7 +20,7 @@ class Category extends Component {
             
         }
 
-        this.handleCategoryChange = this.handleCategoryChange.bind(this)
+        this.handleChange = this.handleChange.bind(this)
         this.handleAddCategory = this.handleAddCategory.bind(this)
         this.changebudgetCategory = this.changebudgetCategory.bind(this)
         this.getBudgetAxios = this.getBudgetAxios.bind(this)
@@ -51,7 +51,7 @@ class Category extends Component {
             })
     }
 
-    handleCategoryChange = (e) => {
+    handleChange = (e) => {
         this.setState({
             [e.target.name]:e.target.value
         })
@@ -60,7 +60,7 @@ class Category extends Component {
     handleAddCategory = (e) =>{
         e.preventDefault()
         console.log("Adding Category")
-        if (this.state.new_category != "" && this.state.id != ""){
+        if (this.state.new_category != "" && this.state.id != "" && !(this.state.new_category in this.state.categories)){
             this.setState({
                 categories: {
                     ...this.state.categories,
@@ -76,8 +76,12 @@ class Category extends Component {
                 },
                 new_category: ""
             }, this.updateCategoryAxios)
-            // Call back for setState
+            e.value = ""
             
+        }
+
+        else {
+            console.log("Cannot Add New category")
         }
 
 
@@ -125,14 +129,18 @@ class Category extends Component {
         this.setState({
             categories: tempCategories,
             categories_budget: tempBudget,
-            categories_monthly: tempMonthly
+            categories_monthly: tempMonthly,
+            budget_category: Object.keys(tempCategories)[0],
+            delete_category: Object.keys(tempCategories)[0],
+            budget: Object.values(tempBudget)[0]
+            //Need to Update the States to match the categories
         }, this.updateCategoryAxios)
 
     }
 
 
     updateCategoryAxios = () => {
-        console.log("Category Axios6")
+        console.log("Category Axios7")
         let categoryBody = {
             "categories":this.state.categories,
             "categories_budget": this.state.categories_budget,
@@ -167,8 +175,9 @@ class Category extends Component {
                         <Form.Control 
                             type="new_category" 
                             name = "new_category"
-                            placeholder="Category"
-                            onChange = {(e) => this.handleCategoryChange(e)} />
+                            placeholder="New Category"
+                            value = {`${this.state.new_category}`}
+                            onChange = {(e) => this.handleChange(e)} />
                     </Form.Group>
                     <Button className = "categoryButton"
                         variant="outline-secondary"
@@ -227,7 +236,7 @@ class Category extends Component {
                                     as="select"
                                     type = "delete_category"
                                     name = "delete_category"
-                                    onChange = {(e) => this.handleCategoryChange(e)}>
+                                    onChange = {(e) => this.handleChange(e)}>
                                 {Object.keys(this.state.categories_budget).map((cat) => 
                                     <Fragment key = {cat}>
                                         <option>{cat}</option>
