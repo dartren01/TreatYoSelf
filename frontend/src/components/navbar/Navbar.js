@@ -34,9 +34,8 @@ class Navbar extends Component {
                 <Link to="/" className="navbar-brand">Home</Link>
                 <Link to="/total" className="navbar-brand"> Total </Link>
                 <Link to="/budget/all_transactions/" className="navbar-brand">All Transactions</Link>
-                <Link to="/budget/income/" className="navbar-brand">Income</Link>
-                <Link to="/budget/expense/" className="navbar-brand">Expense</Link>
-                <Link to="/category" className = "navbar-brand">Category</Link>
+                <Link to="/budget/create/" className="navbar-brand">New Transaction</Link>
+                <Link to="/category" className="navbar-brand">Category</Link>
             </React.Fragment>;
         }
         return (

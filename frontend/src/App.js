@@ -98,13 +98,15 @@ class App extends Component {
 
   // Maybe we can use private routes
   render() {
+
+    // fix this, when reload page, component did mount does not get called
+    // so the page stays blank
     // if (!this.state.loadPage) {
     //   return <div></div>
     // }
 
     return (
       <AlertProvider template={AlertTemplate} {...this.options}>
-        <span>Welcome {this.state.username}</span>
         <Router>
           {console.log("App Component Render")}
           <Navbar
@@ -127,15 +129,9 @@ class App extends Component {
                   isLoggedIn={this.state.isLoggedIn}
                   checkLogin={this.checkLogin} />
               )} />
-              <Route exact path="/budget/income" render={props => (
+              <Route exact path="/budget/create" render={props => (
                 <Create_Transaction {...props}
-                  isLoggedIn={this.state.isLoggedIn}
-                  transactionType='Income' />
-              )} />
-              <Route exact path="/budget/expense" render={props => (
-                <Create_Transaction {...props}
-                  isLoggedIn={this.state.isLoggedIn}
-                  transactionType='Expense' />
+                  isLoggedIn={this.state.isLoggedIn} />
               )} />
               <Route exact path="/budget/update" render={props => (
                 <Update_Transaction {...props}
@@ -155,14 +151,14 @@ class App extends Component {
                 <Total {...props}
                 />
               )} />
-              <Route path = "/category" render = {props => (
-                <Category {...props} 
+              <Route path="/category" render={props => (
+                <Category {...props}
                 />
               )} />
             </Switch>
           </div>
         </Router>
-      </AlertProvider >
+      </AlertProvider>
 
     )
   }
