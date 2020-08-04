@@ -46,19 +46,20 @@ class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     ]
 
     def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(
-            instance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        #self.perform_update(serializer)
-            #Not using this because I am updating myself.
         if request.data.get("new_category") and request.data.get("adding"):
             self.addNewCategory(request)
         elif request.data.get("budget_category") and request.data.get("budgeting"):
             self.addBudgetCategory(request)
         elif request.data.get("delete_category") and request.data.get("deleting"):
             self.deleteCategory(request)
-
+        
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        #self.perform_update(serializer)
+            #Not using this because I am updating myself.
+        #categories = Categories.objects.get(author = self.request.user)
         return Response(serializer.data)
 
     #Updates Category by adding a new category

@@ -52,9 +52,10 @@ class Category extends Component {
                 
             })
             .catch(err => {
-                console.log("Catgory Error componentDidMount " + err)
+                console.log("ComponentDidMount Error " + err)
             })
     }
+
 
     handleChange = (e) => {
         this.setState({
@@ -62,33 +63,15 @@ class Category extends Component {
         })
     }
 
-    handleAddCategory = (e) =>{
+
+    handleAddCategory = (e) => {
         e.preventDefault()
-        console.log("Adding Category")
+        console.log("Adding New Category 6")
         if (this.state.new_category != "" && this.state.id != "" && !(this.state.new_category in this.state.categories)){
             this.setState({
                 adding: 1,
-                categories: {
-                    ...this.state.categories,
-                    [`${this.state.new_category}`]: 0
-                },
-                categories_budget: {
-                    ...this.state.categories_budget,
-                    [`${this.state.new_category}`]: 0
-                },
-                categories_monthly: {
-                    ...this.state.categories_monthly,
-                    [`${this.state.new_category}`]:{}
-                },
-            }, this.updateCategoryAxios)
-            
+            },this.updateCategoryAxios)
         }
-
-        else {
-            console.log("Cannot Add New category")
-        }
-
-
     }
 
     changebudgetCategory = (e) => {
@@ -115,27 +98,14 @@ class Category extends Component {
     handleAddBudget = (e) => {
         e.preventDefault
         this.setState({
-            budgeting:1,
-            categories_budget: {
-                ...this.state.categories_budget,
-                [`${this.state.budget_category}`]:`${this.state.budget}`
-            }
+            budgeting:1
         }, this.updateCategoryAxios)
     }
 
     handleDeleteCategory = (e) => {
         e.preventDefault
-        let tempCategories = this.state.categories
-        let tempBudget = this.state.categories_budget
-        let tempMonthly = this.state.categories_monthly
-        delete tempCategories[this.state.delete_category]
-        delete tempBudget[this.state.delete_category]
-        delete tempMonthly[this.state.delete_category]
         this.setState({
             deleting:1,
-            categories: tempCategories,
-            categories_budget: tempBudget,
-            categories_monthly: tempMonthly,
             //Need to Update the States to match the categories
         }, this.updateCategoryAxios)
 
@@ -160,6 +130,19 @@ class Category extends Component {
             }
         })
             .then(res => {
+                this.setState({
+                    new_category:"",
+                    adding:0,
+                    budgeting:0,
+                    deleting:0,
+
+                    categories: res.data.categories,
+                    categories_budget: res.data.categories_budget,
+                    categories_monthly: res.data.categories_monthly,
+                    budget_category: Object.keys(res.data.categories_budget)[0],
+                    budget: res.data.categories_budget[Object.keys(res.data.categories_budget)[0]],
+                    delete_category: Object.keys(res.data.categories_budget)[0],
+                })
                 console.log("Category has been Updated")
             })
             .catch(err => {
@@ -167,15 +150,6 @@ class Category extends Component {
             })
 
         // Need to set new_category back to empty input field
-        this.setState({
-            new_category:"",
-            adding:0,
-            budgeting:0,
-            deleting:0,
-            budget_category: Object.keys(this.state.categories)[0],
-            delete_category: Object.keys(this.state.categories)[0],
-            budget: Object.values(this.state.categories_budget)[0]
-        })
     }
 
 
