@@ -11,28 +11,40 @@ class AllCategorySerializer(serializers.ModelSerializer):
 class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
-        fields = ("categories","categories_budget", "categories_monthly")
+        fields = ("expense_categories","expense_categories_budget", 
+                "expense_categories_monthly", "income_categories", "income_categories_monthly")
     
     def create(self,validated_data):
         categories = Categories.objects.create(
             author      = self.context["request"].user,
-            categories = {
+            expense_categories = {
                             "Entertainment": 0.0,
                             "Utilities": 0.0,
                             "Food": 0.0,
                         },
-            categories_budget = {
+            expense_categories_budget = {
                 "Entertainment": 0.0,
                 "Utilities": 0.0,
                 "Food": 0.0,
             },
             
-            categories_monthly = {
+            expense_categories_monthly = {
                 "Entertainment":{},
                 "Utilities": {},
                 "Food": {},
+            },
 
-            }
+            income_categories = {
+                "Work": 0.0,
+                "Stocks": 0.0,
+            },
+
+            income_categories_monthly = {
+                "Work": {},
+                "Stocks": {},
+            },
+
+
             
         )
 
@@ -40,9 +52,12 @@ class CategoriesSerializer(serializers.ModelSerializer):
         return categories
 
     def update(self, instance, validated_data):
-        instance.categories = validated_data.get("categories")
-        instance.categories_budget = validated_data.get("categories_budget")
-        instance.categories_monthly = validated_data.get("categories_monthly")
+        instance.expense_categories = validated_data.get("expense_categories")
+        instance.expense_categories_budget = validated_data.get("expense_categories_budget")
+        instance.expense_categories_monthly = validated_data.get("expense_categories_monthly")
+
+        instance.income_categories = validated_data.get("income_categories")
+        instance.income_categories_monthly = validated_data.get("income_categories_monthly")
 
         instance.save()
         return instance

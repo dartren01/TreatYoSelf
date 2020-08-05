@@ -5,9 +5,12 @@ import jsonfield
 
 
 class Categories(models.Model):
-    categories = jsonfield.JSONField()
-    categories_budget = jsonfield.JSONField()
-    categories_monthly = jsonfield.JSONField()
+    expense_categories = jsonfield.JSONField()
+    expense_categories_budget = jsonfield.JSONField()
+    expense_categories_monthly = jsonfield.JSONField()
+    
+    income_categories = jsonfield.JSONField()
+    income_categories_monthly = jsonfield.JSONField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     # current_monthly_spent = models.CharField(max_length=100, default="0")
     # current_monthly_income = models.CharField(max_length=100, default="0")

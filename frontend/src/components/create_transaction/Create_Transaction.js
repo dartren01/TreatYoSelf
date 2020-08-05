@@ -16,6 +16,9 @@ class Create_Transaction extends Component {
             amount: "",
             date: "",
             notes: "",
+            
+            income_categories: {},
+            expense_categories: {},
             categories: {},
             categories_monthly: {},
         }
@@ -29,6 +32,22 @@ class Create_Transaction extends Component {
             [e.target.name]: e.target.value
         });
     };
+
+    handleTypeChange = (e) => {
+        if (this.state.transactionType === "Income"){
+            this.setState((prev,props) => ({
+                transactionType: "Expense",
+                categories: prev.expense_categories,
+                category: Object.keys(prev.expense_categories)[0],
+            }))
+        } else {
+            this.setState((prev,props) => ({
+                transactionType: "Income",
+                categories: prev.income_categories,
+                category: Object.keys(prev.income_categories)[0],
+            }))
+        }
+    }
 
     handleCreate = (e) => {
         e.preventDefault();
@@ -74,14 +93,14 @@ class Create_Transaction extends Component {
                     }
                 })
                     .then(res => {
-                        console.log(res.data[0].categories)
                         this.setState({
-                            categories: res.data[0].categories,
-                            categories_monthly: res.data[0].categories_monthly,
-                            category: Object.keys(res.data[0].categories)[0]
-                            // Gotta include the category here
+                            income_categories: res.data[0].income_categories,
+                            expense_categories: res.data[0].expense_categories,
+                            
+                            categories: res.data[0].income_categories,
+                            categories_monthly: res.data[0].income_categories_monthly,
+                            category: Object.keys(res.data[0].income_categories)[0]
                         })
-
 
 
                     })
@@ -117,7 +136,7 @@ class Create_Transaction extends Component {
                         <Form.Label>Transaction Type</Form.Label>
                         <Form.Control
                             as="select"
-                            onChange={(e) => this.handleChange(e)}>
+                            onChange={(e) => this.handleTypeChange(e)}>
                             {this.state.t_type.map((type) =>
                                 <Fragment key={type}>
                                     <option value={type}>{type}</option>
