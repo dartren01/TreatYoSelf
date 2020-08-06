@@ -8,7 +8,7 @@ class Categories(models.Model):
     expense_categories = jsonfield.JSONField()
     expense_categories_budget = jsonfield.JSONField()
     expense_categories_monthly = jsonfield.JSONField()
-    
+
     income_categories = jsonfield.JSONField()
     income_categories_monthly = jsonfield.JSONField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -30,7 +30,7 @@ class Categories(models.Model):
 
 class Transaction(models.Model):
     t_type = models.CharField("Income/Expense", max_length=15, null=True)
-    category = models.CharField(max_length = 100)
+    category = models.CharField(max_length=100)
     source = models.CharField("Title", max_length=30)
     amount = models.CharField(max_length=100, default="0")
     notes = models.TextField("Additional Information", blank=True, null=True)

@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Recent_Transactions from "../../recent_transactions/Recent_Transactions";
 
-
 class Overview extends Component {
     constructor(props) {
         super(props)
@@ -31,11 +30,12 @@ class Overview extends Component {
         })
             .then(res => {
                 let profileObj = res.data[0];
+                console.log(profileObj.monthly_data);
                 //figure out how to get monthly to object
                 let date = new Date();
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
-                // let rep = profileObj.monthly_data.replace(/\'/g, "\"");
-                // let monthData = JSON.parse(rep);
+                //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
+                //let monthData = JSON.parse(profileObj.monthly_data);
 
                 this.setState({
                     totalObject: profileObj,

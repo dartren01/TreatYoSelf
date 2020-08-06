@@ -9,6 +9,7 @@ from users.serializers import ProfileSerializer
 
 # this file is basically views.py
 
+
 class AllCategoriesViewSet(generics.ListAPIView):
     permission_classes = [
         permissions.IsAuthenticated
@@ -33,10 +34,11 @@ class CategoriesCreateViewSet(generics.CreateAPIView):
     serializer_class = CategoriesSerializer
 
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data = request.data)
-        serializer.is_valid(raise_exception = True)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         categories = serializer.save()
         return Response()
+
 
 class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CategoriesSerializer
@@ -52,19 +54,19 @@ class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
             self.addBudgetCategory(request)
         elif request.data.get("delete_category") and request.data.get("deleting"):
             self.deleteCategory(request)
-        
+
         instance = self.get_object()
         serializer = self.get_serializer(
             instance, data=request.data)
         serializer.is_valid(raise_exception=True)
-        #self.perform_update(serializer)
-            #Not using this because I am updating myself.
+        # self.perform_update(serializer)
+        # Not using this because I am updating myself.
         #categories = Categories.objects.get(author = self.request.user)
         return Response(serializer.data)
 
-    #Updates Category by adding a new category
+    # Updates Category by adding a new category
     def addNewCategory(self, request):
-        categories = Categories.objects.get(author = self.request.user)
+        categories = Categories.objects.get(author=self.request.user)
         newCategory = request.data.get("new_category")
 
         if request.data.get("categoryType") == "Income":
@@ -76,17 +78,17 @@ class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
             categories.expense_categories_budget[newCategory] = 0.0
         categories.save()
 
-    #Updates Category budget
-    def addBudgetCategory(self,request):
-        categories = Categories.objects.get(author = self.request.user)
+    # Updates Category budget
+    def addBudgetCategory(self, request):
+        categories = Categories.objects.get(author=self.request.user)
         budgetCategory = request.data.get("budget_category")
         budget = request.data.get("budget")
         categories.expense_categories_budget[budgetCategory] = budget
         categories.save()
-    
-    #Delete Category
-    def deleteCategory(self,request):
-        categories = Categories.objects.get(author = self.request.user)
+
+    # Delete Category
+    def deleteCategory(self, request):
+        categories = Categories.objects.get(author=self.request.user)
         deleteCategory = request.data.get("delete_category")
 
         if request.data.get("categoryType") == "Income":
@@ -97,8 +99,7 @@ class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
             del categories.expense_categories_budget[deleteCategory]
             del categories.expense_categories_monthly[deleteCategory]
         categories.save()
-        
-        
+
     def get_queryset(self):
         user = self.request.user
         print(user)
@@ -107,7 +108,6 @@ class CategoriesGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
         # queryset = Transaction.objects.filter(author=user)
         queryset = Categories.objects.filter(author=user)
         return queryset.order_by('date_posted')
-
 
 
 class AllTransactionViewSet(generics.ListAPIView):
@@ -199,33 +199,37 @@ class TransactionCreateViewSet(generics.CreateAPIView):
     def addTransactionCategory(self, request):
         requestCategory = request.data.get("category")
         requestAmount = request.data.get("amount")
-        categories = Categories.objects.get(author = self.request.user)
+        categories = Categories.objects.get(author=self.request.user)
         dateObj = datetime.strptime(
             request.data.get("date_posted"), "%Y-%m-%d").date()
         categoryDate = '{}{}'.format(dateObj.month, dateObj.year)
         """
          categories_monthly = {"Food" : {"00-00-00":1000}}
         """
-        #Update categories, run this
+        # Update categories, run this
         if request.data.get("t_type") == "Income":
-            categories.income_categories[requestCategory] += float(requestAmount)
-            #Update categories_monthly
+            categories.income_categories[requestCategory] += float(
+                requestAmount)
+            # Update categories_monthly
             if categoryDate in categories.income_categories_monthly[requestCategory]:
-                categories.income_categories_monthly[requestCategory][categoryDate] += float(requestAmount)
+                categories.income_categories_monthly[requestCategory][categoryDate] += float(
+                    requestAmount)
             else:
-                categories.income_categories_monthly[requestCategory][categoryDate] = float(requestAmount)
-        
+                categories.income_categories_monthly[requestCategory][categoryDate] = float(
+                    requestAmount)
+
         else:
-            categories.expense_categories[requestCategory] += float(requestAmount)
-            #Update categories_monthly
+            categories.expense_categories[requestCategory] += float(
+                requestAmount)
+            # Update categories_monthly
             if categoryDate in categories.expense_categories_monthly[requestCategory]:
-                categories.expense_categories_monthly[requestCategory][categoryDate] += float(requestAmount)
+                categories.expense_categories_monthly[requestCategory][categoryDate] += float(
+                    requestAmount)
             else:
-                categories.expense_categories_monthly[requestCategory][categoryDate] = float(requestAmount)
+                categories.expense_categories_monthly[requestCategory][categoryDate] = float(
+                    requestAmount)
 
         categories.save()
-
-
 
 
 class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
@@ -252,35 +256,39 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
         transaction = Transaction.objects.get(id=self.kwargs.get('pk'))
         self.deleteTransactionFromTotal(request, transaction)
-        self.deleteTransactionFromCategory(request,transaction)
+        self.deleteTransactionFromCategory(request, transaction)
         transaction.delete()
         # add a response
         return Response()
 
     def deleteTransactionFromCategory(self, request, transaction):
-        categories = Categories.objects.get(author = self.request.user)
-        now_date = "{}{}".format(transaction.month,transaction.year)
+        categories = Categories.objects.get(author=self.request.user)
+        now_date = "{}{}".format(transaction.month, transaction.year)
         transCategory = transaction.category
         transAmount = transaction.amount
 
         if transaction.t_type == "Income":
             if transCategory in categories.income_categories:
-                categories.income_categories[transCategory] -= float(transAmount)
-                categories.income_categories_monthly[transCategory][now_date] -= float(transAmount)
+                categories.income_categories[transCategory] -= float(
+                    transAmount)
+                categories.income_categories_monthly[transCategory][now_date] -= float(
+                    transAmount)
                 if categories.income_categories_monthly[transCategory][now_date] == 0:
                     del categories.income_categories_monthly[transCategory][now_date]
 
         else:
             if transCategory in categories.expense_categories:
-                categories.expense_categories[transCategory] -= float(transAmount)
-                categories.expense_categories_monthly[transCategory][now_date] -= float(transAmount)
+                categories.expense_categories[transCategory] -= float(
+                    transAmount)
+                categories.expense_categories_monthly[transCategory][now_date] -= float(
+                    transAmount)
                 if categories.expense_categories_monthly[transCategory][now_date] == 0:
                     del categories.expense_categories_monthly[transCategory][now_date]
-        
+
         categories.save()
 
-
     # update a transaction. Updates total with regards to transaction updated.
+
     def update(self, request, *args, **kwargs):
         # update transaction
         self.updateTransactiontoTotal(request)
