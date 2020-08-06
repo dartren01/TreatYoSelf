@@ -138,13 +138,15 @@ class Category extends Component {
     }
 
     getBudgetAxios = () => {
+        
         axios.get("budget/category/get/", {headers: {
             "Content-Type": "application/json",
             "Authorization": `Token ${Cookies.get("token")}`
         }})
             .then(res => {
+                
                 this.setState({
-                    budget: res.data[0].expense_categories_budget[this.state.expense_budget_category]
+                    budget: res.data[0].expense_categories_budget[this.state.budget_category]
                 })
             })
     }
@@ -214,7 +216,7 @@ class Category extends Component {
                         expense_categories: res.data.expense_categories,
                         expense_categories_budget: res.data.expense_categories_budget,
                         expense_categories_monthly: res.data.expense_categories_monthly,
-                        
+
                         categories: res.data.expense_categories,
                         categories_budget: res.data.expense_categories_budget,
                         categories_monthly: res.data.expense_categories_monthly,
@@ -289,6 +291,7 @@ class Category extends Component {
                                             as="select"
                                             type = "budget_category"
                                             name = "budget_category"
+                                            value = {`${this.state.budget_category}`}
                                             onChange = {(e) => this.changebudgetCategory(e)}>
                                             {Object.keys(this.state.categories_budget).map((cat) => 
                                             <Fragment key = {cat}>

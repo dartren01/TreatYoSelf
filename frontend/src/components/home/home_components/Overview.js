@@ -32,22 +32,21 @@ class Overview extends Component {
             .then(res => {
                 let profileObj = res.data[0];
                 //figure out how to get monthly to object
-
                 let date = new Date();
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
-                let rep = profileObj.monthly_data.replace(/\'/g, "\"");
-                let monthData = JSON.parse(rep);
+                // let rep = profileObj.monthly_data.replace(/\'/g, "\"");
+                // let monthData = JSON.parse(rep);
 
                 this.setState({
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
                     totalSpent: profileObj.total_amount_spent,
                     totalGained: profileObj.total_amount_gained,
-                    monthlySpent: monthData[thisMonthYear]['monthly_spent'],
-                    monthlyGained: monthData[thisMonthYear]['monthly_gained'],
+                    monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
+                    monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
                     loading: false,
                 });
-                console.log(res.data)
+                //console.log(res.data)
             })
             .catch(err => {
                 console.log("total get error: " + err)

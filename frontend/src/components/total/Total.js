@@ -48,7 +48,7 @@ class Total extends Component {
         
         // Creates default categories when total is created
         const categoryObj = {
-            categories: this.state.categories
+            categories: ""
         }
         axios.post("budget/create/category/", categoryObj, header)
             .then(res => {

@@ -1,6 +1,6 @@
 from djongo import models
 from django.contrib.auth.models import User
-from jsonfield import JSONField
+import jsonfield
 
 # Create your models here.
 
@@ -27,7 +27,7 @@ class Profile(models.Model):
         }
     }
     '''
-    monthly_data = JSONField(null=True)
+    monthly_data = jsonfield.JSONField()
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)

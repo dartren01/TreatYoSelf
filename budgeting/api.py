@@ -264,16 +264,18 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
         transAmount = transaction.amount
 
         if transaction.t_type == "Income":
-            categories.income_categories[transCategory] -= float(transAmount)
-            categories.income_categories_monthly[transCategory][now_date] -= float(transAmount)
-            if categories.income_categories_monthly[transCategory][now_date] == 0:
-                del categories.income_categories_monthly[transCategory][now_date]
+            if transCategory in categories.income_categories:
+                categories.income_categories[transCategory] -= float(transAmount)
+                categories.income_categories_monthly[transCategory][now_date] -= float(transAmount)
+                if categories.income_categories_monthly[transCategory][now_date] == 0:
+                    del categories.income_categories_monthly[transCategory][now_date]
 
         else:
-            categories.expense_categories[transCategory] -= float(transAmount)
-            categories.expense_categories_monthly[transCategory][now_date] -= float(transAmount)
-            if categories.expense_categories_monthly[transCategory][now_date] == 0:
-                del categories.expense_categories_monthly[transCategory][now_date]
+            if transCategory in categories.expense_categories:
+                categories.expense_categories[transCategory] -= float(transAmount)
+                categories.expense_categories_monthly[transCategory][now_date] -= float(transAmount)
+                if categories.expense_categories_monthly[transCategory][now_date] == 0:
+                    del categories.expense_categories_monthly[transCategory][now_date]
         
         categories.save()
 
