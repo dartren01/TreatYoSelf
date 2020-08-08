@@ -12,12 +12,18 @@ class Update_Transaction extends Component {
             transactions: "",
             t_type: "",
             category: "",
+            prev_category: "",
             source: "",
             amount: "",
+            prev_amount: "",
             date: "",
+            prev_date: "",
             notes: "",
             id: "",
-            loading: true
+            loading: true,
+
+            expense_categories: {},
+            income_categories: {},
         }
 
     }
@@ -33,6 +39,7 @@ class Update_Transaction extends Component {
     componentDidMount = () => {
         console.log("Create transaction mount");
         // check authentication. currently it calls this after render
+        //THIS WILL GIVE AN ERROR WHEN THE USER REFRESHES
         try {
             if (this.props.isLoggedIn) {
                 console.log("Authorized");
@@ -55,18 +62,37 @@ class Update_Transaction extends Component {
                     transactions: res.data,
                     t_type: res.data.t_type,
                     category: res.data.category,
+                    prev_category: res.data.category,
                     source: res.data.source,
                     amount: res.data.amount,
+                    prev_amount:res.data.amount,
                     date: res.data.date_posted,
+                    prev_date: res.data.date_posted,
                     notes: res.data.notes,
                     id: this.props.location.state.transactionId,
                     loading: false
                 });
-                console.log(this.state.transactions);
             })
             .catch(err => {
                 console.log("transaction get error: " + err)
             })
+
+            //Get categories
+            axios.get( "budget/category/get/", {headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }})
+                .then(res => {
+                        this.setState({
+                            income_categories: res.data[0].income_categories,
+                            expense_categories: res.data[0].expense_categories,
+                        })
+                    
+                })
+                .catch(err => {
+                    console.log("Update Transaction, get Category Error " + err)
+                })
+
     };
 
     // calls a put to backend, sending updated info for transaction.
@@ -75,10 +101,14 @@ class Update_Transaction extends Component {
         console.log("Update transaction ", this.state.id);
         const transactionObj = {
             category: this.state.category,
+            prev_category: this.state.prev_category,
             source: this.state.source,
             amount: this.state.amount,
+            prev_amount: this.state.prev_amount,
             date_posted: this.state.date,
-            notes: this.state.notes
+            prev_date: this.state.prev_date,
+            notes: this.state.notes,
+            t_type: this.state.t_type
         };
         axios.put(`/budget/transaction/update/${this.state.id}`, transactionObj, {
             headers: {
@@ -124,8 +154,18 @@ class Update_Transaction extends Component {
 
                             <Form.Group controlId="formCategorySelect">
                                 <Form.Label>Category</Form.Label>
-                                <Form.Control as="select">
-                                    <option>figure this out</option>
+                                <Form.Control 
+                                        as="select"
+                                        name = "category"
+                                        value = {this.state.category}
+                                        onChange = {(e) => this.handleChange(e)}>
+                                    {this.state.t_type === "Income" ? 
+                                        Object.keys(this.state.income_categories).map((cat) =>
+                                        <option key = {cat}>{cat}</option>) :
+                                        Object.keys(this.state.expense_categories).map((cat) => 
+                                        <option key = {cat}>{cat}</option>)
+                                        }
+                                    
 
                                 </Form.Control>
                             </Form.Group>

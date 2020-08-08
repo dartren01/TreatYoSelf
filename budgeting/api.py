@@ -284,6 +284,7 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
     def update(self, request, *args, **kwargs):
         # update transaction
         self.updateTransactiontoTotal(request)
+        self.updateTransCategory(request)
         instance = self.get_object()
         serializer = self.get_serializer(
             instance, data=request.data)
@@ -385,7 +386,7 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
                 float(transaction.amount)
 
             # if the new date exists
-            if profile.monthly_data[newTransactionDate]:
+            if newTransactionDate in profile.monthly_data:
                 # get the expenses for that month year
                 prevGainNew = profile.monthly_data[newTransactionDate]["monthly_gained"]
                 # update monthly_spend for that month year with new amount
@@ -401,3 +402,61 @@ class TransactionGetUpdateDestroyViewSet(generics.RetrieveUpdateDestroyAPIView):
 
             profile.total_amount = round(profile.total_amount, 2)
             profile.save()
+
+    def updateTransCategory(self, request):
+        categories = Categories.objects.get(author = self.request.user)
+        transCategory = request.data.get("category")
+        prevCategory = request.data.get("prev_category")
+        amount = request.data.get("amount")
+        prev_amount = request.data.get("prev_amount")
+        t_type = request.data.get("t_type")
+
+        dateObj = datetime.strptime(
+            request.data.get("date_posted"), '%Y-%m-%d').date()
+        newDate = '{}{}'.format(dateObj.month, dateObj.year)
+
+        dateObj2 = datetime.strptime(
+            request.data.get("prev_date"), '%Y-%m-%d').date()
+        prevDate = '{}{}'.format(dateObj2.month, dateObj2.year)
+
+        #SWitch category based on type
+        currentCategory = categories.income_categories
+        currentCategoryMonthly = categories.income_categories_monthly
+        if t_type == "Expense":
+            currentCategory = categories.expense_categories
+            currentCategoryMonthly = categories.expense_categories_monthly
+            
+        #Updates income_categories with new amount
+        currentCategory[prevCategory] -= float(prev_amount)
+        currentCategory[transCategory] += float(amount)
+        
+        #Updates income_categories_monthly with new amount
+        currentCategoryMonthly[prevCategory][prevDate] -= float(prev_amount)
+
+        #Check if the newDate is the same as old Date.
+        if transCategory == prevCategory:
+            if newDate == prevDate:
+                currentCategoryMonthly[transCategory][newDate] += float(amount)
+            else:
+                if newDate in currentCategoryMonthly[transCategory]:
+                    currentCategoryMonthly[transCategory][newDate] += float(amount)
+                else:
+                    currentCategoryMonthly[transCategory][newDate] = float(amount)
+        else:
+            if newDate in currentCategoryMonthly:
+                currentCategoryMonthly[transCategory][newDate] += float(amount)
+            else:
+                currentCategoryMonthly[transCategory][newDate] = float(amount)
+                
+        
+        if currentCategoryMonthly[prevCategory][prevDate] == 0:
+            del currentCategoryMonthly[prevCategory][prevDate]
+        
+            
+        categories.save()
+
+
+
+
+
+
