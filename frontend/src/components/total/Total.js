@@ -18,7 +18,6 @@ class Total extends Component {
         this.setState({
             total_amount: e.target.value
         })
-        console.log(this.state.total_amount)
     }
 
     handleTotal = (e) => {
@@ -40,12 +39,11 @@ class Total extends Component {
         axios.post("api/total", totalBudget, header)
             .then(res => {
                 console.log(res)
-                this.props.history.push("/")
             })
             .catch(err => {
                 console.log("Budgeting Total Error ", err);
             })
-        
+
         // Creates default categories when total is created
         const categoryObj = {
             categories: ""
@@ -53,6 +51,7 @@ class Total extends Component {
         axios.post("budget/create/category/", categoryObj, header)
             .then(res => {
                 console.log("Category Added")
+                this.props.history.push("/")
             })
             .catch(err => {
                 console.log("Category post error: " + err)

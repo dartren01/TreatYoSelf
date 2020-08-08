@@ -1,6 +1,4 @@
 import React, { Component, Fragment } from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
 
 import Overview from "./home_components/Overview";
 import Landing from "./home_components/Landing";
