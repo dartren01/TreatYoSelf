@@ -12,6 +12,7 @@ class Recent_Transactions extends Component {
 
     componentDidMount = () => {
         console.log("recent transactions componentDidMount");
+        /*
         axios.get(`/budget/all_transactions`, {
             headers: {
                 "Content-Type": "application/json",
@@ -29,15 +30,18 @@ class Recent_Transactions extends Component {
                 console.log("transaction get error: " + err)
             })
         console.log(this.state.transactions);
+        */
     };
 
 
     render() {
         // have a separate page for transaction details?.
+        let recentFiveTransactions = this.props.transactions.slice(0, 5);
+
         return (
             <Fragment>
                 <ul className="list-group flex-column">
-                    {this.state.transactions.map((transaction) => (
+                    {recentFiveTransactions.map((transaction) => (
                         <Fragment key={transaction.id}>
                             <li className="list-group-item flex-grow-1 align-items-stretch">
                                 <div className="row">

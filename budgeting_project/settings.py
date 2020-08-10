@@ -95,8 +95,8 @@ DATABASES = {
         'ENGINE':   'djongo',
         'NAME':     'TreatYoSelf',
         'CLIENT': {
-            'host': "mongodb+srv://andrewyk:MyPassword123@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE",
-            # 'host': "mongodb+srv://burger:burgercheese@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority"
+            # 'host': "mongodb+srv://andrewyk:MyPassword123@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE",
+            'host': "mongodb+srv://burger:burgercheese@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority"
         },
     }
 }
