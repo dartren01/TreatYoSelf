@@ -1,0 +1,65 @@
+html, body
+{
+
+    font-family: Quicksand, "Helvetica Neue", sans-serif !important;    
+}
+
+#app
+{
+    color:#F5D281;
+}
+
+#row1
+{
+    margin-bottom: 3%;
+}
+
+#ovalBG
+{
+    position: absolute;
+    width: 48.5%;
+    top: 140%;
+    z-index: 2;
+}
+
+#smallOvalBG
+{
+    position: absolute;
+    width: 15%;
+    top: 181%;
+    margin-left: 75%;
+}
+
+#features-wrapper
+{
+    width:65%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    top: 5%;
+}
+.features-title
+{
+    top: 5%;
+    text-align: center;
+    color: white;
+    font-family: Quicksand;
+    font-size: 30px;
+    font-weight: 600;
+
+}
+
+.features-slogan
+{
+    text-align: center;
+    font-family: "Helvetica Neue", sans-serif !important;
+    color: white;
+    margin: 0;
+}
+.features-slogan-more
+{
+    text-align: center;
+    font-family: "Helvetica Neue", sans-serif !important;
+    color: white;
+    
+}

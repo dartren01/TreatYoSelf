@@ -1,0 +1,24 @@
+
+.mainSection {
+    background-color: white;
+    height: 135vh; 
+    position: relative;
+}
+
+.featuresSection{
+    background-color: #12A874;
+    height: 100vh;
+    box-shadow: 0 6px 10px -2px grey;
+    margin-bottom: 4%;
+}
+
+.howSection{
+    background-color: white;
+    height: 110vh;
+
+}
+
+.teamSection{
+    background-color: white;
+    height: 100vh;
+}

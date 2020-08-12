@@ -12,7 +12,8 @@ import axios from "axios";
 
 import './App.css';
 import Navbar from "./components/navbar/Navbar";
-import Home from "./components/home/Home";
+import Landing from "./components/home/home_components/Landing/Landing";
+import Overview from "./components/home/home_components/Overview/Overview";
 import Login from "./components/login/Login"
 import Register from "./components/register/Register"
 import Total from "./components/total/Total"
@@ -109,54 +110,78 @@ class App extends Component {
       <AlertProvider template={AlertTemplate} {...this.options}>
         <Router>
           {console.log("App Component Render")}
-          <Navbar
-            {...this.props}
-            isLoggedIn={this.state.isLoggedIn}
-            nextPath={this.nextPath}
-            deleteLogin={this.deleteLogin}
-          />
-          <div className="container">
-            <Switch>
-              <Route exact path="/" render={props => (
-                <Home {...props}
-                  username={this.state.username}
-                  isLoggedIn={this.state.isLoggedIn}
-                  checkLogin={this.checkLogin} />
-              )} />
-              <Route exact path="/budget/all_transactions" render={props => (
-                <All_Transactions {...props}
-                  username={this.state.username}
-                  isLoggedIn={this.state.isLoggedIn}
-                  checkLogin={this.checkLogin} />
-              )} />
-              <Route exact path="/budget/create" render={props => (
-                <Create_Transaction {...props}
-                  isLoggedIn={this.state.isLoggedIn} />
-              )} />
-              <Route exact path="/budget/update" render={props => (
-                <Update_Transaction {...props}
-                  isLoggedIn={this.state.isLoggedIn} />
-              )} />
-              <Route path="/register" render={props => (
-                <Register {...props}
-                  setLogin={this.setLogin}
-                />
-              )} />
-              <Route path="/login" render={props => (
-                <Login {...props}
-                  setLogin={this.setLogin}
-                />
-              )} />
-              <Route path="/total" render={props => (
-                <Total {...props}
-                />
-              )} />
-              <Route path="/category" render={props => (
-                <Category {...props}
-                />
-              )} />
-            </Switch>
-          </div>
+          {this.state.isLoggedIn === false ?
+            <React.Fragment>
+              <Switch>
+                <Route exact path="/" render={props => (
+                  <Landing />
+                )} />
+                <Route exact path="/register" render={props => (
+                  <Register {...props}
+                    setLogin={this.setLogin}
+                  />
+                )} />
+                <Route exact path="/login" render={props => (
+                  <Login {...props}
+                    setLogin={this.setLogin}
+                  />
+                )} />
+              </Switch>
+            </React.Fragment>
+            :
+            <React.Fragment>
+              <Navbar
+                {...this.props}
+                isLoggedIn={this.state.isLoggedIn}
+                nextPath={this.nextPath}
+                deleteLogin={this.deleteLogin}
+              />
+              {/* <div className="container"> */}
+              <Switch>
+                <Route exact path="/" render={props => (
+                  //   <Home {...props}
+                  //     username={this.state.username}
+                  //     isLoggedIn={this.state.isLoggedIn}
+                  //     checkLogin={this.checkLogin} />
+                  // )} />
+                  <Overview />)} />
+
+                <Route exact path="/budget/all_transactions" render={props => (
+                  <All_Transactions {...props}
+                    username={this.state.username}
+                    isLoggedIn={this.state.isLoggedIn}
+                    checkLogin={this.checkLogin} />
+                )} />
+                <Route exact path="/budget/create" render={props => (
+                  <Create_Transaction {...props}
+                    isLoggedIn={this.state.isLoggedIn} />
+                )} />
+                <Route exact path="/budget/update" render={props => (
+                  <Update_Transaction {...props}
+                    isLoggedIn={this.state.isLoggedIn} />
+                )} />
+                <Route path="/register" render={props => (
+                  <Register {...props}
+                    setLogin={this.setLogin}
+                  />
+                )} />
+                <Route path="/login" render={props => (
+                  <Login {...props}
+                    setLogin={this.setLogin}
+                  />
+                )} />
+                <Route path="/total" render={props => (
+                  <Total {...props}
+                  />
+                )} />
+                <Route path="/category" render={props => (
+                  <Category {...props}
+                  />
+                )} />
+              </Switch>
+              {/* </div> */}
+            </React.Fragment>
+          }
         </Router>
       </AlertProvider>
 

@@ -1,0 +1,68 @@
+#teamBG {
+    width: 100%;
+    position: absolute;
+    top: 350%;
+}
+
+#row21 {
+    margin-bottom: 1%;
+}
+#row22 {
+    
+}
+
+#team-wrapper
+{
+    width:80%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+    top: 7%;
+}
+.team-title
+{
+    text-align: left;
+    color: white;
+    font-family: Quicksand;
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 32%;
+
+}
+
+.team-slogan
+{
+    text-align: left;
+    font-family: "Helvetica Neue", sans-serif !important;
+    color: white;
+    /* margin-right: 5%; */
+    margin-left: 32%;
+}
+
+#colQuestion {
+    margin-top: 10%;
+}
+.team-question
+{
+    text-align: center;
+    color: white;
+    font-family: Quicksand;
+    font-size: 22px;
+    font-weight: 600;
+    /* margin-right: 32%; */
+}
+
+.team-contact
+{
+    text-align: center;
+    color: white;
+    font-family: Source Sans Pro    ;
+    font-size: 14px;
+    font-weight: 400;
+    /* margin-right: 32%; */
+}
+
+.team-contact-us
+{
+
+}
