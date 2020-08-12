@@ -20,9 +20,9 @@ class Features extends Component {
                 <img src={ovalIMG} id="ovalBG"></img>
                 <img src={smallOvalIMG} id="smallOvalBG"></img>
                 <div id="features-wrapper">
-                    <p class="features-title"><span id="app">App </span>Features</p>
-                    <p class="features-slogan">Everything you wished were in your banking app</p>
-                    <p class="features-slogan-more">...and more</p>
+                    <p className="features-title">App Features</p>
+                    <p className="features-slogan">Everything you wished were in your banking app</p>
+                    <p className="features-slogan-more">...and more</p>
                     <div className="row" id="row1">
                         <div className="col-md-4">
                             <Card

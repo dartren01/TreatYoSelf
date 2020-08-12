@@ -32,7 +32,7 @@ class Team extends Component {
                         <div className="col-md-4" id="colQuestion">
                             <h2 className="team-question"> Have a Question?</h2>
                             <p className="team-contact">In case you have any questions,  concerns, or business inquiries about Treat Yo’ Self,
-                                <Link className="team-contact-us"> contact us</Link> and we would be happy to help. </p>
+                                <Link to="" className="team-contact-us"> contact us</Link> and we would be happy to help. </p>
                         </div>
                         <div className="col-md-4.5">
                             <Card2

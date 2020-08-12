@@ -60,33 +60,33 @@ class Overview extends Component {
     render() {
 
         let totalText;
-        if (this.state.loading) {
-            totalText = <h1>Loading</h1>;
-        } else {
-            totalText =
-                <div>
-                    <h1>
-                        Current Balance
+        // if (this.state.loading) {
+        //     totalText = <h1>Loading</h1>;
+        // } else {
+        totalText =
+            <div>
+                <h1>
+                    Current Balance
                             </h1>
-                    <br />
-                    <h2>
-                        ${this.state.totalAmount}
-                    </h2>
-                    <br />
-                    <p>
-                        Total spent: ${this.state.totalSpent}
-                    </p>
-                    <p>
-                        Total gained: ${this.state.totalGained}
-                    </p>
-                    <p>
-                        Monthly spent: ${this.state.monthlySpent}
-                    </p>
-                    <p>
-                        Monthy gained: ${this.state.monthlyGained}
-                    </p>
-                </div>;
-        }
+                <br />
+                <h2>
+                    ${this.state.totalAmount}
+                </h2>
+                <br />
+                <p>
+                    Total spent: ${this.state.totalSpent}
+                </p>
+                <p>
+                    Total gained: ${this.state.totalGained}
+                </p>
+                <p>
+                    Monthly spent: ${this.state.monthlySpent}
+                </p>
+                <p>
+                    Monthy gained: ${this.state.monthlyGained}
+                </p>
+            </div>;
+        // }
 
         return (
             <div>

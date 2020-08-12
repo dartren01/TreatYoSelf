@@ -28,9 +28,9 @@ class HowItWorks extends Component {
                 <img src={step4IMG} id="step4BG"></img>
 
                 <div className="how-wrapper">
-                    <p class="how-title"><span id="how">How </span>It Works</p>
-                    <p class="how-slogan"> Don't take out your calculator. We do the organization and data analysis for you, so you have more time to focus on yo'self. Follow these simple steps to get started. </p>
-                    <React.Fragment id="step1and2">
+                    <p className="how-title">How It Works</p>
+                    <p className="how-slogan"> Don't take out your calculator. We do the organization and data analysis for you, so you have more time to focus on yo'self. Follow these simple steps to get started. </p>
+                    <div id="step1and2">
                         <div className="row" id="howRow1">
                             <div className="col-md-6">
                                 <div className="card zero text-center">
@@ -72,7 +72,7 @@ class HowItWorks extends Component {
                                             </svg>
                                         </div>
                                         <h4 className="card-title">1. Create Personalized Transaction Categories</h4>
-                                        <Link className="card-text">Learn More </Link>
+                                        <Link to="" className="card-text">Learn More </Link>
                                         <img src={arrowIMG} className="arrow"></img>
                                     </div>
                                 </div>
@@ -112,14 +112,14 @@ class HowItWorks extends Component {
                                             </svg>
                                         </div>
                                         <h4 className="card-title">2. Add Daily Transactions and Schedule Payments</h4>
-                                        <Link className="card-text">Learn More </Link>
+                                        <Link to="" className="card-text">Learn More </Link>
                                         <img src={arrowIMG} className="arrow"></img>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </React.Fragment>
-                    <React.Fragment id="step3and4">
+                    </div>
+                    <div id="step3and4">
                         <div className="row" id="howRow2">
                             <div className="col-md-6">
                                 <div className="card zero text-center">
@@ -213,7 +213,7 @@ class HowItWorks extends Component {
                                             </svg>
                                         </div>
                                         <h4 className="card-title">3. Set and Meet Spending and Income Goals</h4>
-                                        <Link className="card-text">Learn More </Link>
+                                        <Link to="" className="card-text">Learn More </Link>
                                         <img src={arrowIMG} className="arrow"></img>
                                     </div>
                                 </div>
@@ -254,13 +254,13 @@ class HowItWorks extends Component {
 
                                         </div>
                                         <h4 className="card-title">4. Treat Yo’ Self for Exceeding Your Financial Goals</h4>
-                                        <Link className="card-text" id="yellowLearn">Learn More </Link>
+                                        <Link to="" className="card-text" id="yellowLearn">Learn More </Link>
                                         <img src={yArrowIMG} className="yArrow"></img>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </React.Fragment>
+                    </div>
 
                 </div>
             </div >

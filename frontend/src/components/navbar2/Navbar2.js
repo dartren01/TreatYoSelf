@@ -86,7 +86,7 @@ class Navbar2 extends Component {
                 <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div className="collapse navbar-collapse" id="navbarNav">
                     <div className="navContainer">
                         {midNavbar}
                         <Link to="/login">
