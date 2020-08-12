@@ -285,7 +285,7 @@ class Category extends Component {
                                 onChange={(e) => this.handleChange(e)} />
                         </Form.Group>
                         <Button className="categoryButton"
-                            variant="outline-secondary"
+                            variant="outline-primary"
                             onClick={(e) => this.handleAddCategory(e)}>
                             Add
                     </Button>
@@ -349,7 +349,7 @@ class Category extends Component {
 
                         <Button
                             className="categoryButton"
-                            variant="outline-secondary"
+                            variant="outline-danger"
                             onClick={(e) => this.handleDeleteCategory(e)}>
                             Delete
                         </Button>
