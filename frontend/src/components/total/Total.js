@@ -69,7 +69,7 @@ class Total extends Component {
                     </legend>
                     <div className="form-group">
                         <label>
-                            Initial Balance*
+                            Initial Balance
                         </label>
                         <input type="number" name="total" className="numberinput form-control"
                             placeholder="Total Amount" onChange={(e) => this.totalChange(e)} />

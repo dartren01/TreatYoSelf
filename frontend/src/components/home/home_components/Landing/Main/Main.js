@@ -33,7 +33,7 @@ class Main extends Component {
                     <div className="row" id="mainRow2">
                         <div className="col-md-6"></div>
                         <div className="col-md-6">
-                            <p className="promo2-title">You are in control of your finances.</p>
+                            <p className="promo2-title"><span id="you">You </span>are in control of your finances.</p>
                             <p className="promo2-slogan">Time to say goodbye to cluttered receipts and hello to secure virtual transactions.
                              Our beautiful UI will allow you to keep track of your transactions and finally acheive your financial goals.</p>
                         </div>
