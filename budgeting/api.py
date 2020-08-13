@@ -123,7 +123,7 @@ class AllTransactionViewSet(generics.ListAPIView):
             raise Exception("Unauthorized Access")
         # queryset = Transaction.objects.filter(author=user)
         queryset = Transaction.objects.filter(author=user)
-        return queryset.order_by('date_posted')
+        return queryset.order_by('-date_posted')
 
 
 class TransactionCreateViewSet(generics.CreateAPIView):
