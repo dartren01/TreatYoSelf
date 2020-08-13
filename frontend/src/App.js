@@ -144,7 +144,10 @@ class App extends Component {
                   //     isLoggedIn={this.state.isLoggedIn}
                   //     checkLogin={this.checkLogin} />
                   // )} />
-                  <Overview />)} />
+                  <Overview {...props}
+                    username={this.state.username}
+                    isLoggedIn={this.state.isLoggedIn}
+                    checkLogin={this.checkLogin} />)} />
 
                 <Route exact path="/budget/all_transactions" render={props => (
                   <All_Transactions {...props}

@@ -4,8 +4,8 @@ import axios from "axios";
 import { Doughnut, Bar } from 'react-chartjs-2';
 import * as d3 from "d3";
 
-import Recent_Transactions from "../../recent_transactions/Recent_Transactions";
-import { interpolateColors } from "../../../static/color_generator";
+import Recent_Transactions from "../../../recent_transactions/Recent_Transactions";
+import { interpolateColors } from "../../../../static/color_generator";
 
 
 class Overview extends Component {
@@ -171,7 +171,7 @@ class Overview extends Component {
                 totalCatIncome += incomeCategories[key][currentMonthYear];
             }
         }
-        if(totalCatIncome < this.state.monthlyGained){
+        if (totalCatIncome < this.state.monthlyGained) {
             incomeDataset.push(this.state.monthlyGained - totalCatIncome);
             incomeLabels.push("Unassigned Category Transactions");
         }
@@ -184,7 +184,7 @@ class Overview extends Component {
                 totalCatExpense += expenseCategories[key][currentMonthYear];
             }
         }
-        if(totalCatExpense < this.state.monthlySpent){
+        if (totalCatExpense < this.state.monthlySpent) {
             incomeDataset.push(this.state.monthlySpent - totalCatExpense);
             incomeLabels.push("Unassigned Category Transactions");
         }
@@ -321,35 +321,6 @@ class Overview extends Component {
 
     render() {
         let totalText;
-<<<<<<< HEAD
-        // if (this.state.loading) {
-        //     totalText = <h1>Loading</h1>;
-        // } else {
-        totalText =
-            <div>
-                <h1>
-                    Current Balance
-                            </h1>
-                <br />
-                <h2>
-                    ${this.state.totalAmount}
-                </h2>
-                <br />
-                <p>
-                    Total spent: ${this.state.totalSpent}
-                </p>
-                <p>
-                    Total gained: ${this.state.totalGained}
-                </p>
-                <p>
-                    Monthly spent: ${this.state.monthlySpent}
-                </p>
-                <p>
-                    Monthy gained: ${this.state.monthlyGained}
-                </p>
-            </div>;
-        // }
-=======
         let incomeData = {}, incomeOptions, expenseData = {}, expenseOptions;
         let expenseBarData = {}, expenseBudgetOptions;
         if (this.state.loading) {
@@ -364,7 +335,7 @@ class Overview extends Component {
                     <h2>
                         ${this.state.totalAmount}
                     </h2>
-                    <br/>
+                    <br />
                 </div>;
 
 
@@ -372,7 +343,6 @@ class Overview extends Component {
             this.chartTextSet();
             [expenseBarData, expenseBudgetOptions] = this.createBarChart();
         }
->>>>>>> f720ec4c38404d19164bd13d39a5d1524b3aa3f3
 
 
 
@@ -393,10 +363,10 @@ class Overview extends Component {
                         <h2>Budgeting Vs Spending</h2>
                         <div>
                             <Bar
-                            data={expenseBarData}
-                            width={300}
-                            height={200}
-                            options={expenseBudgetOptions}/>
+                                data={expenseBarData}
+                                width={300}
+                                height={200}
+                                options={expenseBudgetOptions} />
                         </div>
                         <table>
                             <tbody>
