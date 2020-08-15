@@ -11,6 +11,8 @@ class Register extends Component {
         super(props)
 
         this.state = {
+            firstname: "",
+            lastname:"",
             username: "",
             email: "",
             password: "",
@@ -37,6 +39,8 @@ class Register extends Component {
             })
         } else {
             const registerUser = {
+                first_name: this.state.firstname,
+                last_name: this.state.lastname,
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password,
@@ -67,7 +71,28 @@ class Register extends Component {
         return (
             <div>
                 {console.log("Register Render")}
+                <Form>
+                    <Form.Group className = "form-group name1 col-sm-6" controlId="formFirstName">
+                        <Form.Label>First Name</Form.Label>
+                        <Form.Control
+                            type="firstname"
+                            name="firstname"
+                            placeholder="First Name"
+                            onChange={(e) => this.handleChange(e)} />
+                    </Form.Group>
+                
+
+                    <Form.Group className = "form-group name2 col-sm-6" controlId="formLastName">
+                        <Form.Label>Last Name</Form.Label>
+                        <Form.Control
+                            type="lastname"
+                            name="lastname"
+                            placeholder="Last Name"
+                            onChange={(e) => this.handleChange(e)} />
+                    </Form.Group>
+                </Form>
                 <Form className="col-sm-8">
+        
                     <Form.Group controlId="formBasicName">
                         <Form.Label>Username</Form.Label>
                         <Form.Control
