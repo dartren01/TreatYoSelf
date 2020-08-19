@@ -89,6 +89,10 @@ class App extends Component {
             loadPage: true
           })
         })
+    } else {
+      this.setState({
+        loadPage: true
+      })
     }
   };
 
@@ -103,9 +107,9 @@ class App extends Component {
 
     // fix this, when reload page, component did mount does not get called
     // so the page stays blank
-    // if (!this.state.loadPage) {
-    //   return <div></div>
-    // }
+    if (!this.state.loadPage) {
+      return <div>Loading . . .</div>
+    }
 
     return (
       <AlertProvider template={AlertTemplate} {...this.options}>
@@ -140,14 +144,11 @@ class App extends Component {
               {/* <div className="container"> */}
               <Switch>
                 <Route exact path="/" render={props => (
-                  //   <Home {...props}
-                  //     username={this.state.username}
-                  //     isLoggedIn={this.state.isLoggedIn}
-                  //     checkLogin={this.checkLogin} />
-                  // )} />
-                  <Overview {...props}/>
-                )} />
-
+                  <Overview {...props}
+                    username={this.state.username}
+                    isLoggedIn={this.state.isLoggedIn}
+                    checkLogin={this.checkLogin} />
+                  )} />
                 <Route exact path="/budget/all_transactions" render={props => (
                   <All_Transactions {...props}/>
                 )} />

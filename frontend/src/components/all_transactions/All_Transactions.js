@@ -4,13 +4,18 @@ import Cookies from "js-cookie"
 import axios from "axios";
 import { withAlert } from 'react-alert';
 
+import Transaction from './Transaction';
+import Pagination from './Pagination';
+
 class All_Transactions extends Component {
     constructor(props) {
         super(props);
         this.state = {
             transactions: [],
             showSuccessDeleteAlert: false,
-            loading: true
+            loading: true,
+            currentPage: 1,
+            transactionsPerPage: 6
         }
     }
 
@@ -70,58 +75,42 @@ class All_Transactions extends Component {
         })
     }
 
+    // Pagination Functions
+    paginate = (pageNum) => this.setState({currentPage: pageNum});
+    nextPage = () => this.setState({currentPage: this.state.currentPage + 1});
+    prevPage = () => this.setState({currentPage: this.state.currentPage - 1});
+
 
     render() {
         // have a separate page for transaction details?.
+
+        const indexOfLastPost = this.state.currentPage * this.state.transactionsPerPage;
+        const indexOfFirstPost = indexOfLastPost - this.state.transactionsPerPage;
+        const currentTransactions = this.state.transactions.slice(indexOfFirstPost, indexOfLastPost);
+        
         return (
             <div>
                 <h1>
-                    Transaction Page
+                    All Transactions Page
                 </h1>
                 {this.state.loading === true ?
                     <h1>
-                        Loading . . .
+                        Loading Transactions . . .
                     </h1> :
                     <div>
-                        <ul className="list-group flex-column ">
-                            {this.state.transactions.map((transaction) => (
-                                <Fragment key={transaction.id}>
-                                    <li className="list-group-item flex-grow-1 align-items-stretch">
-                                        <div className="row">
-                                            <div className="col-sm">
-                                                <h1>{transaction.source}</h1>
-                                            </div>
-                                            <div className="col-sm text-center">
-                                                <h1>{transaction.category}</h1>
-                                            </div>
-                                            <div className="col-sm text-right">
-                                                {transaction.t_type === "Expense" ?
-                                                    <h1 style={{ color: "red" }}>-${transaction.amount}</h1>
-                                                    :
-                                                    <h1 style={{ color: "limegreen" }}>+${transaction.amount}</h1>}
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-sm text-black-50">
-                                                {transaction.date_posted}
-                                            </div>
-                                            <div className="col-sm text-right text-black-50">
-                                                {transaction.t_type}
-                                            </div>
-                                        </div>
-                                        <div className="row pt-2">
-                                            <div className="col-lg text-black-50 text-wrap">
-                                                {transaction.notes}
-                                            </div>
-                                            <div>
-                                                <button onClick={() => this.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>
-                                                <button onClick={() => this.handleDelete(transaction.id)} className="btn btn-danger">Delete</button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </Fragment>
-                            ))}
-                        </ul>
+                        <Transaction 
+                        curTrans={currentTransactions}
+                        handleDelete={this.handleDelete}
+                        handleUpdateRedirect={this.handleUpdateRedirect}/>
+
+                        <Pagination 
+                        transactionsPerPage={this.state.transactionsPerPage}
+                        totalTransactions={this.state.transactions.length}
+                        currentPage={this.state.currentPage}
+                        paginate={this.paginate}
+                        nextPage={this.nextPage}
+                        prevPage={this.prevPage}/>
+                    
                     </div>}
             </div>
         )
