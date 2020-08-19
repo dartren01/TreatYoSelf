@@ -7,6 +7,7 @@ import AlertTemplate from 'react-alert-template-basic';
 
 // Using HashRouter so reloading don't look into backend
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import {Portal} from "react-portal";
 import Cookies from "js-cookie"
 import axios from "axios";
 
@@ -144,35 +145,34 @@ class App extends Component {
                   //     isLoggedIn={this.state.isLoggedIn}
                   //     checkLogin={this.checkLogin} />
                   // )} />
-                  <Overview {...props}
-                    username={this.state.username}
-                    isLoggedIn={this.state.isLoggedIn}
-                    checkLogin={this.checkLogin} />)} />
+                  <Overview {...props}/>
+                )} />
 
                 <Route exact path="/budget/all_transactions" render={props => (
-                  <All_Transactions {...props}
-                    username={this.state.username}
-                    isLoggedIn={this.state.isLoggedIn}
-                    checkLogin={this.checkLogin} />
+                  <All_Transactions {...props}/>
                 )} />
+
                 <Route exact path="/budget/create" render={props => (
-                  <Create_Transaction {...props}
-                    isLoggedIn={this.state.isLoggedIn} />
+                  <Create_Transaction {...props}/>
                 )} />
+
                 <Route exact path="/budget/update" render={props => (
                   <Update_Transaction {...props}
                     isLoggedIn={this.state.isLoggedIn} />
                 )} />
+
                 <Route path="/register" render={props => (
                   <Register {...props}
                     setLogin={this.setLogin}
                   />
                 )} />
+
                 <Route path="/login" render={props => (
                   <Login {...props}
                     setLogin={this.setLogin}
                   />
                 )} />
+
                 <Route path="/total" render={props => (
                   <Total {...props}
                   />

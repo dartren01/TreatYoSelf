@@ -20,7 +20,6 @@ class Overview extends Component {
             categoryObj: "",
             monthYearDate: "",
             loading: true,
-            isLoggedIn: false
         }
         this.canvas = React.createRef();
 
@@ -171,8 +170,7 @@ class Overview extends Component {
             <div className="container">
                 <div className="row">
                     <h1>
-                        {console.log("Home Render")}
-                        {console.log(this.props.username)}
+                        {console.log("Overview Render")}
                         Monthly Overview
                     </h1>
                 </div>

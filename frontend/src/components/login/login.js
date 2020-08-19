@@ -4,7 +4,10 @@ import {Link} from "react-router-dom"
 import Cookies from "js-cookie"
 import axios from "axios";
 
+import Navbar2 from "../navbar2/Navbar2"
 import Register from "../register/Register"
+
+import "./login.css"
 
 
 class Login extends Component{
@@ -54,37 +57,39 @@ class Login extends Component{
     render(){
         return(
             <div>
-                <Form className =  "col-sm-8">
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control 
-                            type="name" 
-                            name = "username"
-                            placeholder="username"
-                            onChange = {(e) => this.handleChange(e)} />
-                    </Form.Group>
-                
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control 
-                            type="password"
-                            name = "password" 
-                            placeholder="Password"
-                            onChange = {(e) => this.handleChange(e)} />
+                <Navbar2 />
+                <div className = "loginPage">
+                    <Form className =  "forms col-sm-8">
+                        <Form.Group controlId="formBasicName">
+                            {/* <Form.Label>Username</Form.Label> */}
+                            <Form.Control 
+                                type="name" 
+                                name = "username"
+                                placeholder="Username"
+                                onChange = {(e) => this.handleChange(e)} />
                         </Form.Group>
+                    
+                        <Form.Group controlId="formBasicPassword">
+                            {/* <Form.Label>Password</Form.Label> */}
+                            <Form.Control 
+                                type="password"
+                                name = "password" 
+                                placeholder="Password"
+                                onChange = {(e) => this.handleChange(e)} />
+                            </Form.Group>
 
-                    <Button 
-                        variant="outline-secondary"
-                        onClick = {(e) => this.handleLogin(e)}>
-                        Login
-                    </Button>
-                    <p>
-                        Register here <Link to = "/register">Register</Link>
-                        <br/>
-                        {this.state.loginCheck}
-                    </p>
+                        <Button 
+                            variant="outline-secondary"
+                            onClick = {(e) => this.handleLogin(e)}>
+                            Login
+                        </Button>
+                        <p>
+                            <Link to = "/register">Register here</Link>
+                            <br/>
+                        </p>
 
-                </Form>
+                    </Form>
+                </div>
             </div>
         )
     }
