@@ -7,6 +7,7 @@ import AlertTemplate from 'react-alert-template-basic';
 
 // Using HashRouter so reloading don't look into backend
 import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { Portal } from "react-portal";
 import Cookies from "js-cookie"
 import axios from "axios";
 
@@ -89,6 +90,10 @@ class App extends Component {
             isLoggedIn: false
           })
         })
+    } else {
+      this.setState({
+        loadPage: true
+      })
     }
   };
 
@@ -101,15 +106,20 @@ class App extends Component {
   // Maybe we can use private routes
   render() {
 
+
     // fix this, when reload page, component did mount does not get called
     // so the page stays blank
-    // if (!this.state.loadPage) {
-    //   return <div></div>
-    // }
+    if (!this.state.loadPage) {
+      return <div>Loading . . .</div>
+    }
 
     return (
       <AlertProvider template={AlertTemplate} {...this.options}>
         <Router>
+          <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
           {console.log("App Component Render")}
           {this.state.isLoggedIn === false ?
             <React.Fragment>
@@ -140,40 +150,36 @@ class App extends Component {
               {/* <div className="container"> */}
               <Switch>
                 <Route exact path="/" render={props => (
-                  //   <Home {...props}
-                  //     username={this.state.username}
-                  //     isLoggedIn={this.state.isLoggedIn}
-                  //     checkLogin={this.checkLogin} />
-                  // )} />
                   <Overview {...props}
-                    username={this.state.username}
-                    isLoggedIn={this.state.isLoggedIn}
-                    checkLogin={this.checkLogin} />)} />
-
-                <Route exact path="/budget/all_transactions" render={props => (
-                  <All_Transactions {...props}
                     username={this.state.username}
                     isLoggedIn={this.state.isLoggedIn}
                     checkLogin={this.checkLogin} />
                 )} />
-                <Route exact path="/budget/create" render={props => (
-                  <Create_Transaction {...props}
-                    isLoggedIn={this.state.isLoggedIn} />
+                <Route exact path="/budget/all_transactions" render={props => (
+                  <All_Transactions {...props} />
                 )} />
+
+                <Route exact path="/budget/create" render={props => (
+                  <Create_Transaction {...props} />
+                )} />
+
                 <Route exact path="/budget/update" render={props => (
                   <Update_Transaction {...props}
                     isLoggedIn={this.state.isLoggedIn} />
                 )} />
+
                 <Route path="/register" render={props => (
                   <Register {...props}
                     setLogin={this.setLogin}
                   />
                 )} />
+
                 <Route path="/login" render={props => (
                   <Login {...props}
                     setLogin={this.setLogin}
                   />
                 )} />
+
                 <Route path="/total" render={props => (
                   <Total {...props}
                   />

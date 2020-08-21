@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-import { Doughnut, Bar } from 'react-chartjs-2';
-import * as d3 from "d3";
 
 import Recent_Transactions from "../../../recent_transactions/Recent_Transactions";
-import { interpolateColors } from "../../../../static/color_generator";
+import DoughnutChart from "../../../charts/DoughnutChart";
+import BarChart from "../../../charts/BarChart";
+import LineChart from "../../../charts/LineChart"
 
 
 class Overview extends Component {
@@ -14,14 +14,12 @@ class Overview extends Component {
         this.state = {
             totalObject: "",
             totalAmount: "",
-            totalSpent: "",
-            totalGained: "",
             monthlySpent: "",
             monthlyGained: "",
             transactions: [],
             categoryObj: "",
+            monthYearDate: "",
             loading: true,
-            isLoggedIn: false
         }
         this.canvas = React.createRef();
 
@@ -42,14 +40,13 @@ class Overview extends Component {
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
                 //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
                 //let monthData = JSON.parse(profileObj.monthly_data);
-
+                console.log(profileObj)
                 this.setState({
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
-                    totalSpent: profileObj.total_amount_spent,
-                    totalGained: profileObj.total_amount_gained,
                     monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
                     monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
+                    monthYearDate: parseInt(thisMonthYear)
                 });
             })
             .catch(err => {
@@ -96,180 +93,10 @@ class Overview extends Component {
             })
     };
 
-    // Create CHARTS
-
-    createBarChart = () => {
-        let date = new Date();
-        let currentMonthYear = parseInt(`${date.getMonth() + 1}${date.getFullYear()}`);
-
-        let expenseCatBudget = this.state.categoryObj.expense_categories_budget;
-        let expenseCatSpending = this.state.categoryObj.expense_categories_monthly;
-
-        let expenseBudgetLabels = Object.keys(expenseCatBudget);
-        let expenseBudgets = Object.values(expenseCatBudget);
-
-        let expenseSpending = [];
-        for (let key in expenseCatSpending) {
-            if (expenseCatSpending[key].hasOwnProperty(currentMonthYear)) {
-                expenseSpending.push(expenseCatSpending[key][currentMonthYear]);
-            }
-            else {
-                expenseSpending.push(0);
-            }
-        }
-
-
-        let expenseBarData = {
-            datasets: [{
-                data: expenseBudgets,
-                backgroundColor: "green",
-                label: 'budget'
-            }, {
-                data: expenseSpending,
-                backgroundColor: "red",
-                label: 'spending'
-            }],
-            labels: expenseBudgetLabels,
-            borderWidth: 1,
-        }
-        let barOptions = {
-            legend: {
-                display: false
-            },
-            maintainAspectRatio: false,
-            aspectRatio: 2.5,
-            responsive: true,
-            title: {
-                display: true,
-                text: "Budget Vs Spending"
-            }
-        }
-
-        return ([
-            expenseBarData,
-            barOptions
-        ])
-    }
-
-    createDonutChart = () => {
-        let date = new Date();
-        let currentMonthYear = parseInt(`${date.getMonth() + 1}${date.getFullYear()}`);
-
-        let incomeCategories = this.state.categoryObj.income_categories_monthly;
-        let expenseCategories = this.state.categoryObj.expense_categories_monthly;
-
-        let incomeDataset = [];
-        let incomeLabels = [];
-        let expenseDataset = [];
-        let expenseLabel = [];
-
-        let totalCatIncome = 0;
-        for (let key in incomeCategories) {
-            if (incomeCategories[key].hasOwnProperty(currentMonthYear)) {
-                incomeDataset.push(incomeCategories[key][currentMonthYear]);
-                incomeLabels.push(key);
-                totalCatIncome += incomeCategories[key][currentMonthYear];
-            }
-        }
-        if (totalCatIncome < this.state.monthlyGained) {
-            incomeDataset.push(this.state.monthlyGained - totalCatIncome);
-            incomeLabels.push("Unassigned Category Transactions");
-        }
-
-        let totalCatExpense = 0;
-        for (let key in expenseCategories) {
-            if (expenseCategories[key].hasOwnProperty(currentMonthYear)) {
-                expenseDataset.push(expenseCategories[key][currentMonthYear]);
-                expenseLabel.push(key);
-                totalCatExpense += expenseCategories[key][currentMonthYear];
-            }
-        }
-        if (totalCatExpense < this.state.monthlySpent) {
-            incomeDataset.push(this.state.monthlySpent - totalCatExpense);
-            incomeLabels.push("Unassigned Category Transactions");
-        }
-
-        /*
-         * FOR INCOME
-         */
-
-        const colorScaleIncome = d3.interpolateGreens;
-        let dataLengthIncome = incomeDataset.length;
-        const colorRangeInfo = {
-            colorStart: 0.3,
-            colorEnd: 1,
-            useEndAsStart: false,
-        };
-        let COLORSINCOME = interpolateColors(dataLengthIncome, colorScaleIncome, colorRangeInfo);
-
-        let incomeData = {
-            datasets: [{
-                data: incomeDataset,
-                backgroundColor: COLORSINCOME,
-                label: 'Income'
-            }],
-            labels: incomeLabels,
-            borderWidth: 1,
-        }
-        let incomeOptions = {
-            legend: {
-                display: false
-            },
-            maintainAspectRatio: false,
-            aspectRatio: 2.5,
-            cutoutPercentage: 70,
-            responsive: true,
-            title: "This Month Income",
-            amount: `$${this.state.monthlyGained}`
-        }
-
-        /**
-         * FOR EXPENSE
-         */
-
-        const colorScaleExpense = d3.interpolateReds;
-        let dataLengthExpense = expenseDataset.length;
-        const colorRangeInfo2 = {
-            colorStart: 0.3,
-            colorEnd: 1,
-            useEndAsStart: false,
-        };
-        let COLORSEXPENSE = interpolateColors(dataLengthExpense, colorScaleExpense, colorRangeInfo2);
-
-        let expenseData = {
-            datasets: [{
-                data: expenseDataset,
-                backgroundColor: COLORSEXPENSE,
-                label: 'Expense'
-            }],
-            labels: expenseLabel,
-            borderWidth: 1,
-        }
-        let expenseOptions = {
-            legend: {
-                display: false
-            },
-            maintainAspectRatio: false,
-            aspectRatio: 2.5,
-            cutoutPercentage: 70,
-            responsive: true,
-            title: "This Month Expense",
-            amount: `$${this.state.monthlySpent}`
-        }
-
-
-        return ([
-            incomeData,
-            incomeOptions,
-            expenseData,
-            expenseOptions
-        ])
-    }
-
     chartTextSet = () => {
         Chart.pluginService.register({
             beforeDraw: function (chart) {
-                if (chart.config.type === "bar") {
+                if (chart.config.type !== "doughnut") {
                     return;
                 }
                 let width = chart.chart.width,
@@ -321,8 +148,6 @@ class Overview extends Component {
 
     render() {
         let totalText;
-        let incomeData = {}, incomeOptions, expenseData = {}, expenseOptions;
-        let expenseBarData = {}, expenseBudgetOptions;
         if (this.state.loading) {
             totalText = <h1>Loading</h1>;
         } else {
@@ -338,20 +163,14 @@ class Overview extends Component {
                     <br />
                 </div>;
 
-
-            [incomeData, incomeOptions, expenseData, expenseOptions] = this.createDonutChart();
             this.chartTextSet();
-            [expenseBarData, expenseBudgetOptions] = this.createBarChart();
         }
 
-
-
         return (
-            <div>
+            <div className="container">
                 <div className="row">
                     <h1>
-                        {console.log("Home Render")}
-                        {console.log(this.props.username)}
+                        {console.log("Overview Render")}
                         Monthly Overview
                     </h1>
                 </div>
@@ -360,34 +179,12 @@ class Overview extends Component {
                 </div>
                 <div className="row">
                     <div>
+                        <LineChart {...this.state}/>
                         <h2>Budgeting Vs Spending</h2>
                         <div>
-                            <Bar
-                                data={expenseBarData}
-                                width={300}
-                                height={200}
-                                options={expenseBudgetOptions} />
+                            <BarChart {...this.state}/>
                         </div>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <Doughnut
-                                            data={incomeData}
-                                            width={350}
-                                            height={350}
-                                            options={incomeOptions} />
-                                    </td>
-                                    <td>
-                                        <Doughnut
-                                            data={expenseData}
-                                            width={350}
-                                            height={350}
-                                            options={expenseOptions} />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <DoughnutChart {...this.state}/>
                     </div>
                 </div>
                 <div className="row">

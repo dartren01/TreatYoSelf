@@ -4,6 +4,9 @@ import { Link } from "react-router-dom"
 import axios from "axios"
 import Cookies from "js-cookie"
 
+import "./Register.css"
+
+import Navbar2 from "../navbar2/Navbar2"
 import Login from "../login/Login"
 
 class Register extends Component {
@@ -11,6 +14,8 @@ class Register extends Component {
         super(props)
 
         this.state = {
+            firstname: "",
+            lastname:"",
             username: "",
             email: "",
             password: "",
@@ -37,6 +42,8 @@ class Register extends Component {
             })
         } else {
             const registerUser = {
+                first_name: this.state.firstname,
+                last_name: this.state.lastname,
                 username: this.state.username,
                 email: this.state.email,
                 password: this.state.password,
@@ -66,56 +73,79 @@ class Register extends Component {
     render() {
         return (
             <div>
-                {console.log("Register Render")}
-                <Form className="col-sm-8">
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control
-                            type="name"
-                            name="username"
-                            placeholder="username"
-                            onChange={(e) => this.handleChange(e)} />
-                    </Form.Group>
+                <Navbar2 />
+                <div className = "registerPage">
+                    {console.log("Register Render")}
+                    <Form className="col-sm-8">
+                        <h1 className = "registerTitle">Register</h1>
+                        <Form.Group controlId="formFirstName">
+                            {/* <Form.Label>First Name</Form.Label> */}
+                            <Form.Control
+                                type="firstname"
+                                name="firstname"
+                                placeholder="First Name"
+                                onChange={(e) => this.handleChange(e)} />
+                        </Form.Group>
+                    
 
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control
-                            type="email"
-                            name="email"
-                            placeholder="email"
-                            onChange={(e) => this.handleChange(e)} />
-                    </Form.Group>
+                        <Form.Group controlId="formLastName">
+                            {/* <Form.Label>Last Name</Form.Label> */}
+                            <Form.Control
+                                type="lastname"
+                                name="lastname"
+                                placeholder="Last Name"
+                                onChange={(e) => this.handleChange(e)} />
+                        </Form.Group>
+            
+                        <Form.Group controlId="formBasicName">
+                            {/* <Form.Label>Username</Form.Label> */}
+                            <Form.Control
+                                type="name"
+                                name="username"
+                                placeholder="Username"
+                                onChange={(e) => this.handleChange(e)} />
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            onChange={(e) => this.handleChange(e)} />
-                    </Form.Group>
+                        <Form.Group controlId="formBasicEmail">
+                            {/* <Form.Label>Email</Form.Label> */}
+                            <Form.Control
+                                type="email"
+                                name="email"
+                                placeholder="Email"
+                                onChange={(e) => this.handleChange(e)} />
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicPassword2">
-                        <Form.Label>Confirm Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            name="password2"
-                            placeholder="Confirm Password"
-                            onChange={(e) => this.handleChange(e)} />
-                    </Form.Group>
+                        <Form.Group controlId="formBasicPassword">
+                            {/* <Form.Label>Password</Form.Label> */}
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                                onChange={(e) => this.handleChange(e)} />
+                        </Form.Group>
 
-                    <Button
-                        variant="outline-secondary"
-                        onClick={(e) => this.handleRegister(e)}>
-                        Register
-                    </Button>
-                    <p>
-                        Login here <Link to="/login">Login</Link>
-                        <br />
-                        {this.state.errorCheck}
-                        {console.log(this.state.errorCheck)}
-                    </p>
-                </Form>
+                        <Form.Group controlId="formBasicPassword2">
+                            {/* <Form.Label>Confirm Password</Form.Label> */}
+                            <Form.Control
+                                type="password"
+                                name="password2"
+                                placeholder="Confirm Password"
+                                onChange={(e) => this.handleChange(e)} />
+                        </Form.Group>
+
+                        <Button
+                            variant="outline-secondary"
+                            onClick={(e) => this.handleRegister(e)}>
+                            Register
+                        </Button>
+                        <p>
+                            <Link to="/login">Login here</Link>
+                            <br />
+                            {this.state.errorCheck}
+                            {console.log(this.state.errorCheck)}
+                        </p>
+                    </Form>
+                </div>
             </div>
         )
     }

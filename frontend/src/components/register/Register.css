@@ -1,0 +1,11 @@
+.registerTitle {
+    color: blue;
+    text-align: center;
+}
+
+.registerPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

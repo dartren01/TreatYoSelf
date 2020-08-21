@@ -1,41 +1,16 @@
 import React, { Component, Fragment } from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
 
 class Recent_Transactions extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            transactions: [],
-        }
     }
-
-    componentDidMount = () => {
-        console.log("recent transactions componentDidMount");
-        /*
-        axios.get(`/budget/all_transactions`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
-        })
-            .then(res => {
-                this.setState({
-                    transactions: res.data.slice(0, 5),
-                    loading: false
-                });
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log("transaction get error: " + err)
-            })
-        console.log(this.state.transactions);
-        */
-    };
-
 
     render() {
         // have a separate page for transaction details?.
+        if(this.props.loading){
+            return(<div></div>)
+        }
+
         let recentFiveTransactions = this.props.transactions.slice(0, 5);
 
         return (
