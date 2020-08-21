@@ -7,36 +7,66 @@ import step2IMG from "../images/Step 2.svg";
 import step3IMG from "../images/Step 3.svg";
 import step4IMG from "../images/Step 4.svg";
 import pathIMG from "../images/path.svg";
-import arrowIMG from "../images/arrow.svg";
-import yArrowIMG from "../images/yArrow.svg";
+import simpleStepsIMG from "../images/simpleSteps.svg";
 
 class HowItWorks extends Component {
     constructor(props) {
         super(props)
-        this.state = {
+        this.getDimensions = this.getDimensions.bind(this);
+        if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
+            this.state = {
+                changeRow: true,
+                isDesktopversion: true,
+            };
         }
+        else if (window.innerWidth >= 1200) {
+            this.state = {
+                changeRow: true,
+                isDesktopversion: true,
+            };
+        }
+        else {
+            this.state = {
+                changeRow: false,
+                isDesktopversion: false,
+            };
+        }
+    }
+    getDimensions() {
+        console.log(window.innerWidth, window.innerHeight)
+        if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
+            this.setState({ changeRow: true })
+            this.setState({ isDesktopversion: true })
+        } else if (window.innerWidth >= 1200) {
+            this.setState({ changeRow: true })
+            this.setState({ isDesktopversion: true })
+        } else {
+            this.setState({ changeRow: false })
+            this.setState({ isDesktopversion: false })
+        }
+    }
+    componentDidMount() {
+        window.addEventListener("resize", this.getDimensions);
+    }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.getDimensions);
     }
     render() {
         return (
             <div className="howSection" id="how">
-                <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet"></link>
-                <img src={rectangleIMG} id="rectangleBG"></img>
-                <img src={pathIMG} id="pathBG"></img>
-                <img src={step1IMG} id="step1BG"></img>
-                <img src={step2IMG} id="step2BG"></img>
-                <img src={step3IMG} id="step3BG"></img>
-                <img src={step4IMG} id="step4BG"></img>
-
-                <div className="how-wrapper">
-                    <p className="how-title">How It Works</p>
-                    <p className="how-slogan"> Don't take out your calculator. We do the organization and data analysis for you, so you have more time to focus on yo'self. Follow these simple steps to get started. </p>
-                    <div id="step1and2">
-                        <div className="row" id="howRow1">
-                            <div className="col-md-6">
+                <img src={pathIMG} className="pathBG"></img>
+                <img src={simpleStepsIMG} className="simpleStepsBG"></img>
+                <div className="wrapper">
+                    <article className="promo">
+                        <h4>Getting started is as easy as following these simple steps</h4>
+                    </article>
+                    <div className={this.state.isDesktopversion ? "container" : "container-fluid"}>
+                        <div className={this.state.changeRow ? "row row-cols-2" : "row row-cols-1"} >
+                            <div className={this.state.isDesktopversion ? "col d-flex justify-content-center" : "col d-flex justify-content-start"} >
                                 <div className="card zero text-center">
                                     <div className="card-body">
                                         <div className="pink">
-                                            <svg width="30%" height="30%" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <svg width={this.state.isDesktopversion ? "25%" : "30%"} height={this.state.isDesktopversion ? "15%" : "30%"} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="burger" filter="url(#filter0_d)">
                                                     <g id="circle">
                                                         <path id="Vector" d="M60 106C87.6142 106 110 83.6142 110 56C110 28.3858 87.6142 6 60 6C32.3858 6 10 28.3858 10 56C10 83.6142 32.3858 106 60 106Z" fill="#F28482" />
@@ -71,17 +101,20 @@ class HowItWorks extends Component {
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <h4 className="card-title">1. Create Personalized Transaction Categories</h4>
-                                        <Link to="" className="card-text">Learn More </Link>
-                                        <img src={arrowIMG} className="arrow"></img>
+                                        <h4 className="card-title"><span className='bigNumber'>1.</span> Create personalized transaction categories</h4>
+                                        <Link to="">
+                                            <button className="pinkButton">
+                                                Learn More
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-6">
+                            <div className={this.state.isDesktopversion ? "col d-flex justify-content-center" : "col d-flex justify-content-end"} >
                                 <div className="card zero text-center">
                                     <div className="card-body">
                                         <div className="pink">
-                                            <svg width="30%" height="30%" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <svg width={this.state.isDesktopversion ? "25%" : "30%"} height={this.state.isDesktopversion ? "15%" : "30%"} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="add" filter="url(#filter0_d)">
                                                     <g id="circle">
                                                         <path id="Vector" d="M60 106C87.6142 106 110 83.6142 110 56C110 28.3858 87.6142 6 60 6C32.3858 6 10 28.3858 10 56C10 83.6142 32.3858 106 60 106Z" fill="#F28482" />
@@ -111,21 +144,20 @@ class HowItWorks extends Component {
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <h4 className="card-title">2. Add Daily Transactions and Schedule Payments</h4>
-                                        <Link to="" className="card-text">Learn More </Link>
-                                        <img src={arrowIMG} className="arrow"></img>
+                                        <h4 className="card-title"><span className='bigNumber'>2.</span> Add daily transactions and schedule payments</h4>
+                                        <Link to="">
+                                            <button className="pinkButton">
+                                                Learn More
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="step3and4">
-                        <div className="row" id="howRow2">
-                            <div className="col-md-6">
+                            <div className={this.state.isDesktopversion ? "col d-flex justify-content-center" : "col d-flex justify-content-start"} >
                                 <div className="card zero text-center">
                                     <div className="card-body">
                                         <div className="pink">
-                                            <svg width="30%" height="30%" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <svg width={this.state.isDesktopversion ? "25%" : "30%"} height={this.state.isDesktopversion ? "15%" : "30%"} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="calendar" filter="url(#filter0_d)">
                                                     <g id="circle">
                                                         <path id="Vector" d="M60 106C87.6142 106 110 83.6142 110 56C110 28.3858 87.6142 6 60 6C32.3858 6 10 28.3858 10 56C10 83.6142 32.3858 106 60 106Z" fill="#F28482" />
@@ -212,17 +244,20 @@ class HowItWorks extends Component {
                                                 </defs>
                                             </svg>
                                         </div>
-                                        <h4 className="card-title">3. Set and Meet Spending and Income Goals</h4>
-                                        <Link to="" className="card-text">Learn More </Link>
-                                        <img src={arrowIMG} className="arrow"></img>
+                                        <h4 className="card-title"><span className='bigNumber'>3.</span> Set and meet spending and income goals</h4>
+                                        <Link to="">
+                                            <button className="pinkButton">
+                                                Learn More
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-6" id="treatCard">
+                            <div className={this.state.isDesktopversion ? "col d-flex justify-content-center" : "col d-flex justify-content-end"} >
                                 <div className="card zero text-center">
                                     <div className="card-body">
                                         <div className="pink">
-                                            <svg width="30%" height="30%" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <svg width={this.state.isDesktopversion ? "25%" : "30%"} height={this.state.isDesktopversion ? "15%" : "30%"} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <g id="gift">
                                                     <g id="circle" filter="url(#filter0_d)">
                                                         <path id="Vector" d="M60 106C87.6142 106 110 83.6142 110 56C110 28.3858 87.6142 6 60 6C32.3858 6 10 28.3858 10 56C10 83.6142 32.3858 106 60 106Z" fill="#F5D281" />
@@ -253,20 +288,25 @@ class HowItWorks extends Component {
                                             </svg>
 
                                         </div>
-                                        <h4 className="card-title">4. Treat Yo’ Self for Exceeding Your Financial Goals</h4>
-                                        <Link to="" className="card-text" id="yellowLearn">Learn More </Link>
-                                        <img src={yArrowIMG} className="yArrow"></img>
+                                        <h4 className="card-title"><span className='bigNumber'>4.</span> Treat yo’self for exceeding your financial goals</h4>
+                                        <Link to="">
+                                            <button className="yellowButton">
+                                                Learn More
+                                            </button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-            </div >
-
-        )
+            </div >)
     }
 }
 
 export default HowItWorks;
+
+
+
+
+

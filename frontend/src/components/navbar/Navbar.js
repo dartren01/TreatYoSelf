@@ -25,28 +25,25 @@ class Navbar extends Component {
     render() {
         console.log(this.props.history.location.pathname);
         let leftNavBar;
-        // if (!this.props.isLoggedIn) {
-        //     leftNavBar = <Link to="/" className="navbar-brand">Home</Link>;
-        //     // can add stuff here for not logged in like about and faq
-        // }
-        // else if (this.props.history.location.pathname !== "/total") {
-        leftNavBar = <React.Fragment>
-            <Link to="/" className="navbar-brand">Home</Link>
-            <Link to="/total" className="navbar-brand"> Total </Link>
-            <Link to="/budget/all_transactions/" className="navbar-brand">All Transactions</Link>
-            <Link to="/budget/create/" className="navbar-brand">New Transaction</Link>
-            <Link to="/category" className="navbar-brand">Category</Link>
-        </React.Fragment>;
-        // }
+        if (this.props.history.location.pathname !== "/total") {
+            leftNavBar = <React.Fragment>
+                <Link to="/" className="nav-link">Home</Link>
+                <Link to="/total" className="nav-link"> Total </Link>
+                <Link to="/budget/all_transactions/" className="nav-link">All Transactions</Link>
+                <Link to="/budget/create/" className="nav-link">New Transaction</Link>
+                <Link to="/category" className="nav-link">Category</Link>
+            </React.Fragment>;
+        }
         return (
-            <nav className="navbar navbar-dark bg-dark navbar-expand-sm" >
-                {console.log("Navbar Render")}
-                {leftNavBar}
-                <div className="w-100">
+            <div className="navbar1">
+                <nav className="navbar navbar-dark bg-dark navbar-expand-sm" >
+                    {console.log("Navbar Render")}
+                    {leftNavBar}
+                    {/* <div className="w-100"> */}
                     <ul className="navbar-nav ml-auto">
                         {this.props.isLoggedIn ?
                             <React.Fragment>
-                                <li className="navbar-item">
+                                <li className="nav-item">
                                     <button className="logoutButton"
                                         onClick={() => this.handleLogout()}>
                                         Logout
@@ -55,12 +52,12 @@ class Navbar extends Component {
                             </React.Fragment>
                             :
                             <React.Fragment>
-                                <li className="navbar-item">
+                                <li className="nav-item">
                                     <Link to="/register" className="nav-link" >
                                         Register
                                     </Link>
                                 </li>
-                                <li className="navbar-item">
+                                <li className="nav-item">
                                     <Link to="/login" className="nav-link">
                                         Login
                                     </Link>
@@ -68,8 +65,9 @@ class Navbar extends Component {
                             </React.Fragment>
                         }
                     </ul>
-                </div>
-            </nav>
+                    {/* </div> */}
+                </nav>
+            </div>
         )
     }
 

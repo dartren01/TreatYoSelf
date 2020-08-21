@@ -1,68 +1,152 @@
-#teamBG {
-    width: 100%;
-    position: absolute;
-    top: 350%;
-}
-
-#row21 {
-    margin-bottom: 1%;
-}
-#row22 {
-    
-}
-
-#team-wrapper
-{
-    width:80%;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-    top: 7%;
-}
-.team-title
-{
-    text-align: left;
-    color: white;
-    font-family: Quicksand;
+.teamSection .promo h4 {
+    padding: 0px 35px 30px;
+    padding-top: 20%;
+    margin: 0;
+    font-family: 'Archivo';
+    text-align: right;
     font-size: 30px;
-    font-weight: 600;
-    margin-left: 32%;
-
+    font-weight: 700;
+    color: black;    
+    position: relative;
 }
-
-.team-slogan
-{
-    text-align: left;
-    font-family: "Helvetica Neue", sans-serif !important;
-    color: white;
-    /* margin-right: 5%; */
-    margin-left: 32%;
+.teamSection .col {
+    padding: 2%;
 }
-
-#colQuestion {
-    margin-top: 10%;
+.teamSection .container-fluid {
+    padding-left: 25px;
+    padding-right: 25px;
 }
-.team-question
-{
-    text-align: center;
-    color: white;
-    font-family: Quicksand;
-    font-size: 22px;
-    font-weight: 600;
-    /* margin-right: 32%; */
+.teamSection .card.question .questionIMG {
+    position: absolute;
+    width: 40%;
 }
-
-.team-contact
-{
-    text-align: center;
-    color: white;
-    font-family: Source Sans Pro    ;
-    font-size: 14px;
-    font-weight: 400;
-    /* margin-right: 32%; */
+.teamSection .card.question .questionIMG2 {
+    position: absolute;
+    width: 40%;
+    margin-top: 65%;    
+    right: -2%;
 }
-
-.team-contact-us
-{
-
+.teamSection .card.question {
+    border: transparent;
+    background: transparent;
+}
+.teamSection .card.question .card-title{
+    font-family: 'Archivo';
+    font-size: 18px;    
+    font-weight: bold;
+    padding-top: 10%;
+}
+.teamSection .card.question .card-subtitle{
+    font-family: 'Archivo';
+    font-size: 11px;    
+}
+.teamSection .contactUs{
+    color: #FF5C00;
+}
+.teamSection .card.question .card-body{
+    padding: 5%;
+    line-height: 14px;  
+}
+@media only screen and (max-width: 320px) {
+    .teamSection .card.question .questionIMG2 {
+        position: absolute;
+        width: 40%;
+        margin-top: 80%;    
+        right: -2%;
+    }
+}
+@media only screen and (min-width: 400px) {
+    .teamSection .card.question .card-title{
+        font-family: 'Archivo';
+        font-size: 20px;    
+        font-weight: bold;
+        padding-top: 10%;
+    }
+}
+@media only screen and (min-width: 500px) {
+    .teamSection .card.question .card-title{
+        font-family: 'Archivo';
+        font-size: 20px;    
+        font-weight: bold;
+        padding: 0 15%;
+        padding-top: 15%;
+    }
+    .teamSection .card.question .card-subtitle{
+        font-family: 'Archivo';
+        font-size: 12px;    
+    }
+}
+@media only screen and (min-width:768px) {
+    .teamSection .promo h4 {
+        padding: 0px 35px 30px;
+        padding-top: 20%;
+        padding-right: 15%;
+        padding-left: 15%;
+        margin: 0;
+        font-family: 'Archivo';
+        text-align: right;
+        font-size: 30px;
+        font-weight: 700;
+        color: black;    
+        position: relative;
+    }
+}
+@media only screen and (min-width:850px) {
+    .teamSection .card.question .card-title{
+        font-family: 'Archivo';
+        font-size: 20px;    
+        font-weight: bold;
+        padding: 0 20%;
+        padding-top: 25%;
+    }
+    .teamSection .card.question .card-subtitle{
+        font-family: 'Archivo';
+        font-size: 12px;    
+    }
+}
+@media only screen and (min-width:1024px) {
+    .teamSection .promo h4 {
+        font-size: 40px;
+        line-height: 45px;
+    }
+    .teamSection .card.question .card-title{
+        font-family: 'Archivo';
+        font-size: 24px;    
+        font-weight: bold;
+        padding: 0 20%;
+        padding-top: 25%;
+    }
+    .teamSection .card.question .card-subtitle{
+        font-family: 'Archivo';
+        font-size: 14px;    
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}
+@media only screen and (min-width:1200px) {
+    .teamSection .promo h4 {
+        font-size: 35px;
+        text-align: center;
+        padding-top: 10%;
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-bottom: 7%;
+    }
+    .teamSection .card.question .card-title{
+        font-family: 'Archivo';
+        font-size: 22px;    
+        font-weight: bold;
+        padding: 0 20%;
+        padding-top: 20%;
+    }
+    .teamSection .card.question .card-subtitle{
+        font-family: 'Archivo';
+        font-size: 13px;    
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+    .teamSection .container-fluid {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
 }

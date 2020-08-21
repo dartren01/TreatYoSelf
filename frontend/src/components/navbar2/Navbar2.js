@@ -5,12 +5,31 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import logo from "../navbar2/images/logo.svg";
 import "./Navbar2.css";
 import { Link as ScrLink } from "react-scroll";
+import { ToggleButton } from "react-bootstrap";
 
 class Navbar2 extends Component {
     constructor(props) {
         super(props);
+        this.scrFunction = this.scrFunction.bind(this);
         this.state = {
+            isButtonOpen: false,
+            isNavbarScrolled: false,
         };
+    }
+
+    scrFunction() {
+        if (window.scrollY > 80) {
+            this.setState({ isNavbarScrolled: true })
+        } else {
+            this.setState({ isNavbarScrolled: false })
+        }
+    }
+    componentDidMount() {
+        window.addEventListener("scroll", this.scrFunction)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("scroll", this.scrFunction)
     }
 
     render() {
@@ -18,35 +37,25 @@ class Navbar2 extends Component {
         let leftNavbar;
         leftNavbar = <React.Fragment>
             <ScrLink
-                className="navbar-left"
-                activeClass="active"
-                to="main"
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={1000}
-            ><img src={logo} /></ScrLink>
-            <ScrLink
                 className="navbar-brand"
                 activeClass="active"
                 to="main"
                 spy={true}
                 smooth={true}
-                offset={-100}
+                offset={-200}
                 duration={1000}
-            >Treat Yo' Self</ScrLink>
+            ><img src={logo} className="logo" /> Treat Yo'Self</ScrLink>
         </React.Fragment>;
 
         let midNavbar;
         midNavbar = <React.Fragment>
-
             <ScrLink
                 className="nav-link"
                 activeClass="active"
                 to="features"
                 spy={true}
                 smooth={true}
-                offset={-40}
+                offset={0}
                 duration={1000}
             >Features</ScrLink>
             <ScrLink
@@ -55,7 +64,7 @@ class Navbar2 extends Component {
                 to="how"
                 spy={true}
                 smooth={true}
-                offset={-90}
+                offset={0}
                 duration={1000}
             >How It Works</ScrLink>
             <ScrLink
@@ -65,43 +74,45 @@ class Navbar2 extends Component {
                 spy={true}
                 smooth={true}
                 offset={0}
-                duration={500}
+                duration={1000}
             >Team</ScrLink>
             <ScrLink
                 className="nav-link"
                 activeClass="active"
-                to="features"
+                to="future"
                 spy={true}
                 smooth={true}
                 offset={0}
-                duration={500}
+                duration={1000}
             >Future</ScrLink>
-
-
         </React.Fragment >;
         return (
-            <nav className="navbar navbar-expand-lg navbar-light" >
-                <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet"></link>
-                {leftNavbar}
-                <button className="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <div className="navContainer">
-                        {midNavbar}
-                        <Link to="/login">
-                            <button className="login">
-                                Log in
-                            </button>
-                        </Link>
-                        <Link to="/register" >
-                            <button className="signup">
-                                Sign Up
-                            </button>
-                        </Link>
+            <div className="navbar2">
+                <nav className={this.state.isNavbarScrolled ? "navbar active navbar-expand-xl navbar-dark" : "navbar navbar-expand-xl navbar-dark"} >
+                    <div className="container-fluid">
+                        {leftNavbar}
+                        <div className={this.state.isButtonOpen ? "menuButton open" : "menuButton"}
+                            onClick={() => this.setState({ isButtonOpen: !this.state.isButtonOpen })}
+                            data-toggle="collapse" data-target="#navbar2Nav">
+                            <div className="burger"> </div>
+                        </div>
+                        <div className="collapse navbar-collapse" id="navbar2Nav">
+                            {midNavbar}
+                            <Link to="/login">
+                                <button className="login">
+                                    Log in
+                                </button>
+                            </Link>
+                            <Link to="/register" >
+                                <button className="signup">
+                                    Sign Up
+                                </button>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-            </nav >
+                </nav >
+
+            </div>
         )
     }
 }

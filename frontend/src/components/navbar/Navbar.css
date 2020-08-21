@@ -1,14 +1,30 @@
 /* nav ul li:first-child { float: left; } */
-
-nav ul {
+.navbar1 .navbar
+{
+    font-weight: bold;
+    z-index: 5;    
+    background-color: white;
+}
+.navbar1 .nav ul {
     display: inline-block;
     margin-right: 1rem;
     float: right;
 }
 
+.navbar1 .nav-item {
+    
+}
 
+.navbar1 .nav-link {
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    font-family: Quicksand, sans-serif !important;
+}
 
-
-.logoutButton{
+.navbar1 .logoutButton{
     background-color: greenyellow
 }

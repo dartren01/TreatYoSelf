@@ -5,15 +5,21 @@ import "./Card2.css";
 const Card2 = props => {
     return (
         <React.Fragment>
-            <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet"></link>
             <div className="card two text-center">
-                <div className="overflow">
-                    <img src={props.imgsrc} alt="Image" className="card-img-top" />
+                <div className="imgBox">
+                    <img src={props.imgsrc} className="card-img-top" />
+                    <ul>
+                        <a href={props.linkedin_link}>
+                            <img src={props.linkedin} className="linkedin" />
+                        </a>
+                        <a href={props.facebook_link}>
+                            <img src={props.facebook} className="facebook" />
+                        </a>
+                    </ul>
                 </div>
                 <div className="card-body">
                     <h4 className="card-title">{props.name}</h4>
-                    <h5 className="card-subtitle">{props.title} </h5>
-                    <p className="card-text text-secondary">" {props.text} "</p>
+                    <h5 className="card-subtitle">{props.job} </h5>
                 </div>
             </div>
         </React.Fragment>

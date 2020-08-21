@@ -85,7 +85,8 @@ class App extends Component {
         .catch(err => {
           console.log("Checking Logged In Error" + err)
           this.setState({
-            loadPage: true
+            loadPage: true,
+            isLoggedIn: false
           })
         })
     }

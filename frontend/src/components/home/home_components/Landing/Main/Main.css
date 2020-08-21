@@ -1,125 +1,403 @@
 
-html, body
-{
-
-    font-family: Quicksand, "Helvetica Neue", sans-serif !important;    
+.mainSection .bannerBG {
+    display: none;
 }
-#simple
-{
-    color: #12A874;
+.mainSection .piggyBG {
+    display: none;
 }
-
-/* #you
-{
-    color:#F5D281;
-} */
-
-#bannerBG {
-    position: absolute;
-    top: 45%;
-    width: 100%;
-    z-index: 0;
+.mainSection .laptopBG {
+    display: none;
 }
-
-#piggyBG {
-    position: absolute;
-    top: 35%;
-    left: 60%;
-    width: 35%;
-    z-index: 1;
+.mainSection .promo h5, .mainSection .promo p{
+    display: none;
 }
-
-#laptopBG {
-    position: absolute;
-    top: 37%;
-    right: 40%;
-    width: 58%;
-    z-index: 1;
+.mainSection .promo2 {
+    display: none;
 }
-
-#budgetBG {
-    position: absolute;
-    top: 39.5%;
-    left: 9.65%;
-    z-index: 2;
-}
-
-/* --------------------------------------------Main-wrapper------------------------------------------ */
-
-.main-wrapper
-{
-    height: 120vh;
-    margin: 5% 4% 0 10%;
-    position: relative; 
-    z-index: 2;
-}
-
-/* --------------------------------------------Row 1------------------------------------------ */
-
-#mainRow1 {
-    top: 12%;
+.mainSection .piggyPhoneBG {
+    display: block;
     width: 100%;
     position: absolute;
-    /* this is relative to the main-wrapper */
-}   
-.promo-title
-{
+    top: 30%;
+    z-index: 2;
+}
+.mainSection .wrapper {
+    width: 100%;
+}
+.mainSection .promo h2 {
+    padding: 0px 30px;
+    padding-top: 30%;
+    padding-bottom: 170%;
+    font-family: 'Archivo';
+    font-size: 35px;
+    font-weight: 700;
     color: black;
-    font-size: 40px;
-    line-height: 1.2;
-    font-family: Quicksand;
-    padding-right: 8%;
+    line-height: 45px;
 }
-
-.promo-slogan
-{
-    color: black;   
-    font-family: "Helvetica Neue", sans-serif !important;
-}
-
-#get_started_link {
-    padding: 0;
-}
-
-.get_started {
-    font-weight: bold;
-    color: white;
-    padding: 10px 10px;
-    border: 1px solid transparent;
-    background-color: #12A874;
-    cursor: pointer;
-    transition: all 0.3s ease 0s; 
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 6px
-}
-
-/* --------------------------------------------Row 2------------------------------------------ */
-
-#mainRow2 {
-    top: 74.3%;
-    width: 100%;
-    position: absolute;
-    /* this is relative to the main-wrapper */
-}
-
-.get_started:hover{
-    border:1px solid white;
-    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1);
-}
-
-.promo2-title
-{
-    color: white;
+.mainSection .promo h4 {
+    position: relative;
+    z-index: 3;
+    margin: 0;
+    padding: 10px 35px 20px;
+    font-weight: bold ;
     font-size: 30px;
-    font-weight: 600;
-    font-family: Quicksand;
-    padding-left: 18%;
+    color: black;
+    font-family: 'Archivo' !important;
+}
+.mainSection .promo {
+    text-align: center;
+    padding-bottom: 20%;
+}
+.mainSection .simpleWord {
+    color: #12A874;
+    font-weight: bold;
+}
+.mainSection .promo a {
+    text-decoration: none;
+    display: inline-block;
+}
+.mainSection .promo .get_started {
+    font-weight: normal;
+    color: white;
+    padding: 6px 18px;
+    font-size: 16px;
+    font-family: "Arial";
+    border: 1px solid white;
+    background-color: #5F9FFF;
+    cursor: pointer;
+    /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); */
+    transition: all 0.3s ease 0s;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+.mainSection .promo .login {
+    font-weight: normal;
+    color: white;
+    padding: 6px 18px;
+    font-size: 16px;
+    font-family: "Arial";
+    border: 1px solid white;
+    background-color: #FF8181;
+    cursor: pointer;
+    /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); */
+    transition: all 0.3s ease 0s;
+    border-radius: 20px;
+}
+.mainSection .promo .get_started:hover {
+    color: black;
+    background-color: #FFBE5B;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border:1px solid transparent;
+}
+.mainSection .promo .login:hover {
+    color: black;
+    background-color: #FFBE5B;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border:1px solid transparent;
+}
+button:focus {
+    outline: none;
 }
 
-.promo2-slogan  
-{
-    color: white;
-    font-family: "Helvetica Neue", sans-serif !important;
-    padding-left: 18%;
-    padding-right: 15%;
+@media only screen and (min-width: 768px) {
+    .mainSection .wrapper {
+        width: 100%;  
+    }
+    .mainSection .promo h2 {
+        padding-bottom: 140%;
+    }
+    .mainSection .promo h4 {
+        padding: 0 100px;
+        padding-bottom: 40px;
+    }
+    .mainSection .piggyPhoneBG {
+        top: 23%;
+    }
 }
+
+@media only screen and (min-width: 1024px) {
+    .mainSection .piggyPhoneBG {
+        top: 28%;
+    }
+    .mainSection .promo h2 {
+        font-size: 55px;
+        padding-bottom: 165%;
+    }
+    .mainSection .promo h4 {
+        font-size: 40px;
+        line-height: 45px;
+    }
+    .mainSection .promo .login {
+        font-size: 22px;
+    }
+    .mainSection .promo .get_started {
+        font-size: 22px;
+    }
+    .mainSection .promo {
+        padding-bottom: 15%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .mainSection .promo h2 , .mainSection .promo h4 {
+        display: none;
+    }
+    .mainSection .piggyPhoneBG {
+        display: none;
+    }
+    .mainSection .login{
+        display: none;
+    }
+    .mainSection .wrapper {
+        width: 90%;  
+        margin: 12% 2% 0% 8%;
+    }
+    .mainSection .promo {
+        text-align: left;
+    }
+    .mainSection .promo h5 {
+        font-size: 45px;
+        margin-right: 50%;
+        font-weight: bold;
+        color: black;
+        display: block;
+    }
+    .mainSection .promo p {
+        font-family: Source Sans Pro !important;
+        font-weight: 500;
+        font-size: 18px;
+        color: grey;
+        line-height: 30px; 
+        display: block;
+    }
+    .mainSection .promo .get_started {
+        padding: 6px 18px;
+        font-size: 16px;
+        border: 1px solid white;
+        background-color: #12A874;
+    }
+    .mainSection .promo2 {
+        text-align: right;
+    }
+    .mainSection .promo2 h4 {
+        text-align: left;
+        color: white;
+        margin-top: 20%;
+        font-family: 'Archivo' !important;
+        font-size: 35px;
+        font-weight: bold;
+        margin-left: 65%;
+        margin-bottom: 10px;
+        display: block;
+        /* z-index: 3; */
+        position: relative;
+    }
+    .mainSection .promo2 p {
+        text-align: left;
+        color: white;
+        position: relative;
+        display: block;
+        margin-left: 65%;
+        padding-bottom: 15%;
+        margin-right: 5%;
+    }
+    .mainSection .bannerBG {
+        display: block;
+        width: 100%;
+        position: absolute;
+        margin-top: 50px;
+        left:0;
+        right: 0;
+        z-index: 0;
+    }
+    .mainSection .piggyBG {
+        display: block;
+        width: 40%;
+        position: absolute;
+        z-index: 1;
+        margin-top: -60px;
+        right: 0;
+    }
+    .mainSection .laptopBG {
+        display: block;
+        width: 65%;
+        left: 0;
+        position: absolute;
+        z-index: 1;
+        margin-top: -60px;
+    }
+    .mainSection .promo2 {
+        display: block;
+    }
+   
+    
+}
+@media only screen and (min-width: 1366px) {
+    .mainSection .promo h5 {
+        font-size: 45px;
+        margin-right: 60%;
+    }
+    .mainSection .promo2 h4 {
+        margin-top: 15%;
+    }
+    .mainSection .promo2 p {
+        padding-bottom: 15%;
+    }
+    .mainSection .bannerBG {
+        display: block;
+        width: 100%;
+        position: absolute;
+        margin-top: 0;
+        left:0;
+        right: 0;
+        z-index: 0;
+    }
+    .mainSection .piggyBG {
+        display: block;
+        width: 35%;
+        position: absolute;
+        z-index: 1;
+        margin-top: -110px;
+        right: 40px;
+    }
+    .mainSection .laptopBG {
+        display: block;
+        width: 65%;
+        left: 0;
+        position: absolute;
+        z-index: 1;
+        margin-top: -110px;
+    }
+}
+/* @media only screen and (min-width: 1440px) {
+    .mainSection .promo2 h4 {
+        font-family: Quicksand;
+        text-align: left;
+        font-size: 25px;
+        color: white;
+        line-height: 35px;
+        margin: 435px -100px 10px 840px;
+        position: relative;
+        z-index: 2;
+    }
+    .mainSection .promo2 p {
+        padding: 0px 30px;
+        font-family: Source Sans Pro;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 500;
+        color: white;    
+        line-height: 27px;
+        margin: 0px -90px 10px 840px;
+        position: relative;
+        z-index: 2;
+        padding-bottom: 18%;
+    }
+} */
+/* @media only screen and (min-width: 1580px) {
+    .mainSection .wrapper {
+        width: 1400px;
+        margin: -25px auto;  
+    }
+    .mainSection .promo h2 {
+        padding-right: 900px;
+    }
+    .mainSection .promo2 h4 {
+        font-family: Quicksand;
+        text-align: left;
+        font-size: 25px;
+        color: white;
+        line-height: 35px;
+        margin: 445px -100px 10px 960px;
+        position: relative;
+        z-index: 2;
+    }
+    .mainSection .promo2 p {
+        padding: 0px 30px;
+        font-family: Source Sans Pro;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 500;
+        color: white;    
+        line-height: 27px;
+        margin: 0px 30px 0px 960px;
+        position: relative;
+        z-index: 2;
+        padding-bottom: 20%;
+    }
+}
+@media only screen and (min-width: 1750px) {
+    .mainSection .wrapper {
+        width: 1550px;
+        margin: -25px auto;  
+    }
+    .mainSection .promo2 h4 {
+        font-family: Quicksand;
+        text-align: left;
+        font-size: 25px;
+        color: white;
+        line-height: 35px;
+        margin: 500px -150px 10px 1090px;
+        position: relative;
+        z-index: 2;
+    }
+    .mainSection .promo2 p {
+        padding: 0px 30px;
+        font-family: Source Sans Pro;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 500;
+        color: white;    
+        line-height: 27px;
+        margin: 0px 50px 10px 1090px;
+        position: relative;
+        z-index: 2;
+        padding-bottom: 20%;
+    }
+}
+@media only screen and (min-width: 1920px) {
+    .mainSection .wrapper {
+        width: 1550px;
+        margin: -25px auto;  
+    }
+    .mainSection .promo h2 {
+        padding-right: 980px;
+    }
+    .mainSection .promo2 h4 {
+        font-family: Quicksand;
+        text-align: left;
+        font-size: 25px;
+        color: white;
+        line-height: 35px;
+        margin: 600px -150px 10px 1050px;
+        position: relative;
+        z-index: 2;
+    }
+    .mainSection .promo2 p {
+        padding: 0px 30px;
+        font-family: Source Sans Pro;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 500;
+        color: white;    
+        line-height: 27px;
+        margin: 0px -140px 10px 1050px;
+        position: relative;
+        z-index: 2;
+        padding-bottom: 25%;
+    }
+    .mainSection .laptopBG {
+        width: 62%;
+        padding: 0;
+        left: 2%;
+        margin: 150px -20px 0px 0px;
+    }
+    .mainSection .bannerBG {
+        top: 330px;
+    }
+    .mainSection .piggyBG {
+        top: 240px;
+        width: 30%;
+        right: 4%;
+    }
+} */
