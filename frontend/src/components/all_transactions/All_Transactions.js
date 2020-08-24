@@ -11,7 +11,9 @@ class All_Transactions extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            transactions: [],
             showSuccessDeleteAlert: false,
+            loading: true,
             currentPage: 1,
             transactionsPerPage: 6
         }
@@ -19,7 +21,6 @@ class All_Transactions extends Component {
 
     componentDidMount = () => {
         console.log("all transactions componentDidMount");
-        /*
         axios.get(`/budget/all_transactions`, {
             headers: {
                 "Content-Type": "application/json",
@@ -37,7 +38,6 @@ class All_Transactions extends Component {
                 console.log("transaction get error: " + err)
             })
         console.log(this.state.transactions);
-        */
     };
 
     // calls delete, passing in transaction id.
@@ -52,7 +52,7 @@ class All_Transactions extends Component {
             }
         })
             .then(res => {
-                let arrCopy = [...this.props.transactions]
+                let arrCopy = [...this.state.transactions]
                 const newTransactions = arrCopy.filter(transaction => transaction.id !== id)
                 this.setState({
                     transactions: newTransactions
@@ -86,14 +86,18 @@ class All_Transactions extends Component {
 
         const indexOfLastPost = this.state.currentPage * this.state.transactionsPerPage;
         const indexOfFirstPost = indexOfLastPost - this.state.transactionsPerPage;
-        const currentTransactions = this.props.transactions.slice(indexOfFirstPost, indexOfLastPost);
-
+        const currentTransactions = this.state.transactions.slice(indexOfFirstPost, indexOfLastPost);
+        
         return (
             <div>
                 <h1>
                     All Transactions Page
                 </h1>
-                <div>
+                {this.state.loading === true ?
+                    <h1>
+                        Loading Transactions . . .
+                    </h1> :
+                    <div>
                         <Transaction 
                         curTrans={currentTransactions}
                         handleDelete={this.handleDelete}
@@ -101,13 +105,13 @@ class All_Transactions extends Component {
 
                         <Pagination 
                         transactionsPerPage={this.state.transactionsPerPage}
-                        totalTransactions={this.props.transactions.length}
+                        totalTransactions={this.state.transactions.length}
                         currentPage={this.state.currentPage}
                         paginate={this.paginate}
                         nextPage={this.nextPage}
                         prevPage={this.prevPage}/>
                     
-                    </div>
+                    </div>}
             </div>
         )
     }

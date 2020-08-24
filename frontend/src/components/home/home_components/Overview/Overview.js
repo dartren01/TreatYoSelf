@@ -46,8 +46,7 @@ class Overview extends Component {
                     totalAmount: profileObj.total_amount,
                     monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
                     monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
-                    monthYearDate: parseInt(thisMonthYear),
-                    transactions: this.props.transactions
+                    monthYearDate: parseInt(thisMonthYear)
                 });
             })
             .catch(err => {
@@ -78,7 +77,6 @@ class Overview extends Component {
 
 
         // get transactions, pass to recent transactions js
-        /*
         axios.get(`/budget/all_transactions`, {
             headers: {
                 "Content-Type": "application/json",
@@ -92,7 +90,7 @@ class Overview extends Component {
             })
             .catch(err => {
                 console.log("transaction get error: " + err)
-            })*/
+            })
     };
 
     chartTextSet = () => {
