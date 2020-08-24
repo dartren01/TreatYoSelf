@@ -31,7 +31,8 @@ class App extends Component {
     this.state = {
       username: "",
       isLoggedIn: false,
-      loadPage: null
+      loadPage: null,
+      transactions: []
     };
     this.options = {
       // you can also just use 'bottom center'
@@ -78,9 +79,9 @@ class App extends Component {
         .then(res => {
           this.setState({
             username: res.data.username,
-            isLoggedIn: true,
-            loadPage: true
+            isLoggedIn: true
           });
+          this.getTransactions();
           console.log("CheckLogin: User has Logged In (App)")
         })
         .catch(err => {
@@ -101,6 +102,26 @@ class App extends Component {
     console.log("App Component componentDidMount");
     this.checkLogin();
   };
+
+  getTransactions = () => {
+    axios.get(`/budget/all_transactions`, {
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${Cookies.get("token")}`
+      }
+  })
+      .then(res => {
+          console.log(res.data)
+          this.setState({
+              transactions: res.data,
+              loadPage: true
+          });
+      })
+      .catch(err => {
+          console.log("transaction get error: " + err)
+      })
+    console.log(this.state.transactions);
+  }
 
 
   // Maybe we can use private routes
@@ -153,10 +174,12 @@ class App extends Component {
                   <Overview {...props}
                     username={this.state.username}
                     isLoggedIn={this.state.isLoggedIn}
-                    checkLogin={this.checkLogin} />
+                    checkLogin={this.checkLogin}
+                    transactions={this.state.transactions} />
                 )} />
                 <Route exact path="/budget/all_transactions" render={props => (
-                  <All_Transactions {...props} />
+                  <All_Transactions {...props} 
+                  transactions={this.state.transactions}/>
                 )} />
 
                 <Route exact path="/budget/create" render={props => (
