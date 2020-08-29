@@ -22,6 +22,7 @@ import All_Transactions from "./components/all_transactions/All_Transactions"
 import Create_Transaction from "./components/create_transaction/Create_Transaction";
 import Update_Transaction from "./components/update_transaction/Update_Transaction";
 import Category from "./components/category/Category"
+import Analytics from "./components/analytics/Analytics";
 
 
 // Notes: Need to figure out how to login in before rendering components.
@@ -30,6 +31,8 @@ class App extends Component {
     super(props);
     this.state = {
       username: "",
+      firstname: "",
+      lastname: "",
       isLoggedIn: false,
       loadPage: null
     };
@@ -55,6 +58,8 @@ class App extends Component {
   setLogin = (res) => {
     this.setState({
       username: res.data.user.username,
+      firstname: res.data.user.first_name,
+      lastname: res.data.user.last_name,
       isLoggedIn: true
     })
   };
@@ -62,6 +67,8 @@ class App extends Component {
   deleteLogin = () => {
     this.setState({
       username: "",
+      firstname: "",
+      lastname: "",
       isLoggedIn: false
     })
   };
@@ -78,6 +85,8 @@ class App extends Component {
         .then(res => {
           this.setState({
             username: res.data.username,
+            firstname: res.data.first_name,
+            lastname: res.data.last_name,
             isLoggedIn: true,
             loadPage: true
           });
@@ -118,8 +127,9 @@ class App extends Component {
         <Router>
           <link href="https://fonts.googleapis.com/css2?family=Questrial&display=swap" rel="stylesheet"></link>
           <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet"></link>
-          <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
           <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"></link>
           {console.log("App Component Render")}
           {this.state.isLoggedIn === false ?
             <React.Fragment>
@@ -141,59 +151,68 @@ class App extends Component {
             </React.Fragment>
             :
             <React.Fragment>
-              <Navbar
-                {...this.props}
-                isLoggedIn={this.state.isLoggedIn}
-                nextPath={this.nextPath}
-                deleteLogin={this.deleteLogin}
-              />
-              {/* <div className="container"> */}
-              <Switch>
-                <Route exact path="/" render={props => (
-                  <Overview {...props}
-                    username={this.state.username}
-                    isLoggedIn={this.state.isLoggedIn}
-                    checkLogin={this.checkLogin} />
-                )} />
-                <Route exact path="/budget/all_transactions" render={props => (
-                  <All_Transactions {...props} />
-                )} />
+              <div className="appWrapper">
+                <Navbar
+                  {...this.props}
+                  isLoggedIn={this.state.isLoggedIn}
+                  username={this.state.username}
+                  firstname={this.state.firstname}
+                  lastname={this.state.lastname}
+                  nextPath={this.nextPath}
+                  deleteLogin={this.deleteLogin}
+                />
+                <div className="main_container">
+                  <Switch>
+                    <Route exact path="/" render={props => (
+                      <Overview {...props}
+                        username={this.state.username}
+                        isLoggedIn={this.state.isLoggedIn}
+                        checkLogin={this.checkLogin} />
+                    )} />
+                    <Route exact path="/budget/all_transactions" render={props => (
+                      <All_Transactions {...props} />
+                    )} />
 
-                <Route exact path="/budget/create" render={props => (
-                  <Create_Transaction {...props} />
-                )} />
+                    <Route exact path="/budget/create" render={props => (
+                      <Create_Transaction {...props} />
+                    )} />
 
-                <Route exact path="/budget/update" render={props => (
-                  <Update_Transaction {...props}
-                    isLoggedIn={this.state.isLoggedIn} />
-                )} />
+                    <Route exact path="/budget/update" render={props => (
+                      <Update_Transaction {...props}
+                        isLoggedIn={this.state.isLoggedIn} />
+                    )} />
 
-                <Route path="/register" render={props => (
-                  <Register {...props}
-                    setLogin={this.setLogin}
-                  />
-                )} />
+                    <Route path="/register" render={props => (
+                      <Register {...props}
+                        setLogin={this.setLogin}
+                      />
+                    )} />
 
-                <Route path="/login" render={props => (
-                  <Login {...props}
-                    setLogin={this.setLogin}
-                  />
-                )} />
+                    <Route path="/login" render={props => (
+                      <Login {...props}
+                        setLogin={this.setLogin}
+                      />
+                    )} />
 
-                <Route path="/total" render={props => (
-                  <Total {...props}
-                  />
-                )} />
-                <Route path="/category" render={props => (
-                  <Category {...props}
-                  />
-                )} />
-              </Switch>
-              {/* </div> */}
+                    <Route path="/total" render={props => (
+                      <Total {...props}
+                      />
+                    )} />
+                    <Route path="/analytics" render={props => (
+                      <Analytics {...props}
+                      />
+                    )} />
+                    <Route path="/category" render={props => (
+                      <Category {...props}
+                      />
+                    )} />
+                  </Switch>
+                </div>
+              </div>
             </React.Fragment>
           }
         </Router>
-      </AlertProvider>
+      </AlertProvider >
 
     )
   }

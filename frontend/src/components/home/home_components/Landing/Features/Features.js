@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Card from "./Card";
 import payment_img from "../images/payments.svg";
 import visibility_img from "../images/visibility.svg";

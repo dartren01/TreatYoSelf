@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./Card.css";
 const Card = props => {
     return (

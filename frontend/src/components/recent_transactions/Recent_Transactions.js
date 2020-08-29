@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-
+import "./Recent_Transactions.css"
 class Recent_Transactions extends Component {
     constructor(props) {
         super(props);
@@ -7,8 +7,8 @@ class Recent_Transactions extends Component {
 
     render() {
         // have a separate page for transaction details?.
-        if(this.props.loading){
-            return(<div></div>)
+        if (this.props.loading) {
+            return (<div></div>)
         }
 
         let recentFiveTransactions = this.props.transactions.slice(0, 5);
@@ -19,25 +19,25 @@ class Recent_Transactions extends Component {
                     {recentFiveTransactions.map((transaction) => (
                         <Fragment key={transaction.id}>
                             <li className="list-group-item flex-grow-1 align-items-stretch">
-                                <div className="row">
+                                <div className="row one">
                                     <div className="col-sm">
-                                        <h1>{transaction.source}</h1>
+                                        {transaction.source}
                                     </div>
                                     <div className="col-sm text-center">
-                                        <h1>{transaction.category}</h1>
+                                        {transaction.category}
                                     </div>
                                     <div className="col-sm text-right">
                                         {transaction.t_type === "Expense" ?
-                                            <h1 style={{ color: "red" }}>-${transaction.amount}</h1>
+                                            <h1 style={{ color: "red" }}>- ${transaction.amount}</h1>
                                             :
-                                            <h1 style={{ color: "limegreen" }}>+${transaction.amount}</h1>}
+                                            <h1 style={{ color: "#12A874" }}>+ ${transaction.amount}</h1>}
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-sm text-black-50">
+                                <div className="row two">
+                                    <div className="col-sm text">
                                         {transaction.date_posted}
                                     </div>
-                                    <div className="col-sm text-right text-black-50">
+                                    <div className="col-sm text-right">
                                         {transaction.t_type}
                                     </div>
                                 </div>

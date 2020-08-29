@@ -1,30 +1,306 @@
-/* nav ul li:first-child { float: left; } */
-.navbar1 .navbar
-{
+
+/* .navbarSection .topbar    {
+    position: fixed;
+    top: 0;
+    width: 100%;
     font-weight: bold;
     z-index: 5;    
-    background-color: white;
-}
-.navbar1 .nav ul {
-    display: inline-block;
-    margin-right: 1rem;
-    float: right;
+    background: white;
+    transition: 0.2s;
+} */
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap'); */
+
+
+
+.appWrapper{
+    width: 100%;
+    display: flex;
+    background: white;
 }
 
-.navbar1 .nav-item {
-    
-}
-
-.navbar1 .nav-link {
-    display: inline-block;
-    cursor: pointer;
-    color: white;
+.topbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
     font-weight: bold;
-    text-align: center;
-    font-size: 14px;
-    font-family: Quicksand, sans-serif !important;
+    z-index: 5;    
+    background: transparent;
+    transition: 0.2s;
+}
+.topbar .navbar-nav {
+  flex-direction: row;
 }
 
-.navbar1 .logoutButton{
-    background-color: greenyellow
+.topbar .navbar-brand .logo{
+    width: 35px;
+    margin-top: -10px;
+    margin-right: 3px;
+    cursor: pointer;
+    color: black;
 }
+.topbar .navbar-brand {
+    margin: 10px 0px 0px;
+    margin-left: 10px;
+    font-family: 'Quicksand';
+    color: black !important;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.topbar .nav-item {
+  margin: 10px 5px 0px;
+  flex-direction: row;  
+
+}
+
+.topbar .profile {
+  justify-content: center;
+  /* padding: 8px 10px; */
+  width: 105px;
+  height: 39px; 
+  font-family: 'Source Sans Pro';
+  color: black;
+  font-size:  16px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: white;
+  border: transparent;
+  transition: filter 300ms;
+  border-radius: 20px;
+  border-color: transparent;
+  border-width: 1.5px;
+}
+
+.topbar .profile:hover{
+  /* background-color: rgb(240, 240, 240); */
+  filter: brightness(0.92); 
+}
+
+
+
+.topbar .pfp {
+  margin-left: 10px;
+  margin-top: -5px;
+}
+.topbar .bell {
+  width: 15px;
+  /* height: 15px; */
+  margin-left: 1px;
+  margin-top: -2px;
+}
+.topbar .dropArrow {
+  width: 15px;
+}
+.topbar .topButton{
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  /* padding: 5px 10px; */
+  background-color: rgb(236, 234, 234);
+  border-radius: 50%;
+  border-color: transparent;
+  border-width: 1.5px;
+  transition: filter 300ms;
+}
+
+.topbar .opened {
+
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  background-color: rgb(162, 223, 198);
+  border-radius: 50%;
+  border-color: transparent;
+  border-width: 1.5px;
+  transition: filter 300ms;
+}
+
+.topbar .topButton:hover {
+  /* background-color: lightgrey; */
+  filter: brightness(0.9);  
+}
+
+.topbar .bellPicture {
+  margin-left: 2px;
+  margin-top: -2px;
+}
+
+.topbar .dropdown {
+  position: absolute;
+  right: -100px;
+  top: 60px;
+  width: 300px;
+  transform: translateX(-45%);
+  -webkit-box-shadow: 0 0 15px rgb(216, 216, 216);
+    -moz-box-shadow: 0 0 15px rgb(216, 216, 216);
+    box-shadow: 0 0 15px rgb(216, 216, 216);
+    background-color: white;
+  border-radius: 8px;
+  padding: 1rem;  
+  overflow: hidden;
+  z-index: 6;
+}
+.topbar .dropdown .big-menu-item {
+  margin-bottom: 20px;  
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: background 500ms;
+  padding: .5rem;
+}
+
+
+.topbar .dropdown h2 {
+  color: black;
+  font-weight: 700;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-top: 8px;
+}
+.topbar .dropdown h2::after {
+  content: "";
+  border-bottom:2px solid rgb(219, 216, 216);
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  left: 10px;
+}
+.topbar .dropdown p {
+  font-size: 15px;
+  font-weight: 600;
+  color: black;
+  margin-top: 14px;
+  margin-left: 10px;
+}
+
+.dropdown a:hover {
+  text-decoration: none;
+}
+
+.topbar .menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: background 500ms;
+  padding: .5rem;
+}
+
+.topbar .menu-item:hover {
+  background-color: rgb(236, 234, 234);
+}
+
+.topbar .icon-right {
+  margin-left: auto;
+}
+.sidebar{
+  position: fixed;
+  top: 110px;
+  left: 0;
+  background: white;
+  width: 200px;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.sidebar .wrapper {
+    margin-left: 20px;
+}
+.sidebar .sidebar-header h4 {
+    font-family: Quicksand;
+    margin-left: 20px;
+    font-size: 16px;
+    color: #9F9FAF;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+.sidebar .sidebar-header p {
+    font-family: Lato;
+    margin-left: 30px;
+    font-size: 28px;
+    color: black;
+    font-weight: normal;
+}
+
+.sidebar .sidebar-header .tranButtonStyling {
+    font-family: Quicksand;
+    font-size: 16px;
+    color: white;
+    font-weight: 600;
+    padding: 6px 14px;
+    margin-left:15px;
+    margin-top: 10px;
+    margin-bottom:20px;
+    border: 1px solid white;
+    background-color: #12A874;
+    transition: all 0.3s ease 0s; 
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+.sidebar .sidebar-header .tranButtonStyling:hover{
+    border:1px solid transparent;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    background-color: #FFBE5B;
+} 
+
+.sidebar .nav-link {
+    font-family: Quicksand;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    padding:15px;
+    padding-right: 0px;
+    margin-left: 20px;
+}
+
+.sidebar .homeIMG {
+    margin-right: 20px;
+    margin-top: -4px;
+}
+.sidebar .categoryIMG {
+  margin-right: 16px;
+  margin-top: -4px;
+}
+
+.appWrapper .sidebar ul li.home a:hover,
+.appWrapper .sidebar ul li.analytics a:hover,
+.appWrapper .sidebar ul li.transactions a:hover,
+.appWrapper .sidebar ul li.categories a:hover {
+  background-color: rgb(240, 240, 240);
+}
+.appWrapper .sidebar ul li.active a{
+  color: #12A874;
+  font-weight: bold;
+  position: relative;
+
+  
+}
+.appWrapper .sidebar ul li.active a::after {
+  content: "";
+  border-right: 2px solid #12A874;
+  position: absolute;
+  top: 10px; 
+  bottom: 10px; 
+  right: 0px;
+}
+
+.appWrapper .main_container{
+    width: 100%;
+    margin-top: 70px;
+    margin-left: 300px;
+    margin-right: 400px;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.appWrapper .main_container .item{
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 22px;
+}
+

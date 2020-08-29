@@ -6,6 +6,8 @@ import Recent_Transactions from "../../../recent_transactions/Recent_Transaction
 import DoughnutChart from "../../../charts/DoughnutChart";
 import BarChart from "../../../charts/BarChart";
 import LineChart from "../../../charts/LineChart"
+import './Overview.css';
+
 
 
 class Overview extends Component {
@@ -104,23 +106,23 @@ class Overview extends Component {
                     ctx = chart.chart.ctx;
 
                 ctx.restore();
-                let fontSize = (height / 250).toFixed(2);
-                ctx.font = fontSize + "em sans-serif";
+                let fontSize = (height / 200).toFixed(2);
+                ctx.font = fontSize + "em Quicksand";
                 ctx.textBaseline = "bottom";
                 ctx.fillStyle = '#000';
 
                 let title = chart.config.options.title,
                     textX = Math.round((width - ctx.measureText(title).width) / 2),
-                    textY = height / 2 - 20;
+                    textY = height / 2 - 5;
                 ctx.fillText(title, textX, textY);
 
-                let font2Size = (height / 120).toFixed(2);
-                ctx.font = font2Size + "em sans-serif";
+                let font2Size = (height / 180).toFixed(2);
+                ctx.font = font2Size + "em Lato";
                 ctx.textBaseline = "top";
 
                 let amount = chart.config.options.amount,
                     text2X = Math.round((width - ctx.measureText(amount).width) / 2),
-                    text2Y = height / 2 - 15;
+                    text2Y = height / 2;
 
                 ctx.fillText(amount, text2X, text2Y);
 
@@ -152,25 +154,13 @@ class Overview extends Component {
             totalText = <h1>Loading</h1>;
         } else {
             totalText =
-                <div>
-                    <h1>
-                        Current Balance
-                            </h1>
-                    <br />
-                    <h2>
-                        ${this.state.totalAmount}
-                    </h2>
-                    <br />
-                </div>;
-
-            this.chartTextSet();
+                this.chartTextSet();
         }
 
         return (
-            <div className="container">
+            <div className="overview">
                 <div className="row">
                     <h1>
-                        {console.log("Overview Render")}
                         Monthly Overview
                     </h1>
                 </div>
@@ -179,12 +169,15 @@ class Overview extends Component {
                 </div>
                 <div className="row">
                     <div>
-                        <LineChart {...this.state}/>
-                        <h2>Budgeting Vs Spending</h2>
-                        <div>
-                            <BarChart {...this.state}/>
+                        <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
+                        <div className="charts">
+                            <div className="chartContainer" style={{ position: "relative", height: "45vh", width: "40vw" }}>
+                                <BarChart {...this.state} />
+                            </div>
+                            <div >
+                                <DoughnutChart {...this.state} />
+                            </div>
                         </div>
-                        <DoughnutChart {...this.state}/>
                     </div>
                 </div>
                 <div className="row">
@@ -195,6 +188,7 @@ class Overview extends Component {
                     </div>
                 </div>
             </div>
+
         )
     }
 }

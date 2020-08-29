@@ -111,7 +111,6 @@ class Navbar2 extends Component {
                         </div>
                     </div>
                 </nav >
-
             </div>
         )
     }

@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from "react";
 import * as d3 from "d3";
-import {Doughnut} from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 
 import { interpolateColors } from "../../static/color_generator";
-
+import "./DoughnutChart.css"
 /**
  * Doughnut chart for monthly income spend and gain
  */
@@ -54,11 +54,11 @@ class DoughnutChart extends Component {
         /*
          * FOR INCOME
          */
-
-        const colorScaleIncome = d3.interpolateGreens;
+        Chart.defaults.global.legend.labels.usePointStyle = true;
+        const colorScaleIncome = d3.interpolate("white", "mediumseagreen");
         let dataLengthIncome = incomeDataset.length;
         const colorRangeInfo = {
-            colorStart: 0.3,
+            colorStart: 0.6,
             colorEnd: 1,
             useEndAsStart: false,
         };
@@ -75,14 +75,14 @@ class DoughnutChart extends Component {
         }
         let incomeOptions = {
             legend: {
-                display: false
+                display: false,
             },
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             aspectRatio: 2.5,
             cutoutPercentage: 70,
             responsive: true,
-            title: "This Month Income",
-            amount: `$${this.props.monthlyGained}`
+            title: "Income",
+            amount: `$ ${this.props.monthlyGained}`,
         }
 
         /**
@@ -111,12 +111,12 @@ class DoughnutChart extends Component {
             legend: {
                 display: false
             },
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             aspectRatio: 2.5,
             cutoutPercentage: 70,
             responsive: true,
-            title: "This Month Expense",
-            amount: `$${this.props.monthlySpent}`
+            title: "Expenses",
+            amount: `$ ${this.props.monthlySpent}`,
         }
 
 
@@ -129,8 +129,8 @@ class DoughnutChart extends Component {
     }
 
     render() {
-        if(this.props.loading){
-            return(<div></div>)
+        if (this.props.loading) {
+            return (<div></div>)
         }
 
         let incomeData = {}, incomeOptions, expenseData = {}, expenseOptions;
@@ -138,26 +138,22 @@ class DoughnutChart extends Component {
 
         return (
             <Fragment>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <Doughnut
-                                    data={incomeData}
-                                    width={350}
-                                    height={350}
-                                    options={incomeOptions} />
-                            </td>
-                            <td>
-                                <Doughnut
-                                    data={expenseData}
-                                    width={350}
-                                    height={350}
-                                    options={expenseOptions} />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="doughnutGraphs">
+                    <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
+                        <Doughnut
+                            data={incomeData}
+                            width={120}
+                            height={120}
+                            options={incomeOptions} />
+                    </div>
+                    <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
+                        <Doughnut
+                            data={expenseData}
+                            width={120}
+                            height={120}
+                            options={expenseOptions} />
+                    </div>
+                </div>
             </Fragment>)
     }
 }

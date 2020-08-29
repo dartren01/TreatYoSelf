@@ -10,6 +10,7 @@ import darrenIMG from "./images/darren.png";
 import andrewIMG from "./images/andrew.jpg";
 import linkedinIMG from "./linkedin.svg";
 import facebookIMG from "./facebook.svg";
+import "../../../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 class Team extends Component {
     constructor(props) {

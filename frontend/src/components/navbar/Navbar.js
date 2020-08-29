@@ -1,18 +1,152 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useRef, Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
+import axios from "axios";
 import { useLocation } from 'react-router-dom'
+import logo from "./images/logo.svg";
+import homeIMG from "./images/home.svg";
+import transactionsIMG from "./images/transactions.svg";
+import categoryIMG from "./images/category.svg";
+import analyticsIMG from "./images/analytics.svg";
+
+import gHomeIMG from "./images/gHome.svg";
+import gTransactionsIMG from "./images/gTransactions.svg";
+import gCategoryIMG from "./images/gCategory.svg";
+import gAnalyticsIMG from "./images/gAnalytics.svg";
+
+import pfp from "./images/profilePic.svg";
+import bell from "./images/bell.svg";
+import dropArrow from "./images/dropArrow.svg";
+
+import rightArrow from "./images/rightArrow.svg";
+import logout from "./images/logout.svg";
+import settings from "./images/settings.svg";
+import help from "./images/help.svg";
 
 import "./Navbar.css"
+
+const NavItem = (props) => {
+    const [open, setOpen] = useState(false);
+    const [color, setColor] = useState(false);
+    const node = useRef();
+    useEffect(() => {
+        // add when mounted
+        document.addEventListener("mousedown", handleClick);
+        // return function to be called when unmounted
+        return () => {
+            document.removeEventListener("mousedown", handleClick);
+        };
+    }, []);
+    const handleClick = e => {
+        if (!node.current.contains(e.target)) {
+            setOpen(false);
+            setColor(false);
+        }
+    }
+
+    return (
+        <div ref={node}>
+            <li className="nav-item">
+                <button onClick={() => setOpen(!open)} onMouseDown={() => setColor(!color)} className={color ? props.opened : props.className}>
+                    {props.personName}
+                    <img src={props.image} className={props.imageName}></img>
+                </button>
+                {open && props.children}
+            </li>
+        </div>
+    );
+}
+
+const DropdownMenu = (props) => {
+
+    return (
+        <div className="dropdown">{props.children}</div >
+    )
+}
+const DropdownItem = (props) => {
+    return (
+        <a href='#' className={props.className} onClick={props.onClick}>
+            <span className="icon-button">{props.leftIcon}</span>
+            {props.children}
+            <span className="icon-right">{props.rightIcon}</span>
+        </a>
+    );
+}
 
 class Navbar extends Component {
     constructor(props) {
         super(props);
+        this.setOpen = this.setOpen.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+        this.getPage = this.getPage.bind(this);
         this.state = {
+            loading: true,
+            totalAmount: "",
+            isHome: false,
+            isAnalytics: false,
+            isTransactions: false,
+            isCategories: false,
+            open: false,
         };
+    }
+    getPage = () => {
+        if (this.props.history.location.pathname === "/") {
+            console.log("home")
+            this.setState({ isHome: true })
+            this.setState({ isAnalytics: false })
+            this.setState({ isTransactions: false })
+            this.setState({ isCategories: false })
+        } else if (this.props.history.location.pathname === "/analytics") {
+            console.log("analytics")
+            this.setState({ isHome: false })
+            this.setState({ isAnalytics: true })
+            this.setState({ isTransactions: false })
+            this.setState({ isCategories: false })
 
-        this.handleLogout = this.handleLogout.bind(this)
+        } else if (this.props.history.location.pathname === "/budget/all_transactions/") {
+            console.log("transactions")
+            this.setState({ isHome: false })
+            this.setState({ isAnalytics: false })
+            this.setState({ isTransactions: true })
+            this.setState({ isCategories: false })
+        } else if (this.props.history.location.pathname === "/category") {
+            console.log("category")
+            this.setState({ isHome: false })
+            this.setState({ isAnalytics: false })
+            this.setState({ isTransactions: false })
+            this.setState({ isCategories: true })
+        }
+    }
+    componentDidMount = () => {
+        this.getPage();
+        console.log("Navbar componentDidMount");
+        console.log(this.props.firstname, this.props.lastname)
+        window.addEventListener("hashchange", this.getPage);
+        axios.get(`/api/total/get`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        })
+            .then(res => {
+                let profileObj = res.data[0];
+                console.log(profileObj)
+                this.setState({
+                    totalAmount: profileObj.total_amount,
+                    loading: false,
+                });
+            })
+            .catch(err => {
+                console.log("total get error: " + err)
+                this.setState({
+                    loading: false,
+                });
+            })
+
+    }
+    componentWillUnmount = () => {
+        window.removeEventListener("hashchange", this.getPage);
     }
 
     handleLogout = () => {
@@ -22,52 +156,164 @@ class Navbar extends Component {
         window.location.reload();
     };
 
+    setOpen = () => {
+        this.setState({ open: !this.state.open })
+        console.log(this.state.open)
+    }
+
     render() {
-        console.log(this.props.history.location.pathname);
-        let leftNavBar;
-        if (this.props.history.location.pathname !== "/total") {
-            leftNavBar = <React.Fragment>
-                <Link to="/" className="nav-link">Home</Link>
-                <Link to="/total" className="nav-link"> Total </Link>
-                <Link to="/budget/all_transactions/" className="nav-link">All Transactions</Link>
-                <Link to="/budget/create/" className="nav-link">New Transaction</Link>
-                <Link to="/category" className="nav-link">Category</Link>
-            </React.Fragment>;
+        let header;
+        if (this.state.loading) {
+            header = <h1>Loading</h1>;
+        } else {
+            header =
+                <div className="sidebar-header">
+                    <h4>
+                        Balance
+                    </h4>
+                    <p>
+                        $ {this.state.totalAmount}
+                    </p>
+                    <Link to="/budget/create/">
+                        <button className="tranButtonStyling">
+                            New Transaction
+                            </button>
+                    </Link>
+                </div>;
         }
+
+        let whichHome;
+        if (this.state.isHome) {
+            whichHome = gHomeIMG;
+        } else {
+            whichHome = homeIMG;
+        }
+        let whichAnalytics;
+        if (this.state.isAnalytics) {
+            whichAnalytics = gAnalyticsIMG;
+        } else {
+            whichAnalytics = analyticsIMG;
+        }
+        let whichTransactions;
+        if (this.state.isTransactions) {
+            whichTransactions = gTransactionsIMG;
+        } else {
+            whichTransactions = transactionsIMG;
+        }
+        let whichCategories;
+        if (this.state.isCategories) {
+            whichCategories = gCategoryIMG;
+        } else {
+            whichCategories = categoryIMG;
+        }
+        // let leftNavBar;
+        // if (this.props.history.location.pathname !== "/total") {
+        //     leftNavBar = <React.Fragment>
+        //     </React.Fragment>;
+        // }
         return (
-            <div className="navbar1">
-                <nav className="navbar navbar-dark bg-dark navbar-expand-sm" >
-                    {console.log("Navbar Render")}
-                    {leftNavBar}
-                    {/* <div className="w-100"> */}
-                    <ul className="navbar-nav ml-auto">
-                        {this.props.isLoggedIn ?
-                            <React.Fragment>
-                                <li className="nav-item">
-                                    <button className="logoutButton"
-                                        onClick={() => this.handleLogout()}>
-                                        Logout
-                                    </button>
-                                </li>
-                            </React.Fragment>
-                            :
-                            <React.Fragment>
-                                <li className="nav-item">
-                                    <Link to="/register" className="nav-link" >
-                                        Register
-                                    </Link>
-                                </li>
-                                <li className="nav-item">
-                                    <Link to="/login" className="nav-link">
-                                        Login
-                                    </Link>
-                                </li>
-                            </React.Fragment>
-                        }
-                    </ul>
-                    {/* </div> */}
+
+            <React.Fragment>
+                <div className="topbar">
+                    <nav className="navbar navbar-expand-xl navbar-dark" >
+                        <div className="container-fluid">
+                            <div className="navbar-brand">
+                                <img src={logo} className="logo" /> Treat Yo'Self
+                            </div>
+                            <ul className="navbar-nav ml-auto">
+                                <NavItem
+                                    className="profile"
+                                    image={pfp}
+                                    imageName="pfp"
+                                    personName={this.props.firstname}
+                                    opened="profile"
+                                >
+                                    <DropdownMenu>
+
+                                    </DropdownMenu>
+                                </NavItem>
+                                <NavItem
+                                    className="topButton"
+                                    image={bell}
+                                    imageName="bell"
+                                    opened="opened"
+                                >
+                                    <DropdownMenu>
+
+                                    </DropdownMenu>
+                                </NavItem>
+                                <NavItem
+                                    className="topButton"
+                                    image={dropArrow}
+                                    imageName="dropArrow"
+                                    opened="opened"
+                                >
+                                    <DropdownMenu>
+                                        <DropdownItem
+                                            className="big-menu-item">
+                                            <img className="bigPfp" src={pfp}></img>
+                                            <h2>{this.props.firstname + " " + this.props.lastname}</h2>
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            className="menu-item"
+                                            leftIcon={<img src={settings}></img>}
+                                            rightIcon={<img src={rightArrow}></img>}>
+                                            <p>
+                                                Settings &amp; Privacy
+                                            </p>
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            className="menu-item"
+                                            leftIcon={<img src={help}></img>}
+                                            rightIcon={<img src={rightArrow}></img>}>
+                                            <p>
+                                                Help &amp; Support
+                                            </p>
+                                        </DropdownItem>
+                                        <DropdownItem
+                                            className="menu-item"
+                                            leftIcon={<img src={logout}></img>}
+                                            onClick={this.handleLogout}>
+                                            <p>
+                                                Logout
+                                            </p>
+                                        </DropdownItem >
+                                    </DropdownMenu>
+                                </NavItem>
+
+                            </ul>
+                        </div>
+                    </nav >
+                </div >
+                <nav className="sidebar" id="sidebar">
+                    <div className="wrapper">
+                        {header}
+                        <ul className="list-unstyled components">
+                            <li className={this.state.isHome ? "active" : "home"}>
+
+                                <Link to="/" className="nav-link">
+                                    <img src={whichHome} className="homeIMG" /> Home
+                                </Link>
+                            </li>
+                            <li className={this.state.isAnalytics ? "active" : "analytics"}>
+                                <Link to="/analytics" className="nav-link">
+                                    <img src={whichAnalytics} className="homeIMG" /> Analytics
+                                </Link>
+                            </li>
+                            <li className={this.state.isTransactions ? "active" : "transactions"}>
+                                <Link to="/budget/all_transactions/" className="nav-link">
+                                    <img src={whichTransactions} className="homeIMG" /> Transactions
+                                </Link>
+                            </li>
+                            <li className={this.state.isCategories ? "active" : "categories"}>
+                                <Link to="/category" className="nav-link">
+                                    <img src={whichCategories} className="categoryIMG" /> Categories
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
-            </div>
+            </React.Fragment >
         )
     }
 

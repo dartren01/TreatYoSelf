@@ -17,7 +17,7 @@
 .navbar2 .navbar.active {
     -webkit-box-shadow: 0 8px 6px -6px #999;
     -moz-box-shadow: 0 8px 6px -6px #999;
-    box-shadow: 0 8px px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
     background-color: white;
 }
 .navbar2 .nav-link {

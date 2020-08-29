@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {Bar} from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
 /**
  * Budget VS Spending Chart
@@ -34,19 +34,38 @@ class BarChart extends Component {
         let expenseBarData = {
             datasets: [{
                 data: expenseBudgets,
-                backgroundColor: "green",
-                label: 'Budget'
+                backgroundColor: "#12A874",
+                label: 'Budget',
             }, {
                 data: expenseSpending,
-                backgroundColor: "rgba(232, 187, 39, 1)",
-                label: 'Spending'
+                backgroundColor: "#FFBE5B",
+                label: 'Spending',
             }],
             labels: expenseBudgetLabels,
             borderWidth: 1,
         }
         let barOptions = {
             legend: {
-                display: true
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: "black",
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "black",
+                        beginAtZero: true,
+                        maxTicksLimit: 10,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "black",
+
+                    }
+                }]
             },
             maintainAspectRatio: false,
             aspectRatio: 2.5,
@@ -64,8 +83,8 @@ class BarChart extends Component {
 
 
     render() {
-        if(this.props.loading){
-            return(<div></div>)
+        if (this.props.loading) {
+            return (<div></div>)
         }
         let expenseBarData = {}, expenseBudgetOptions;
         [expenseBarData, expenseBudgetOptions] = this.createBarChart();
@@ -73,8 +92,6 @@ class BarChart extends Component {
             <Fragment>
                 <Bar
                     data={expenseBarData}
-                    width={300}
-                    height={200}
                     options={expenseBudgetOptions} />
             </Fragment>)
     }

@@ -1,0 +1,29 @@
+.overview h1 {
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    font-size:34px;
+}
+.overview h4 {
+    font-family: Quicksand;
+    font-weight: bolder;
+    font-size:18px;
+    margin-left: 10px;  
+}
+.overview .spendingCategory {
+    font-family: Quicksand;
+    font-weight: normal;
+    font-size:12px;
+    color: grey;
+}
+.overview .charts {
+    display: flex;
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
+.overview h2 {
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    font-size:24px;     
+    margin-top: 40px;
+}
