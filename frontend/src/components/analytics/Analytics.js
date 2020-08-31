@@ -4,8 +4,10 @@ import axios from "axios";
 
 import Recent_Transactions from "../recent_transactions/Recent_Transactions";
 import DoughnutChart from "../charts/DoughnutChart";
-import BarChart from "../charts/BarChart";
-import LineChart from "../charts/LineChart"
+import BarChart2 from "../charts/BarChart2";
+import LineChart from "../charts/LineChart";
+import SpendingChart from "../charts/SpendingChart";
+import CashFlow from "../charts/CashFlow";
 import './Analytics.css';
 
 
@@ -18,7 +20,6 @@ class Analytics extends Component {
             totalAmount: "",
             monthlySpent: "",
             monthlyGained: "",
-            transactions: [],
             categoryObj: "",
             monthYearDate: "",
             loading: true,
@@ -79,73 +80,6 @@ class Analytics extends Component {
 
 
         // get transactions, pass to recent transactions js
-        axios.get(`/budget/all_transactions`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
-        })
-            .then(res => {
-                this.setState({
-                    transactions: res.data,
-                });
-            })
-            .catch(err => {
-                console.log("transaction get error: " + err)
-            })
-    };
-
-    chartTextSet = () => {
-        Chart.pluginService.register({
-            beforeDraw: function (chart) {
-                if (chart.config.type !== "doughnut") {
-                    return;
-                }
-                let width = chart.chart.width,
-                    height = chart.chart.height,
-                    ctx = chart.chart.ctx;
-
-                ctx.restore();
-                let fontSize = (height / 200).toFixed(2);
-                ctx.font = fontSize + "em Quicksand";
-                ctx.textBaseline = "bottom";
-                ctx.fillStyle = '#000';
-
-                let title = chart.config.options.title,
-                    textX = Math.round((width - ctx.measureText(title).width) / 2),
-                    textY = height / 2 - 5;
-                ctx.fillText(title, textX, textY);
-
-                let font2Size = (height / 180).toFixed(2);
-                ctx.font = font2Size + "em Lato";
-                ctx.textBaseline = "top";
-
-                let amount = chart.config.options.amount,
-                    text2X = Math.round((width - ctx.measureText(amount).width) / 2),
-                    text2Y = height / 2;
-
-                ctx.fillText(amount, text2X, text2Y);
-
-                ctx.save();
-            },
-
-            afterDraw: function (chart) {
-                if (chart.data.datasets.length === 0) {
-                    // No data is present
-                    let ctx = chart.chart.ctx;
-                    let width = chart.chart.width;
-                    let height = chart.chart.height;
-                    chart.clear();
-
-                    ctx.save();
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.font = "16px normal 'Helvetica Nueue'";
-                    ctx.fillText('No data to display', width / 2, height / 2);
-                    ctx.restore();
-                }
-            }
-        });
     }
 
     render() {
@@ -157,19 +91,21 @@ class Analytics extends Component {
                         <LineChart {...this.state} />
                         <div className="charts">
                             <div>
-                                <BarChart {...this.state} />
+                                <BarChart2 {...this.state} />
                             </div>
                             <div>
-                                <DoughnutChart {...this.state} />
+                                <SpendingChart {...this.state}
+                                    monthName={this.props.monthName}
+                                />
+                            </div>
+                            <div>
+                                <CashFlow
+                                    monthName={this.props.monthName}
+                                    monthlyGained={this.state.monthlyGained}
+                                    monthlySpent={this.state.monthlySpent}
+                                ></CashFlow>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="flex-fill">
-                        <h2>Recent Transactions</h2>
-                        <Recent_Transactions
-                            transactions={this.state.transactions} />
                     </div>
                 </div>
             </div>

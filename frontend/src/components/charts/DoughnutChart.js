@@ -142,15 +142,15 @@ class DoughnutChart extends Component {
                     <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
                         <Doughnut
                             data={incomeData}
-                            width={120}
-                            height={120}
+                            width={110}
+                            height={110}
                             options={incomeOptions} />
                     </div>
                     <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
                         <Doughnut
                             data={expenseData}
-                            width={120}
-                            height={120}
+                            width={110}
+                            height={110}
                             options={expenseOptions} />
                     </div>
                 </div>

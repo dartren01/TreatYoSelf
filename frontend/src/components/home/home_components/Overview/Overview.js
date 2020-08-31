@@ -161,7 +161,7 @@ class Overview extends Component {
             <div className="overview">
                 <div className="row">
                     <h1>
-                        Monthly Overview
+                        {this.props.monthName} Overview
                     </h1>
                 </div>
                 <div className="row">

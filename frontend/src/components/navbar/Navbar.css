@@ -1,17 +1,4 @@
 
-/* .navbarSection .topbar    {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    font-weight: bold;
-    z-index: 5;    
-    background: white;
-    transition: 0.2s;
-} */
-/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700&display=swap'); */
-
-
-
 .appWrapper{
     width: 100%;
     display: flex;
@@ -289,10 +276,14 @@
 
 .appWrapper .main_container{
     width: 100%;
-    margin-top: 70px;
+    margin-top: 0;
     margin-left: 300px;
-    margin-right: 400px;
-    padding: 15px;
+    margin-right: 350px;
+    margin-bottom: 0;
+    border: 1px solid rgb(224, 224, 224); 
+    border-top: none;    
+    padding: 30px;
+    padding-top: 100px;
     transition: all 0.3s ease;
 }
 
@@ -304,3 +295,6 @@
   line-height: 22px;
 }
 
+.overview .row {
+  margin-left: 0px;
+}

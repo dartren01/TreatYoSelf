@@ -83,39 +83,24 @@ class Navbar extends Component {
         this.state = {
             loading: true,
             totalAmount: "",
-            isHome: false,
-            isAnalytics: false,
-            isTransactions: false,
-            isCategories: false,
+            whichPage: 1,
             open: false,
         };
     }
     getPage = () => {
         if (this.props.history.location.pathname === "/") {
             console.log("home")
-            this.setState({ isHome: true })
-            this.setState({ isAnalytics: false })
-            this.setState({ isTransactions: false })
-            this.setState({ isCategories: false })
+            this.setState({ whichPage: 1 })
         } else if (this.props.history.location.pathname === "/analytics") {
             console.log("analytics")
-            this.setState({ isHome: false })
-            this.setState({ isAnalytics: true })
-            this.setState({ isTransactions: false })
-            this.setState({ isCategories: false })
+            this.setState({ whichPage: 2 })
 
         } else if (this.props.history.location.pathname === "/budget/all_transactions/") {
             console.log("transactions")
-            this.setState({ isHome: false })
-            this.setState({ isAnalytics: false })
-            this.setState({ isTransactions: true })
-            this.setState({ isCategories: false })
+            this.setState({ whichPage: 3 })
         } else if (this.props.history.location.pathname === "/category") {
             console.log("category")
-            this.setState({ isHome: false })
-            this.setState({ isAnalytics: false })
-            this.setState({ isTransactions: false })
-            this.setState({ isCategories: true })
+            this.setState({ whichPage: 4 })
         }
     }
     componentDidMount = () => {
@@ -183,37 +168,38 @@ class Navbar extends Component {
         }
 
         let whichHome;
-        if (this.state.isHome) {
+        if (this.state.whichPage === 1) {
             whichHome = gHomeIMG;
         } else {
             whichHome = homeIMG;
         }
         let whichAnalytics;
-        if (this.state.isAnalytics) {
+        if (this.state.whichPage === 2) {
             whichAnalytics = gAnalyticsIMG;
         } else {
             whichAnalytics = analyticsIMG;
         }
         let whichTransactions;
-        if (this.state.isTransactions) {
+        if (this.state.whichPage === 3) {
             whichTransactions = gTransactionsIMG;
         } else {
             whichTransactions = transactionsIMG;
         }
         let whichCategories;
-        if (this.state.isCategories) {
+        if (this.state.whichPage === 4) {
             whichCategories = gCategoryIMG;
         } else {
             whichCategories = categoryIMG;
         }
-        // let leftNavBar;
-        // if (this.props.history.location.pathname !== "/total") {
-        //     leftNavBar = <React.Fragment>
-        //     </React.Fragment>;
-        // }
+        let isTotal;
+        if (this.props.history.location.pathname === "/total") {
+            return (<React.Fragment>
+            </React.Fragment>)
+        }
         return (
 
             <React.Fragment>
+                {isTotal}
                 <div className="topbar">
                     <nav className="navbar navbar-expand-xl navbar-dark" >
                         <div className="container-fluid">
@@ -289,23 +275,23 @@ class Navbar extends Component {
                     <div className="wrapper">
                         {header}
                         <ul className="list-unstyled components">
-                            <li className={this.state.isHome ? "active" : "home"}>
+                            <li className={this.state.whichPage === 1 ? "active" : "home"}>
 
                                 <Link to="/" className="nav-link">
                                     <img src={whichHome} className="homeIMG" /> Home
                                 </Link>
                             </li>
-                            <li className={this.state.isAnalytics ? "active" : "analytics"}>
+                            <li className={this.state.whichPage === 2 ? "active" : "analytics"}>
                                 <Link to="/analytics" className="nav-link">
                                     <img src={whichAnalytics} className="homeIMG" /> Analytics
                                 </Link>
                             </li>
-                            <li className={this.state.isTransactions ? "active" : "transactions"}>
+                            <li className={this.state.whichPage === 3 ? "active" : "transactions"}>
                                 <Link to="/budget/all_transactions/" className="nav-link">
                                     <img src={whichTransactions} className="homeIMG" /> Transactions
                                 </Link>
                             </li>
-                            <li className={this.state.isCategories ? "active" : "categories"}>
+                            <li className={this.state.whichPage === 4 ? "active" : "categories"}>
                                 <Link to="/category" className="nav-link">
                                     <img src={whichCategories} className="categoryIMG" /> Categories
                                 </Link>

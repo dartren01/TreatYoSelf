@@ -16,6 +16,7 @@ class Category extends Component {
             category_type: ["Income", "Expense"],
 
             income_categories: {},
+            income_categories_budget: {},
             income_categories_monthly: {},
 
             expense_categories: {},
@@ -59,6 +60,7 @@ class Category extends Component {
             .then(res => {
                 this.setState({
                     income_categories: res.data[0].income_categories,
+                    income_categories_budget: res.data[0].income_categories_budget,
                     income_categories_monthly: res.data[0].income_categories_monthly,
 
                     expense_categories: res.data[0].expense_categories,
@@ -67,9 +69,7 @@ class Category extends Component {
 
                     categories: res.data[0].income_categories,
                     categories_monthly: res.data[0].income_categories_monthly,
-
-                    // budget_category: Object.keys(res.data[0].expense_categories_budget)[0],
-                    // budget: res.data[0].expense_categories_budget[Object.keys(res.data[0].expense_categories_budget)[0]],
+                    categories_budget: res.data[0].income_categories_budget,
                     delete_category: Object.keys(res.data[0].income_categories)[0],
                     id: res.data[0].id
                 })
@@ -105,12 +105,12 @@ class Category extends Component {
             this.setState((prev, props) => ({
                 categoryType: "Income",
                 categories: prev.income_categories,
-                categories_budget: "",
+                categories_budget: prev.income_categories_budget,
                 categories_monthly: prev.income_categories_monthly,
 
                 new_category: "",
-                budget_category: "",
-                budget: 0,
+                budget_category: Object.keys(prev.income_categories_budget)[0],
+                budget: prev.income_categories_budget[Object.keys(prev.income_categories_budget)[0]],
 
                 delete_category: Object.keys(prev.income_categories)[0]
             }))
@@ -146,9 +146,15 @@ class Category extends Component {
             }
         })
             .then(res => {
-                this.setState({
-                    budget: res.data[0].expense_categories_budget[this.state.budget_category]
-                })
+                if (this.state.categoryType === "Income") {
+                    this.setState({
+                        budget: res.data[0].income_categories_budget[this.state.budget_category]
+                    })
+                } else {
+                    this.setState({
+                        budget: res.data[0].expense_categories_budget[this.state.budget_category]
+                    })
+                }
             })
     }
 
@@ -206,14 +212,15 @@ class Category extends Component {
                         deleting: 0,
 
                         income_categories: res.data.income_categories,
+                        income_categories_budget: res.data.income_categories_budget,
                         income_categories_monthly: res.data.income_categories_monthly,
 
                         categories: res.data.income_categories,
-                        categories_budget: {},
+                        categories_budget: res.data.income_categories_budget,
                         categories_monthly: res.data.income_categories_monthly,
-                        budget_category: "",
-                        budget: 0,
-                        delete_category: Object.keys(res.data.income_categories)[0],
+                        budget_category: Object.keys(res.data.income_categories_budget)[0],
+                        budget: res.data.income_categories_budget[Object.keys(res.data.income_categories_budget)[0]],
+                        delete_category: Object.keys(res.data.income_categories_budget)[0],
                     })
 
                 } else {
@@ -250,13 +257,19 @@ class Category extends Component {
 
     render() {
         console.log("Category Render")
+        let budgetGoal;
+        if (this.state.categoryType === "Income") {
+            budgetGoal = "Income Goal"
+        } else {
+            budgetGoal = "Spending Budget"
+        }
         return (
-            <div>
+            <div className="categoryPage">
                 <h1>Category Page</h1>
 
                 <Form className="form-group name1 col-md-12">
                     <Form.Group controlId="formCategoryType">
-                        <Form.Label>Category Type</Form.Label>
+                        <Form.Label>Transaction Type</Form.Label>
                         <Form.Control
                             as="select"
                             type="categoryType"
@@ -296,7 +309,7 @@ class Category extends Component {
                     <div className="budgetForm">
                         <div className="form-group name1 col-md-6">
                             <Form.Group controlId="formCategoryBudget">
-                                <Form.Label>Category Budget</Form.Label>
+                                <Form.Label>Category</Form.Label>
                                 <Form.Control
                                     as="select"
                                     type="budget_category"
@@ -314,7 +327,7 @@ class Category extends Component {
 
                         <div className="form-group name2 col-md-6">
                             <Form.Group controlId="formBasicBudget">
-                                <Form.Label>Budget</Form.Label>
+                                <Form.Label>{budgetGoal}</Form.Label>
                                 <Form.Control
                                     type="budget"
                                     name="budget"

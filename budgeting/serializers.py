@@ -13,7 +13,7 @@ class CategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categories
         fields = ("expense_categories", "expense_categories_budget",
-                  "expense_categories_monthly", "income_categories", "income_categories_monthly")
+                  "expense_categories_monthly", "income_categories", "income_categories_budget", "income_categories_monthly")
 
     def create(self, validated_data):
         categories = Categories.objects.create(
@@ -39,6 +39,10 @@ class CategoriesSerializer(serializers.ModelSerializer):
                 "Work": 0.0,
                 "Stocks": 0.0,
             },
+            income_categories_budget={
+                "Work": 0.0,
+                "Stocks": 0.0,
+            },
 
             income_categories_monthly={
                 "Work": {},
@@ -60,6 +64,8 @@ class CategoriesSerializer(serializers.ModelSerializer):
             "expense_categories_monthly")
 
         instance.income_categories = validated_data.get("income_categories")
+        instance.income_categories_budget = validated_data.get(
+            "income_categories_budget")
         instance.income_categories_monthly = validated_data.get(
             "income_categories_monthly")
 

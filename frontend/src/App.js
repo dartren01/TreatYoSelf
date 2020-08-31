@@ -114,7 +114,12 @@ class App extends Component {
 
   // Maybe we can use private routes
   render() {
-
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+    let date = new Date();
+    let month = date.getMonth();
+    let monthName = monthNames[month];
 
     // fix this, when reload page, component did mount does not get called
     // so the page stays blank
@@ -162,12 +167,14 @@ class App extends Component {
                   deleteLogin={this.deleteLogin}
                 />
                 <div className="main_container">
+
                   <Switch>
                     <Route exact path="/" render={props => (
                       <Overview {...props}
                         username={this.state.username}
                         isLoggedIn={this.state.isLoggedIn}
-                        checkLogin={this.checkLogin} />
+                        checkLogin={this.checkLogin}
+                        monthName={monthName} />
                     )} />
                     <Route exact path="/budget/all_transactions" render={props => (
                       <All_Transactions {...props} />
@@ -200,6 +207,7 @@ class App extends Component {
                     )} />
                     <Route path="/analytics" render={props => (
                       <Analytics {...props}
+                        monthName={monthName}
                       />
                     )} />
                     <Route path="/category" render={props => (
