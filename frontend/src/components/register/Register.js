@@ -7,7 +7,6 @@ import Cookies from "js-cookie"
 import "./Register.css"
 
 import Navbar2 from "../navbar2/Navbar2"
-import Login from "../login/Login"
 
 class Register extends Component {
     constructor(props) {
@@ -73,7 +72,6 @@ class Register extends Component {
     render() {
         return (
             <div>
-                <Navbar2 />
                 <div className = "registerPage">
                     {console.log("Register Render")}
                     <Form className="col-sm-8">
@@ -138,12 +136,6 @@ class Register extends Component {
                             onClick={(e) => this.handleRegister(e)}>
                             Register
                         </Button>
-                        <p>
-                            <Link to="/login">Login here</Link>
-                            <br />
-                            {this.state.errorCheck}
-                            {console.log(this.state.errorCheck)}
-                        </p>
                     </Form>
                 </div>
             </div>

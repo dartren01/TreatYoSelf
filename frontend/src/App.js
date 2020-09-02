@@ -15,7 +15,6 @@ import './App.css';
 import Navbar from "./components/navbar/Navbar";
 import Landing from "./components/home/home_components/Landing/Landing";
 import Overview from "./components/home/home_components/Overview/Overview";
-import Login from "./components/login/Login"
 import Register from "./components/register/Register"
 import Total from "./components/total/Total"
 import All_Transactions from "./components/all_transactions/All_Transactions"
@@ -23,6 +22,8 @@ import Create_Transaction from "./components/create_transaction/Create_Transacti
 import Update_Transaction from "./components/update_transaction/Update_Transaction";
 import Category from "./components/category/Category"
 import Analytics from "./components/analytics/Analytics";
+
+
 
 
 // Notes: Need to figure out how to login in before rendering components.
@@ -114,12 +115,14 @@ class App extends Component {
 
   // Maybe we can use private routes
   render() {
+    console.log("App Rendering")
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
     let date = new Date();
     let month = date.getMonth();
     let monthName = monthNames[month];
+    
 
     // fix this, when reload page, component did mount does not get called
     // so the page stays blank
@@ -140,7 +143,7 @@ class App extends Component {
             <React.Fragment>
               <Switch>
                 <Route exact path="/" render={props => (
-                  <Landing />
+                  <Landing {...props}/>
                 )} />
                 <Route exact path="/register" render={props => (
                   <Register {...props}
@@ -191,12 +194,6 @@ class App extends Component {
 
                     <Route path="/register" render={props => (
                       <Register {...props}
-                        setLogin={this.setLogin}
-                      />
-                    )} />
-
-                    <Route path="/login" render={props => (
-                      <Login {...props}
                         setLogin={this.setLogin}
                       />
                     )} />
