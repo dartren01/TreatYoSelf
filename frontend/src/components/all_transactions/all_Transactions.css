@@ -2,6 +2,17 @@
     margin: 2vw;
 }
 
+.alltrans .main-header{
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    font-size:34px;
+}
+
+.alltrans h1{
+    font-family: Quicksand;
+    font-weight: bolder;
+}
+
 .pagination {
     margin-top: 4vh;
     margin-bottom: 2vh;
@@ -27,15 +38,19 @@
 
 .list-group-item-t  {
     border: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    list-style-type: none;
+}
+
+.list-group-item-h  {
+    border: none;
     list-style-type: none;
 }
 
 .trans-headings {
     flex-flow: row;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-top: 20px;
     font-size: 20px;
 }
 

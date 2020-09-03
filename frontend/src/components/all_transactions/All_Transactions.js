@@ -134,8 +134,8 @@ class All_Transactions extends Component {
         const currentTransactions = this.state.transactions.slice(indexOfFirstPost, indexOfLastPost);
         console.log("rerender")
         return (
-            <div>
-                <h1>
+            <div className="alltrans">
+                <h1 className="main-header">
                     All Transactions
                 </h1>
                 {this.state.loading === true ?
@@ -162,13 +162,13 @@ class All_Transactions extends Component {
                             </Form>
                         </div>
                         <ul className="list-group trans-headings row">
-                            <li className="list-group-item-t col-sm">
+                            <li className="list-group-item-h col-sm">
                                 Name
                             </li>
-                            <li className="list-group-item-t col-sm text-center">
+                            <li className="list-group-item-h col-sm text-center">
                                 Category
                             </li>
-                            <li className="list-group-item-t col-sm text-right">
+                            <li className="list-group-item-h col-sm text-right">
                                 Amount
                             </li>
                         </ul>

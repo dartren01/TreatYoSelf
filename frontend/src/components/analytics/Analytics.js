@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Recent_Transactions from "../recent_transactions/Recent_Transactions";
 import DoughnutChart from "../charts/DoughnutChart";
-import BarChart2 from "../charts/BarChart2";
 import LineChart from "../charts/LineChart";
 import SpendingChart from "../charts/SpendingChart";
 import CashFlow from "../charts/CashFlow";
@@ -97,9 +96,6 @@ class Analytics extends Component {
                             <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
                             <LineChart {...this.state} />
                             <div className="charts">
-                                <div>
-                                    <BarChart2 {...this.state} />
-                                </div>
                                 <div>
                                     <SpendingChart {...this.state}
                                         monthName={this.props.monthName}

@@ -5,7 +5,7 @@ import axios from "axios";
 import Recent_Transactions from "../../../recent_transactions/Recent_Transactions";
 import DoughnutChart from "../../../charts/DoughnutChart";
 import BarChart from "../../../charts/BarChart";
-import LineChart from "../../../charts/LineChart"
+import BarChart2 from "../../../charts/BarChart2";
 import './Overview.css';
 
 
@@ -149,13 +149,7 @@ class Overview extends Component {
     }
 
     render() {
-        let totalText;
-        if (this.state.loading) {
-            totalText = <h1>Loading</h1>;
-        } else {
-            totalText =
-                this.chartTextSet();
-        }
+        let totalText = this.chartTextSet();
 
         return (
             <div className="overview">
@@ -164,27 +158,36 @@ class Overview extends Component {
                         {this.props.monthName} Overview
                     </h1>
                 </div>
-                <div className="row">
-                    {totalText}
-                </div>
-                <div className="row">
-                    <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
-                    <div className="charts">
-                        <div className="chartContainer" style={{ position: "relative", height: "45vh", width: "40vw" }}>
-                            <BarChart {...this.state} />
+                {this.state.loading === true ?
+                    <h1>
+                        Loading . . .
+                    </h1> :
+                    <div>
+                        <div className="row">
+                            {totalText}
                         </div>
-                        <div >
-                            <DoughnutChart {...this.state} />
+                        <div className="row">
+                            <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
+                            <div className="charts">
+                                <div className="chartContainer" style={{ position: "relative", height: "45vh", width: "40vw" }}>
+                                    <BarChart {...this.state} />
+                                </div>
+                                <div>
+                                    <BarChart2 {...this.state} />
+                                </div>
+                                <div>
+                                    <DoughnutChart {...this.state} />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="flex-fill">
-                        <h2>Recent Transactions</h2>
-                        <Recent_Transactions
-                            transactions={this.state.transactions} />
-                    </div>
-                </div>
+                        <div className="row">
+                            <div className="flex-fill">
+                                <h2>Recent Transactions</h2>
+                                <Recent_Transactions
+                                    transactions={this.state.transactions} />
+                            </div>
+                        </div>
+                    </div>}
             </div>
 
         )
