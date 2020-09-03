@@ -6,12 +6,10 @@ class Transaction extends Component {
     }
 
     render(){
-        const transactions = this.props.curTrans;
-
         return(
             <Fragment>
                 <ul className="list-group flex-column ">
-                            {transactions.map((transaction) => (
+                            {this.props.curTrans.map((transaction) => (
                                 <Fragment key={transaction.id}>
                                     <li className="list-group-item flex-grow-1 align-items-stretch">
                                         <div className="row">
@@ -38,7 +36,7 @@ class Transaction extends Component {
                                         </div>
                                         <div className="row pt-2">
                                             <div className="col-lg text-black-50 text-wrap">
-                                                {transaction.notes}
+                                                Notes: {transaction.notes}
                                             </div>
                                             <div>
                                                 <button onClick={() => this.props.handleUpdateRedirect(transaction.id)} className="btn btn-info">Update</button>

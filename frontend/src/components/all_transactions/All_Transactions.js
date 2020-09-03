@@ -3,9 +3,12 @@ import React, { Component, Fragment } from "react";
 import Cookies from "js-cookie"
 import axios from "axios";
 import { withAlert } from 'react-alert';
+import { Form, Button } from "react-bootstrap";
 
 import Transaction from './Transaction';
 import Pagination from './Pagination';
+
+import "./all_Transactions.css";
 
 class All_Transactions extends Component {
     constructor(props) {
@@ -15,7 +18,8 @@ class All_Transactions extends Component {
             showSuccessDeleteAlert: false,
             loading: true,
             currentPage: 1,
-            transactionsPerPage: 6
+            transactionsPerPage: 6,
+            sortOptions: ["Date", "Title", "Category", "Income", "Expense"]
         }
     }
 
@@ -75,6 +79,47 @@ class All_Transactions extends Component {
         })
     }
 
+    handleSortChange = (e) => {
+        console.log(e.target.value);
+        let arrCopy = [...this.state.transactions]
+        if(e.target.value === "Date"){
+            arrCopy.sort((a, b) => (a.date_posted <= b.date_posted) ? 1 : -1);
+            this.setState({
+                transactions: arrCopy
+            })
+            console.log(arrCopy);
+        }
+        else if(e.target.value === "Title") {
+            arrCopy.sort((a, b) => (a.source > b.source) ? 1 : (a.source === b.source) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+            console.log(arrCopy);
+            this.setState({
+                transactions: arrCopy
+            })
+        }
+        else if(e.target.value === "Category") { 
+            arrCopy.sort((a, b) => (a.category > b.category) ? 1 : (a.category === b.category) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+            console.log(arrCopy);
+            this.setState({
+                transactions: arrCopy
+            })
+        }
+        else if(e.target.value === "Income") {
+            arrCopy.sort((a, b) => (a.t_type < b.t_type) ? 1 : (a.t_type === b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+            console.log(arrCopy);
+            this.setState({
+                transactions: arrCopy
+            })
+        }
+        else if(e.target.value === "Expense") {
+            arrCopy.sort((a, b) => (a.t_type > b.t_type) ? 1 : (a.t_type > b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+            console.log(arrCopy);
+            this.setState({
+                transactions: arrCopy
+            })
+        }
+        console.log("sort transactions");
+    }
+
     // Pagination Functions
     paginate = (pageNum) => this.setState({currentPage: pageNum});
     nextPage = () => this.setState({currentPage: this.state.currentPage + 1});
@@ -87,23 +132,57 @@ class All_Transactions extends Component {
         const indexOfLastPost = this.state.currentPage * this.state.transactionsPerPage;
         const indexOfFirstPost = indexOfLastPost - this.state.transactionsPerPage;
         const currentTransactions = this.state.transactions.slice(indexOfFirstPost, indexOfLastPost);
-        
+        console.log("rerender")
         return (
             <div>
-                <h1>
-                    All Transactions Page
+                <h1 className="page-header">
+                    All Transactions
                 </h1>
                 {this.state.loading === true ?
                     <h1>
                         Loading Transactions . . .
                     </h1> :
                     <div>
+                        <div className="form-block row">
+                            <div>Sort By:</div>
+                            <Form className="form-group">
+                                <Form.Group controlId="formCategoryType">
+                                    <Form.Control
+                                        as="select"
+                                        type="sortType"
+                                        name="sortType"
+                                        onChange={(e) => this.handleSortChange(e)}>
+                                        {this.state.sortOptions.map((type) =>
+                                            <Fragment key={type}>
+                                                <option value={type}>{type}</option>
+                                            </Fragment>
+                                        )}
+                                    </Form.Control>
+                                </Form.Group>
+                            </Form>
+                        </div>
+                        <ul className="list-group row">
+                            <li className="list-group-item">
+                                <div className="header-list">
+                                    <div className="col-sm">
+                                        Name
+                                    </div>
+                                    <div className="col-sm text-center">
+                                        Category
+                                    </div>
+                                    <div className="col-sm text-right">
+                                        Amount
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
                         <Transaction 
                         curTrans={currentTransactions}
                         handleDelete={this.handleDelete}
                         handleUpdateRedirect={this.handleUpdateRedirect}/>
 
-                        <Pagination 
+                        <Pagination className="pagination"
                         transactionsPerPage={this.state.transactionsPerPage}
                         totalTransactions={this.state.transactions.length}
                         currentPage={this.state.currentPage}

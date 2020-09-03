@@ -14,10 +14,10 @@ class Pagination extends Component {
             pageNumbers.push(i);
         }
 
-        if(pageNumbers.length === 1){
+        if(pageNumbers.length <= 1){
             return <Fragment></Fragment>
         }
-
+        console.log("pagenum: ", pageNumbers.length);
         return(
             <nav className="list-group flex-column">
                 <ul className="pagination justify-content-center">

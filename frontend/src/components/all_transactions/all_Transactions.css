@@ -1,0 +1,25 @@
+.page-header {
+    margin: 2vw;
+}
+
+.pagination {
+    margin-top: 4vh;
+    margin-bottom: 2vh;
+}
+
+.form-block {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+}
+
+.form-group {
+    width: 10vw;
+    margin-left: 0.5vw;
+}
+
+.header-list {
+    flex: 1;
+    justify-content: space-evenly;
+}
