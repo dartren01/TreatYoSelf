@@ -42,7 +42,6 @@ class Overview extends Component {
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
                 //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
                 //let monthData = JSON.parse(profileObj.monthly_data);
-                console.log(profileObj)
                 this.setState({
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
@@ -71,7 +70,6 @@ class Overview extends Component {
                     categoryObj: res.data[0],
                     loading: false,
                 });
-                console.log("category obj: ", res.data[0]);
             })
             .catch(err => {
                 console.log("category get error: " + err)
