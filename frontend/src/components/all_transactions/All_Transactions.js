@@ -135,7 +135,7 @@ class All_Transactions extends Component {
         console.log("rerender")
         return (
             <div>
-                <h1 className="page-header">
+                <h1>
                     All Transactions
                 </h1>
                 {this.state.loading === true ?

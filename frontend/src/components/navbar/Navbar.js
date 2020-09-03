@@ -61,9 +61,10 @@ const NavItem = (props) => {
 const DropdownMenu = (props) => {
 
     return (
-        <div className="dropdown">{props.children}</div >
+        <div className="dropdown">{props.children}</div>
     )
 }
+
 const DropdownItem = (props) => {
     return (
         <a href='#' className={props.className} onClick={props.onClick}>
@@ -263,14 +264,14 @@ class Navbar extends Component {
                                             <p>
                                                 Logout
                                             </p>
-                                        </DropdownItem >
+                                        </DropdownItem>
                                     </DropdownMenu>
                                 </NavItem>
 
                             </ul>
                         </div>
-                    </nav >
-                </div >
+                    </nav>
+                </div>
                 <nav className="sidebar" id="sidebar">
                     <div className="wrapper">
                         {header}

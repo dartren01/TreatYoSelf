@@ -85,7 +85,7 @@ class Analytics extends Component {
     render() {
         return (
             <div className="analytics">
-                <h1 className="page-header">
+                <h1>
                     Analytics
                 </h1>
                 {this.state.loading === true ?

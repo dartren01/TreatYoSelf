@@ -168,15 +168,13 @@ class Overview extends Component {
                     {totalText}
                 </div>
                 <div className="row">
-                    <div>
-                        <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
-                        <div className="charts">
-                            <div className="chartContainer" style={{ position: "relative", height: "45vh", width: "40vw" }}>
-                                <BarChart {...this.state} />
-                            </div>
-                            <div >
-                                <DoughnutChart {...this.state} />
-                            </div>
+                    <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
+                    <div className="charts">
+                        <div className="chartContainer" style={{ position: "relative", height: "45vh", width: "40vw" }}>
+                            <BarChart {...this.state} />
+                        </div>
+                        <div >
+                            <DoughnutChart {...this.state} />
                         </div>
                     </div>
                 </div>
