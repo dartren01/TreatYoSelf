@@ -82,36 +82,36 @@ class All_Transactions extends Component {
     handleSortChange = (e) => {
         console.log(e.target.value);
         let arrCopy = [...this.state.transactions]
-        if(e.target.value === "Date"){
+        if (e.target.value === "Date") {
             arrCopy.sort((a, b) => (a.date_posted <= b.date_posted) ? 1 : -1);
             this.setState({
                 transactions: arrCopy
             })
             console.log(arrCopy);
         }
-        else if(e.target.value === "Title") {
-            arrCopy.sort((a, b) => (a.source > b.source) ? 1 : (a.source === b.source) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+        else if (e.target.value === "Title") {
+            arrCopy.sort((a, b) => (a.source > b.source) ? 1 : (a.source === b.source) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
             console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
-        else if(e.target.value === "Category") { 
-            arrCopy.sort((a, b) => (a.category > b.category) ? 1 : (a.category === b.category) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+        else if (e.target.value === "Category") {
+            arrCopy.sort((a, b) => (a.category > b.category) ? 1 : (a.category === b.category) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
             console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
-        else if(e.target.value === "Income") {
-            arrCopy.sort((a, b) => (a.t_type < b.t_type) ? 1 : (a.t_type === b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+        else if (e.target.value === "Income") {
+            arrCopy.sort((a, b) => (a.t_type < b.t_type) ? 1 : (a.t_type === b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
             console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
-        else if(e.target.value === "Expense") {
-            arrCopy.sort((a, b) => (a.t_type > b.t_type) ? 1 : (a.t_type > b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1 );
+        else if (e.target.value === "Expense") {
+            arrCopy.sort((a, b) => (a.t_type > b.t_type) ? 1 : (a.t_type > b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
             console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
@@ -121,9 +121,9 @@ class All_Transactions extends Component {
     }
 
     // Pagination Functions
-    paginate = (pageNum) => this.setState({currentPage: pageNum});
-    nextPage = () => this.setState({currentPage: this.state.currentPage + 1});
-    prevPage = () => this.setState({currentPage: this.state.currentPage - 1});
+    paginate = (pageNum) => this.setState({ currentPage: pageNum });
+    nextPage = () => this.setState({ currentPage: this.state.currentPage + 1 });
+    prevPage = () => this.setState({ currentPage: this.state.currentPage - 1 });
 
 
     render() {
@@ -145,7 +145,7 @@ class All_Transactions extends Component {
                     <div>
                         <div className="form-block row">
                             <div>Sort By:</div>
-                            <Form className="form-group">
+                            <Form className="form-group-sort">
                                 <Form.Group controlId="formCategoryType">
                                     <Form.Control
                                         as="select"
@@ -161,35 +161,31 @@ class All_Transactions extends Component {
                                 </Form.Group>
                             </Form>
                         </div>
-                        <ul className="list-group row">
-                            <li className="list-group-item">
-                                <div className="header-list">
-                                    <div className="col-sm">
-                                        Name
-                                    </div>
-                                    <div className="col-sm text-center">
-                                        Category
-                                    </div>
-                                    <div className="col-sm text-right">
-                                        Amount
-                                    </div>
-                                </div>
+                        <ul className="list-group trans-headings row">
+                            <li className="list-group-item-t col-sm">
+                                Name
+                            </li>
+                            <li className="list-group-item-t col-sm text-center">
+                                Category
+                            </li>
+                            <li className="list-group-item-t col-sm text-right">
+                                Amount
                             </li>
                         </ul>
-                        
-                        <Transaction 
-                        curTrans={currentTransactions}
-                        handleDelete={this.handleDelete}
-                        handleUpdateRedirect={this.handleUpdateRedirect}/>
+
+                        <Transaction
+                            curTrans={currentTransactions}
+                            handleDelete={this.handleDelete}
+                            handleUpdateRedirect={this.handleUpdateRedirect} />
 
                         <Pagination className="pagination"
-                        transactionsPerPage={this.state.transactionsPerPage}
-                        totalTransactions={this.state.transactions.length}
-                        currentPage={this.state.currentPage}
-                        paginate={this.paginate}
-                        nextPage={this.nextPage}
-                        prevPage={this.prevPage}/>
-                    
+                            transactionsPerPage={this.state.transactionsPerPage}
+                            totalTransactions={this.state.transactions.length}
+                            currentPage={this.state.currentPage}
+                            paginate={this.paginate}
+                            nextPage={this.nextPage}
+                            prevPage={this.prevPage} />
+
                     </div>}
             </div>
         )

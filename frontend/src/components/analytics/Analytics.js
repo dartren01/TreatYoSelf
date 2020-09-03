@@ -85,29 +85,36 @@ class Analytics extends Component {
     render() {
         return (
             <div className="analytics">
-                <div className="row">
-                    <div>
-                        <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
-                        <LineChart {...this.state} />
-                        <div className="charts">
-                            <div>
-                                <BarChart2 {...this.state} />
-                            </div>
-                            <div>
-                                <SpendingChart {...this.state}
-                                    monthName={this.props.monthName}
-                                />
-                            </div>
-                            <div>
-                                <CashFlow
-                                    monthName={this.props.monthName}
-                                    monthlyGained={this.state.monthlyGained}
-                                    monthlySpent={this.state.monthlySpent}
-                                ></CashFlow>
+                <h1 className="page-header">
+                    Analytics
+                </h1>
+                {this.state.loading === true ?
+                    <h1>
+                        Loading Analytics . . .
+                    </h1> :
+                    <div className="row">
+                        <div>
+                            <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
+                            <LineChart {...this.state} />
+                            <div className="charts">
+                                <div>
+                                    <BarChart2 {...this.state} />
+                                </div>
+                                <div>
+                                    <SpendingChart {...this.state}
+                                        monthName={this.props.monthName}
+                                    />
+                                </div>
+                                <div>
+                                    <CashFlow
+                                        monthName={this.props.monthName}
+                                        monthlyGained={this.state.monthlyGained}
+                                        monthlySpent={this.state.monthlySpent}
+                                    ></CashFlow>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </div>}
             </div>
 
         )
