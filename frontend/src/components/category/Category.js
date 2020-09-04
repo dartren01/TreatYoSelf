@@ -265,7 +265,7 @@ class Category extends Component {
         }
         return (
             <div>
-                <h1>Category Page</h1>
+                <h1>Categories</h1>
 
                 <Form className="form-group name1 col-md-12 CategoryChoice">
                     <Form.Group controlId="formCategoryType">
