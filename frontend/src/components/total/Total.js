@@ -52,7 +52,7 @@ class Total extends Component {
             .then(res => {
                 console.log("Category Added")
                 this.props.history.push("/")
-                
+                window.location.reload(false)
 
             })
             .catch(err => {
