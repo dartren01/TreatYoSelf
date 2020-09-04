@@ -1,14 +1,19 @@
+.CategoryChoice{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+
 .form-group {
     margin-bottom: 0rem;
 }
 
 
-.budgetForm {
-    display: flex;
-    margin-top: 5%;
+.col-md-6 {
+    padding-left: 0px
 }
 
-.col-md-6 {
+.col-md-7 {
     padding-left: 0px
 }
 
@@ -20,6 +25,10 @@
     float:right;
 }
 
-.categoryPage {
-    padding-bottom: 35%;
+.AddCategory{
+    margin-top: 5%;
+    margin-bottom:10%;
+}
+.Category {
+    margin-bottom: 10%;
 }
