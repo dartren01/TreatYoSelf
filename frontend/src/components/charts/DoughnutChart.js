@@ -19,7 +19,6 @@ class DoughnutChart extends Component {
     createDonutChart = () => {
         let incomeCategories = this.props.categoryObj.income_categories_monthly;
         let expenseCategories = this.props.categoryObj.expense_categories_monthly;
-
         let incomeDataset = [];
         let incomeLabels = [];
         let expenseDataset = [];
