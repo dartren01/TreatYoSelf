@@ -20,6 +20,7 @@
     color: grey;
 }
 
+
 @media only screen and (min-width: 500px) {
     .list-group-item  {
         padding-left: 10px;

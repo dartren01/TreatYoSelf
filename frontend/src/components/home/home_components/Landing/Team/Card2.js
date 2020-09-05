@@ -8,10 +8,10 @@ const Card2 = props => {
                 <div className="imgBox">
                     <img src={props.imgsrc} className="card-img-top" />
                     <ul>
-                        <a href={props.linkedin_link}>
+                        <a target="_blank" rel="noopener noreferrer" href={props.linkedin_link}>
                             <img src={props.linkedin} className="linkedin" />
                         </a>
-                        <a href={props.facebook_link}>
+                        <a target="_blank" rel="noopener noreferrer" href={props.facebook_link}>
                             <img src={props.facebook} className="facebook" />
                         </a>
                     </ul>
