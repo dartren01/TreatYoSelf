@@ -15,14 +15,14 @@ import './App.css';
 import Navbar from "./components/navbar/Navbar";
 import Landing from "./components/home/home_components/Landing/Landing";
 import Overview from "./components/home/home_components/Overview/Overview";
-import Register from "./components/register/Register"
-import Total from "./components/total/Total"
+import Register from "./components/register/Register";
+import Total from "./components/total/Total";
 import All_Transactions from "./components/all_transactions/All_Transactions"
 import Create_Transaction from "./components/create_transaction/Create_Transaction";
 import Update_Transaction from "./components/update_transaction/Update_Transaction";
-import Category from "./components/category/Category"
+import Category from "./components/category/Category";
 import Analytics from "./components/analytics/Analytics";
-
+import RightComponent from "./components/rightComponent/RightComponent";
 
 
 
@@ -122,7 +122,7 @@ class App extends Component {
     let date = new Date();
     let month = date.getMonth();
     let monthName = monthNames[month];
-    
+
 
     // fix this, when reload page, component did mount does not get called
     // so the page stays blank
@@ -143,7 +143,7 @@ class App extends Component {
             <React.Fragment>
               <Switch>
                 <Route exact path="/" render={props => (
-                  <Landing {...props}/>
+                  <Landing {...props} />
                 )} />
                 <Route exact path="/register" render={props => (
                   <Register {...props}
@@ -168,6 +168,10 @@ class App extends Component {
                   lastname={this.state.lastname}
                   nextPath={this.nextPath}
                   deleteLogin={this.deleteLogin}
+                />
+                <RightComponent
+                  {...this.props}
+                  monthName={monthName}
                 />
                 <div className="main_container">
 

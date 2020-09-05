@@ -138,14 +138,14 @@ class DoughnutChart extends Component {
         return (
             <Fragment>
                 <div className="doughnutGraphs">
-                    <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
+                    <div className="doughnut" style={this.props.donut}>
                         <Doughnut
                             data={incomeData}
                             width={110}
                             height={110}
                             options={incomeOptions} />
                     </div>
-                    <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
+                    <div className="doughnut" style={this.props.donut}>
                         <Doughnut
                             data={expenseData}
                             width={110}

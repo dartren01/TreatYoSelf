@@ -24,23 +24,23 @@ class Navbar2 extends Component {
         };
     }
 
-    showLoginModal = () =>{
+    showLoginModal = () => {
         this.setState((prev) => {
-            return{
+            return {
                 showLogin: !prev.showLogin
             }
         })
     }
 
     showRegisterModal = () => {
-        this.setState((prev) =>{
-            return{
+        this.setState((prev) => {
+            return {
                 showRegister: !prev.showRegister
             }
         })
     }
 
-    
+
 
     scrFunction() {
         if (window.scrollY > 80) {
@@ -54,7 +54,7 @@ class Navbar2 extends Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener("scroll",this.scrFunction)
+        window.removeEventListener("scroll", this.scrFunction)
     }
 
     render() {
@@ -128,35 +128,35 @@ class Navbar2 extends Component {
                                     Log in
                                 </button>
                             </Link> */}
-                            
-                          
-                            <button 
-                                className = "login"
-                                onClick = {(e) => this.showLoginModal()}>
+
+
+                            <button
+                                className="login"
+                                onClick={(e) => this.showLoginModal()}>
                                 Log in
                             </button>
-                            <LoginModal 
-                                onClose = {this.showLoginModal}
-                                showLogin = {this.state.showLogin}
+                            <LoginModal
+                                onClose={this.showLoginModal}
+                                showLogin={this.state.showLogin}
                             />
-                           
+
                             {/* <Link to="/register" >
                                 <button className="signup">
                                     Sign Up
                                 </button>
                             </Link> */}
 
-                            <button 
-                                className = "signup"
-                                onClick = {(e) => this.showRegisterModal()}>
+                            <button
+                                className="signup"
+                                onClick={(e) => this.showRegisterModal()}>
                                 Sign Up
                             </button>
-                            <RegisterModal 
-                                onClose = {this.showRegisterModal}
-                                showRegister = {this.state.showRegister}
-                                redirectTotalPage = {this.props.redirectTotalPage}
+                            <RegisterModal
+                                onClose={this.showRegisterModal}
+                                showRegister={this.state.showRegister}
+                                redirectTotalPage={this.props.redirectTotalPage}
                             />
-                            
+
                         </div>
                     </div>
                 </nav >

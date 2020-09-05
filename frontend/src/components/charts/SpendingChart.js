@@ -19,7 +19,7 @@ const Progress = (props) => {
 
     return (
         <div className="progress">
-            <div className="progress-done" style={style}>
+            <div className={props.className} style={style}>
                 {/* ${props.remaining} left */}
             </div>
         </div>
@@ -32,19 +32,24 @@ class SpendingChart extends Component {
     getTotalBudget = () => {
         let categories = this.props.categoryObj;
         let totalBudget = 0;
+        let isBudgetZero = true;
         for (let category in categories.expense_categories_budget) {
             totalBudget += parseFloat(categories.expense_categories_budget[category])
         }
-        console.log(totalBudget)
-        return (totalBudget)
+        if (totalBudget !== 0) {
+            isBudgetZero = false;
+        }
+        return [totalBudget, isBudgetZero]
     }
 
 
     render() {
         if (this.props.loading) {
-            return (<div></div>)
+            return (<div>Loading...</div>)
         }
-        let totalBudget = this.getTotalBudget();
+        let budgetValues = this.getTotalBudget();
+        let totalBudget = budgetValues[0];
+        let isBudgetZero = budgetValues[1];
         let remaining = totalBudget - this.props.monthlySpent;
 
         let date = new Date();
@@ -60,17 +65,26 @@ class SpendingChart extends Component {
                 <h2>
                     {this.props.monthName} Budget
                 </h2>
-                <p>
-                    You have ${remaining} left for the next {remainingDays} day(s).
-                </p>
-                <Progress
-                    remainingWidth={remainingWidth}
-                    remaining={remaining}>
-                </Progress>
-                <h4>
-                    Today
-                </h4>
-            </div>
+                {isBudgetZero ? <p> Create an expense category budget to get started!</p> : remaining > 0 ?
+                    <Fragment>
+                        <p>Good job! You have ${remaining} left for the next {remainingDays} day(s).</p>
+                        <Progress
+                            remainingWidth={remainingWidth}
+                            remaining={remaining}
+                            className="progress-done">
+                        </Progress>
+                        <h4>Today</h4>
+                    </Fragment> : <Fragment>
+                        <p>Oh no! You are down ${remaining} for the next {remainingDays} day(s). Remember to add a budget for every expense!</p>
+                        <Progress
+                            remainingWidth={remainingWidth}
+                            remaining={remaining}
+                            className="progress-bad">
+                        </Progress>
+                        <h4>Today</h4>
+                    </Fragment>}
+
+            </div >
         )
     }
 }

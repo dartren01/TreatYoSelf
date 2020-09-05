@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useLocation } from 'react-router-dom'
+
 import logo from "./images/logo.svg";
 import homeIMG from "./images/home.svg";
 import transactionsIMG from "./images/transactions.svg";
@@ -24,56 +24,10 @@ import logout from "./images/logout.svg";
 import settings from "./images/settings.svg";
 import help from "./images/help.svg";
 
+import { DropdownItem, DropdownMenu, NavItem } from "../dropdown/Dropdown"
 import "./Navbar.css"
 
-const NavItem = (props) => {
-    const [open, setOpen] = useState(false);
-    const [color, setColor] = useState(false);
-    const node = useRef();
-    useEffect(() => {
-        // add when mounted
-        document.addEventListener("mousedown", handleClick);
-        // return function to be called when unmounted
-        return () => {
-            document.removeEventListener("mousedown", handleClick);
-        };
-    }, []);
-    const handleClick = e => {
-        if (!node.current.contains(e.target)) {
-            setOpen(false);
-            setColor(false);
-        }
-    }
 
-    return (
-        <div ref={node}>
-            <li className="nav-item">
-                <button onClick={() => setOpen(!open)} onMouseDown={() => setColor(!color)} className={color ? props.opened : props.className}>
-                    {props.personName}
-                    <img src={props.image} className={props.imageName}></img>
-                </button>
-                {open && props.children}
-            </li>
-        </div>
-    );
-}
-
-const DropdownMenu = (props) => {
-
-    return (
-        <div className="dropdown">{props.children}</div>
-    )
-}
-
-const DropdownItem = (props) => {
-    return (
-        <a href='#' className={props.className} onClick={props.onClick}>
-            <span className="icon-button">{props.leftIcon}</span>
-            {props.children}
-            <span className="icon-right">{props.rightIcon}</span>
-        </a>
-    );
-}
 
 class Navbar extends Component {
     constructor(props) {
@@ -105,9 +59,8 @@ class Navbar extends Component {
         }
     }
     componentDidMount = () => {
-        this.getPage();
         console.log("Navbar componentDidMount");
-        console.log(this.props.firstname, this.props.lastname)
+        this.getPage();
         window.addEventListener("hashchange", this.getPage);
         axios.get(`/api/total/get`, {
             headers: {
@@ -214,10 +167,8 @@ class Navbar extends Component {
                                     imageName="pfp"
                                     personName={this.props.firstname}
                                     opened="profile"
+                                    closeOnClick
                                 >
-                                    <DropdownMenu>
-
-                                    </DropdownMenu>
                                 </NavItem>
                                 <NavItem
                                     className="topButton"

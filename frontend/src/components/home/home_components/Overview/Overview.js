@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 
@@ -6,8 +6,13 @@ import Recent_Transactions from "../../../recent_transactions/Recent_Transaction
 import DoughnutChart from "../../../charts/DoughnutChart";
 import BarChart from "../../../charts/BarChart";
 import BarChart2 from "../../../charts/BarChart2";
+import LineChart from "../../../charts/LineChart"
 import './Overview.css';
 
+import dropArrow from "./images/dropArrow.svg";
+import { DropdownItem, DropdownMenu, NavItem } from "../../../dropdown/Dropdown"
+import income from "./images/income.svg";
+import expense from "./images/expense.svg";
 
 
 class Overview extends Component {
@@ -22,13 +27,27 @@ class Overview extends Component {
             categoryObj: "",
             monthYearDate: "",
             loading: true,
+            renderGraph: <div></div>,
+            rendered: false,
+            closeOnClick: false,
+            bar: {
+                position: "relative",
+                height: "",
+                width: ""
+            },
+            donut: {
+                position: "relative",
+                height: "",
+                width: ""
+            },
         }
-        this.canvas = React.createRef();
 
     }
 
     componentDidMount = () => {
         console.log("Home componentDidMount");
+        this.getDimensions();
+        window.addEventListener("resize", this.getDimensions);
         axios.get(`/api/total/get`, {
             headers: {
                 "Content-Type": "application/json",
@@ -42,6 +61,7 @@ class Overview extends Component {
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
                 //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
                 //let monthData = JSON.parse(profileObj.monthly_data);
+                console.log(profileObj)
                 this.setState({
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
@@ -57,7 +77,6 @@ class Overview extends Component {
                 });
             })
 
-
         // get categories
         axios.get("budget/category/get/", {
             headers: {
@@ -70,6 +89,7 @@ class Overview extends Component {
                     categoryObj: res.data[0],
                     loading: false,
                 });
+                console.log("category obj: ", res.data[0]);
             })
             .catch(err => {
                 console.log("category get error: " + err)
@@ -93,6 +113,26 @@ class Overview extends Component {
             })
     };
 
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.getDimensions);
+    };
+
+    getDimensions = () => {
+        if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
+            this.setState({ bar: { position: "relative", height: "400px", width: "600px" } })
+            this.setState({ donut: { position: "relative", height: "180px", width: "180px" } })
+
+        } else if (1201 <= window.innerWidth && window.innerWidth <= 1600) {
+            this.setState({ bar: { position: "relative", height: "350px", width: "600px" } })
+            this.setState({ donut: { position: "relative", height: "180px", width: "180px" } })
+
+        } else if (1601 <= window.innerWidth) {
+            this.setState({ bar: { position: "relative", height: "500px", width: "700px" } })
+            this.setState({ donut: { position: "relative", height: "200px", width: "200px" } })
+
+        }
+        console.log(this.state.donutHeight, this.state.donutWidth)
+    }
     chartTextSet = () => {
         Chart.pluginService.register({
             beforeDraw: function (chart) {
@@ -146,37 +186,126 @@ class Overview extends Component {
         });
     }
 
+    handleSwitch1 = () => {
+        this.setState({
+            renderGraph:
+                <Fragment>
+                    <h4>Budget vs. Expense in {this.props.monthName} <span className="spendingCategory">($ Per Expense Category)</span></h4>
+                    <div className="charts">
+                        <div className="chartContainer" style={this.state.bar}>
+                            <BarChart {...this.state} />
+                        </div>
+                        <div >
+                            <DoughnutChart {...this.state} />
+                        </div>
+                    </div>
+                </Fragment>,
+            rendered: true,
+            closeOnClick: true,
+        });
+    }
+
+    handleSwitch2 = () => {
+
+        this.setState({
+            renderGraph:
+                <Fragment>
+                    <h4> Goal vs. Income in {this.props.monthName} <span className="spendingCategory">($ Per Income Category)</span></h4>
+                    <div className="charts">
+                        <div className="chartContainer" style={this.state.bar}>
+                            <BarChart2 {...this.state} />
+                        </div>
+                        <div >
+                            <DoughnutChart {...this.state} />
+                        </div>
+                    </div>
+                </Fragment>,
+            rendered: true,
+            closeOnClick: true,
+        });
+    }
+    // handleClose = () => {
+    //     if (this.state.closeOnClick) {
+    //         this.setState({
+    //             closeOnClick: !this.state.closeOnClick
+    //         })
+    //     }
+    // }
+
+
     render() {
-        let totalText = this.chartTextSet();
+        let totalText;
+        if (this.state.loading) {
+            totalText = <h1>Loading</h1>;
+        } else {
+            totalText =
+                this.chartTextSet();
+        }
+        let rendered;
+        if (!this.state.rendered) {
+            rendered = <Fragment>
+                <h4>Budget vs. Expense in {this.props.monthName} <span className="spendingCategory">($ Per Expense Category)</span></h4>
+                <div className="charts">
+                    <div className="chartContainer" style={this.state.bar}>
+                        <BarChart {...this.state} />
+                    </div>
+                    <div >
+                        <DoughnutChart {...this.state} />
+                    </div>
+                </div>
+            </Fragment>
+        } else {
+            rendered = this.state.renderGraph;
+        }
 
         return (
             <div className="overview">
                 <div className="row">
                     <h1>
-                        {this.props.monthName} Overview
+                        Monthly Overview
                     </h1>
                 </div>
                 {this.state.loading === true ?
-                    <h1>
-                        Loading . . .
-                    </h1> :
-                    <div>
+                    <h2>
+                        Loading Home . . .
+                </h2> :
+                    <Fragment>
                         <div className="row">
                             {totalText}
                         </div>
                         <div className="row">
-                            <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
-                            <div className="charts">
-                                <div className="chartContainer" style={{ position: "relative", height: "45vh", width: "40vw" }}>
-                                    <BarChart {...this.state} />
-                                </div>
-                                <div>
-                                    <BarChart2 {...this.state} />
-                                </div>
-                                <div>
-                                    <DoughnutChart {...this.state} />
-                                </div>
-                            </div>
+                            <NavItem
+                                className="topButton"
+                                image={dropArrow}
+                                imageName="dropArrow"
+                                opened="opened"
+                                closeOnClick={this.state.closeOnClick}
+                            >
+
+                                <DropdownMenu>
+                                    <DropdownItem
+                                        className="menu-item"
+                                        leftIcon={<img src={expense}></img>}
+                                        onClick={this.handleSwitch1}
+                                    >
+                                        <p>
+                                            Budget vs. Expense Graph
+                                            </p>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                        className="menu-item"
+                                        leftIcon={<img src={income}></img>}
+                                        onClick={this.handleSwitch2}
+                                    >
+                                        <p>
+                                            Goal vs. Income Graph
+                                            </p>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </NavItem>
+                            {/* {this.handleClose} */}
+                            {rendered}
+
                         </div>
                         <div className="row">
                             <div className="flex-fill">
@@ -185,8 +314,9 @@ class Overview extends Component {
                                     transactions={this.state.transactions} />
                             </div>
                         </div>
-                    </div>}
-            </div>
+                    </Fragment>
+                }
+            </div >
 
         )
     }

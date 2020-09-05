@@ -39,7 +39,7 @@ class BarChart extends Component {
             }, {
                 data: expenseSpending,
                 backgroundColor: "#FFBE5B",
-                label: 'Spending',
+                label: 'Expenses',
             }],
             labels: expenseBudgetLabels,
             borderWidth: 1,
