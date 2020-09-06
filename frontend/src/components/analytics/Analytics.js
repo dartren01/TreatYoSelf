@@ -1,14 +1,16 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 
 import DoughnutChart2 from "../charts/DoughnutChart2";
 import LineChart from "../charts/LineChart";
-import SpendingChart from "../charts/SpendingChart";
 import CashFlow from "../charts/CashFlow";
 import './Analytics.css';
 
-
+import dropArrow from "./images/dropArrow.svg";
+import { DropdownItem, DropdownMenu, NavItem } from "../dropdown/Dropdown"
+import income from "./images/income.svg";
+import expense from "./images/expense.svg";
 
 class Analytics extends Component {
     constructor(props) {
@@ -18,9 +20,23 @@ class Analytics extends Component {
             totalAmount: "",
             monthlySpent: "",
             monthlyGained: "",
+            yearlySpent: "",
+            yearlyGained: "",
             categoryObj: "",
             monthYearDate: "",
             loading: true,
+            renderGraph: <div></div>,
+            rendered: false,
+            bar: {
+                position: "relative",
+                height: "",
+                width: ""
+            },
+            donut: {
+                position: "relative",
+                height: "",
+                width: ""
+            },
         }
         this.canvas = React.createRef();
 
@@ -28,6 +44,8 @@ class Analytics extends Component {
 
     componentDidMount = () => {
         console.log("Analytics componentDidMount");
+        this.getDimensions();
+        window.addEventListener("resize", this.getDimensions);
         axios.get(`/api/total/get`, {
             headers: {
                 "Content-Type": "application/json",
@@ -39,10 +57,18 @@ class Analytics extends Component {
                 //figure out how to get monthly to object
                 let date = new Date();
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
-                //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
-                //let monthData = JSON.parse(profileObj.monthly_data);
-                console.log(profileObj)
+                console.log("hello", profileObj)
+                let yearlySpent = 0;
+                let yearlyGained = 0;
+                for (let obj in profileObj.monthly_data) {
+                    console.log(obj)
+                    yearlyGained += parseFloat(profileObj.monthly_data[obj]["monthly_gained"]);
+                    yearlySpent += parseFloat(profileObj.monthly_data[obj]["monthly_spent"]);
+                }
+                console.log(yearlySpent, yearlyGained)
                 this.setState({
+                    yearlySpent: yearlySpent,
+                    yearlyGained: yearlyGained,
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
                     monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
@@ -78,6 +104,25 @@ class Analytics extends Component {
 
 
         // get transactions, pass to recent transactions js
+    }
+    componentWillUnmount() {
+        window.removeEventListener("resize", this.getDimensions);
+    };
+
+    getDimensions = () => {
+        if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
+            this.setState({ bar: { position: "relative", height: "400px", width: "600px" } })
+            this.setState({ donut: { position: "relative", height: "180px", width: "180px" } })
+
+        } else if (1201 <= window.innerWidth && window.innerWidth <= 1600) {
+            this.setState({ bar: { position: "relative", height: "350px", width: "600px" } })
+            this.setState({ donut: { position: "relative", height: "180px", width: "180px" } })
+
+        } else if (1601 <= window.innerWidth) {
+            this.setState({ bar: { position: "relative", height: "500px", width: "700px" } })
+            this.setState({ donut: { position: "relative", height: "200px", width: "200px" } })
+
+        }
     }
 
     chartTextSet = () => {
@@ -132,42 +177,126 @@ class Analytics extends Component {
             }
         });
     }
+    handleSwitch1 = () => {
+        this.setState({
+            renderGraph:
+                <Fragment>
+                    <h4>Budget vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Expense Category)</span></h4>
+                    <div className="charts">
+                        <div className="chartContainer" style={this.state.bar}>
+                            <LineChart {...this.state} />
+                        </div>
+                        <div >
+                            <DoughnutChart2 {...this.state} />
+                        </div>
+                    </div>
+                </Fragment>,
+            rendered: true,
+        });
+    }
+
+    handleSwitch2 = () => {
+
+        this.setState({
+            renderGraph:
+                <Fragment>
+                    <h4> Goal vs. Income in {this.props.year} <span className="spendingCategory">($ Per Income Category)</span></h4>
+                    <div className="charts">
+                        <div className="chartContainer" style={this.state.bar}>
+                            <LineChart {...this.state} />
+                        </div>
+                        <div >
+                            <DoughnutChart2 {...this.state} />
+                        </div>
+                    </div>
+                </Fragment>,
+            rendered: true,
+        });
+    }
 
 
     render() {
-        this.chartTextSet();
+        let totalText;
+        if (this.state.loading) {
+            totalText = <h1>Loading</h1>;
+        } else {
+            totalText =
+                this.chartTextSet();
+        }
+        let rendered;
+        if (!this.state.rendered) {
+            rendered = <Fragment>
+                <h4>Income vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Month)</span></h4>
+                <div className="charts">
+                    <div className="chartContainer" style={this.state.bar}>
+                        <LineChart {...this.state} />
+                    </div>
+                    <div >
+                        <DoughnutChart2 {...this.state} />
+                    </div>
+                </div>
+            </Fragment>
+        } else {
+            rendered = this.state.renderGraph;
+        }
         return (
             <div className="analytics">
-                <h1>
-                    Analytics
-                </h1>
-                {this.state.loading === true ?
+                <div className="row">
                     <h1>
+                        Yearly Analytics
+                    </h1>
+                </div>
+                {this.state.loading === true ?
+                    <h2>
                         Loading Analytics . . .
-                    </h1> :
-                    <div className="row">
-                        <div>
-                            <h4>Budget vs. Spending <span className="spendingCategory">(Per Spending Category)</span></h4>
-                            <LineChart {...this.state} />
-                            <div className="charts">
-                                <div>
-                                    <SpendingChart {...this.state}
-                                        monthName={this.props.monthName}
-                                    />
-                                </div>
-                                <div>
-                                    <CashFlow
-                                        monthName={this.props.monthName}
-                                        monthlyGained={this.state.monthlyGained}
-                                        monthlySpent={this.state.monthlySpent}
-                                    ></CashFlow>
-                                </div>
-                                <div>
-                                    <DoughnutChart2 {...this.state} />
-                                </div>
+                    </h2> :
+                    <Fragment>
+                        <div className="row">
+                            {totalText}
+                        </div>
+                        <div className="row">
+                            <NavItem
+                                className="topButton"
+                                image={dropArrow}
+                                imageName="dropArrow"
+                                opened="opened"
+                                closeOnClick={this.state.closeOnClick}
+                            >
+
+                                <DropdownMenu>
+                                    <DropdownItem
+                                        className="menu-item"
+                                        leftIcon={<img src={expense}></img>}
+                                        onClick={this.handleSwitch1}
+                                    >
+                                        <p>
+                                            {this.props.year} Income vs. Expense Graph
+                                            </p>
+                                    </DropdownItem>
+                                    <DropdownItem
+                                        className="menu-item"
+                                        leftIcon={<img src={income}></img>}
+                                        onClick={this.handleSwitch2}
+                                    >
+                                        <p>
+                                            Goal vs. Income Graph
+                                            </p>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </NavItem>
+                            {rendered}
+
+                        </div>
+                        <div className="row">
+                            <div className="flex-fill">
+                                <CashFlow {...this.state}
+                                    year={this.props.year}>
+                                </CashFlow>
                             </div>
                         </div>
-                    </div>}
+                    </Fragment>
+                }
+
             </div>
 
         )

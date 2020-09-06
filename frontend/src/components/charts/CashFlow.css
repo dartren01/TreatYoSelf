@@ -1,4 +1,6 @@
-
+.cashFlow {
+    position: relative;
+}
 .cashFlow h2 {
     font-family: Source Sans Pro;
     font-weight: bold;
@@ -16,14 +18,15 @@
 .cashFlow .progress {
     background-color: transparent;
     border-radius: 20px;
-    height: 30px;
+    height: 15px;
     width: 300px;
+    margin-bottom: 5px;
 }
 
 .cashFlow .progress-gain{
     /* background: linear-gradient(to left, green, red); */
     background: #12A874;
-    box-shadow: 0 3px 3px -5px grey, 0 2px 5px grey;
+    /* box-shadow: 0 3px 3px -5px grey, 0 2px 5px grey; */
     display: flex;
     color: white;
     align-items: center;
@@ -38,7 +41,7 @@
 .cashFlow .progress-spent{
     /* background: linear-gradient(to left, green, red); */
     background: #ff0000;
-    box-shadow: 0 3px 3px -5px grey, 0 2px 5px grey;
+    /* box-shadow: 0 3px 3px -5px grey, 0 2px 5px grey; */
     display: flex;
     color: white;
     align-items: center;
@@ -57,11 +60,13 @@
     margin-left: 30px;
     font-weight: bolder;
     font-size: 14px;
+    top: 80px;
 }
 .cashFlow .inGreen {
+    position: absolute;
     color: #12A874;
-    margin-top: 10px;
-    margin-left: 30px;
+    top: 57px;
+    left: 310px;
     font-weight: bolder;
     font-size: 14px;
 }

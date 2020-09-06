@@ -139,9 +139,9 @@ class All_Transactions extends Component {
                     All Transactions
                 </h1>
                 {this.state.loading === true ?
-                    <h1>
+                    <h2>
                         Loading Transactions . . .
-                    </h1> :
+                    </h2> :
                     <div>
                         <div className="form-block row">
                             <div>Sort By:</div>

@@ -6,9 +6,9 @@ const CashFlow = (props) => {
     const [gStyle, setgStyle] = useState();
     let sWidth = 0;
     let gWidth = 0;
-    let monthlySpent = parseFloat(props.monthlySpent)
-    let monthlyGained = parseFloat(props.monthlyGained)
-    let netGain = monthlyGained - monthlySpent;
+    let spent = props.yearlySpent
+    let gained = props.yearlyGained
+    let netGain = gained - spent;
     whichWidth();
 
     useEffect(() => {
@@ -31,12 +31,12 @@ const CashFlow = (props) => {
         }
     })
     function whichWidth() {
-        if (monthlyGained >= monthlySpent) {
+        if (gained >= spent) {
             gWidth = 100;
-            sWidth = (monthlySpent / monthlyGained) * 100
+            sWidth = (spent / gained) * 100
         } else {
             sWidth = 100;
-            gWidth = (monthlyGained / monthlySpent) * 100
+            gWidth = (gained / spent) * 100
         }
     }
     let className;
@@ -53,15 +53,16 @@ const CashFlow = (props) => {
     return (
         <div className="cashFlow">
             <h2>
-                {props.monthName} Cash Flow
+                Cash Flow
                 </h2>
             <p>
-                You've earned ${props.monthlyGained} and spent ${props.monthlySpent}.
+                You've earned ${props.yearlyGained} and spent ${props.yearlySpent} in {props.year}.
                 </p>
             <div className="progress">
                 <div className="progress-gain" style={gStyle}></div>
-                {<p className={className}>{absolute}</p>}
+
             </div>
+            {<p className={className}>{absolute}</p>}
             <div className="progress">
                 <div className="progress-spent" style={sStyle}></div>
             </div>

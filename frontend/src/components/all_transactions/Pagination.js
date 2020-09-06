@@ -32,13 +32,13 @@ class Pagination extends Component {
                                 <a href="#/budget/all_transactions/" style={{ color: "white" }} className="page-link" onClick={() => paginate(num)}>{num}</a>
                             </li> :
                             <li className="page-item" key={num}>
-                                <a href="#/budget/all_transactions/" style={{ color: "#12A874" }} className="page-link" onClick={() => paginate(num)}>{num}</a>
+                                <a href="#/budget/all_transactions/" style={{ color: "black" }} className="page-link" onClick={() => paginate(num)}>{num}</a>
                             </li>
                     ))}
                     {currentPage === pageNumbers.length ?
                         <li></li> :
                         <li className="page-item">
-                            <a className="page-link" href="#/budget/all_transactions/" style={{ color: "#12A874" }} onClick={() => nextPage()}>Next</a>
+                            <a className="page-link" href="#/budget/all_transactions/" style={{ color: "black" }} onClick={() => nextPage()}>Next</a>
                         </li>}
                 </ul>
             </nav>

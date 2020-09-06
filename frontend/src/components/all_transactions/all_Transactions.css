@@ -8,11 +8,13 @@
     font-size:34px;
 }
 
-.alltrans h1{
+.alltrans span {
+    font-size: 14px;
+    /* color: grey; */
+    color: black;
     font-family: Quicksand;
-    font-weight: bolder;
+    font-weight: normal;
 }
-
 .pagination {
     margin-top: 4vh;
     margin-bottom: 2vh;
@@ -23,17 +25,33 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: baseline;
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .form-group-sort {
-    width: 10vw;
     margin-left: 0.5vw;
+    margin-right: 10px;
     padding-right: 10px;
+}
+
+.form-control {
+    color: black;
+    font-family: Source Sans Pro;
+    
 }
 
 .header-list {
     flex: 1;
     justify-content: space-evenly;
+}
+
+.alltrans h2 {
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    font-size:24px;     
+    margin-top: 40px;
 }
 
 .list-group-item-t  {
@@ -46,7 +64,21 @@
 .list-group-item-h  {
     border: none;
     list-style-type: none;
+    font-family: Source Sans Pro;
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    
 }
+
+.list-group-item-h.col-sm.col-sm {
+    margin-left: 10px;
+}
+.list-group-item-h.col-sm.col-sm.text-right {
+    margin-right: 10px;
+}
+
 
 .trans-headings {
     flex-flow: row;
@@ -69,4 +101,114 @@
 
 .trans-buttons {
     padding-right: 10px;
+}
+
+.updateButton {
+    font-family: Quicksand;
+    font-size: 14px;
+    color: white;
+    font-weight: 600;
+    padding: 4px 12px;
+    margin-right: 5px;
+    margin-top: 2px;
+    border: 1px solid white;
+    /* background-color: #12A874; */
+    background-color: black;
+    transition: all 0.3s ease 0s;
+    /* box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1); */
+    border-radius: 22px;
+    text-align: center;
+}
+
+.updateButton:hover {
+    filter: brightness(1.2); 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.deleteButton {
+    font-family: Quicksand;
+    font-size: 14px;
+    color: white;
+    font-weight: 600;
+    padding: 4px 12px;
+    margin-top: 2px;
+    border: 1px solid white;
+    background-color: #ff2b2b;
+    transition: all 0.3s ease 0s;
+    /* box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1); */
+    border-radius: 22px;
+    text-align: center;
+}
+
+.deleteButton:hover {
+    filter: brightness(1.2); 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item-t:before {
+    content: '';
+    width: 100%;
+    border-top: 1px solid rgb(224, 224, 224); 
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: -15px;
+    z-index: 1;
+}
+
+/* .list-group-item-t:after {
+    content: '';
+    width: 100%;
+    border-bottom: 1px solid rgb(224, 224, 224); 
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 10px;
+    z-index: 1;
+} */
+
+.list-group-item-t  {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+}
+.list-group-item-t .row.one {
+    font-family: Quicksand;
+    font-weight: bolder;
+    font-size:16px;
+}
+.list-group-item-t .row.one .col-sm.text-right h1 {
+    font-family: Lato;
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+}
+.list-group-item-t .row.two {
+    font-family: Quicksand;
+    font-weight: normal;
+    font-size:14px;
+    color: grey;
+}
+
+.list-group-item-t .row.three {
+    font-family: Quicksand;
+    font-weight: bolder;
+    font-size:16px;
+}
+
+
+@media only screen and (min-width: 500px) {
+    .list-group-item-t  {
+        padding-left: 10px;
+        padding-right: 10px;
+        border: none;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .list-group-item-t  {
+        padding-left: 10px;
+        padding-right: 10px;
+        border: none;
+    }
 }

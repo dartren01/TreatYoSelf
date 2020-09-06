@@ -121,6 +121,7 @@ class App extends Component {
     ];
     let date = new Date();
     let month = date.getMonth();
+    let year = date.getFullYear();
     let monthName = monthNames[month];
 
 
@@ -207,7 +208,7 @@ class App extends Component {
                     )} />
                     <Route path="/analytics" render={props => (
                       <Analytics {...props}
-                        monthName={monthName}
+                        year={year}
                       />
                     )} />
                     <Route path="/category" render={props => (

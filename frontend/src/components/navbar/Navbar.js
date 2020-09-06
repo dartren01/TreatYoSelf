@@ -102,24 +102,22 @@ class Navbar extends Component {
 
     render() {
         let header;
-        if (this.state.loading) {
-            header = <h1>Loading</h1>;
-        } else {
-            header =
-                <div className="sidebar-header">
-                    <h4>
-                        Balance
+
+        header =
+            <div className="sidebar-header">
+                <h4>
+                    Balance
                     </h4>
-                    <p>
-                        $ {this.state.totalAmount}
-                    </p>
-                    <Link to="/budget/create/">
-                        <button className="tranButtonStyling">
-                            New Transaction
+                <p>
+                    $ {this.state.totalAmount}
+                </p>
+                <Link to="/budget/create/">
+                    <button className="tranButtonStyling">
+                        New Transaction
                             </button>
-                    </Link>
-                </div>;
-        }
+                </Link>
+            </div>;
+
 
         let whichHome;
         if (this.state.whichPage === 1) {
@@ -227,23 +225,23 @@ class Navbar extends Component {
                     <div className="wrapper">
                         {header}
                         <ul className="list-unstyled components">
-                            <li className={this.state.whichPage === 1 ? "active" : "home"}>
+                            <li className={this.state.whichPage === 1 ? "active" : "homePage"}>
 
                                 <Link to="/" className="nav-link">
                                     <img src={whichHome} className="homeIMG" /> Home
                                 </Link>
                             </li>
-                            <li className={this.state.whichPage === 2 ? "active" : "analytics"}>
+                            <li className={this.state.whichPage === 2 ? "active" : "analyticsPage"}>
                                 <Link to="/analytics" className="nav-link">
                                     <img src={whichAnalytics} className="homeIMG" /> Analytics
                                 </Link>
                             </li>
-                            <li className={this.state.whichPage === 3 ? "active" : "transactions"}>
+                            <li className={this.state.whichPage === 3 ? "active" : "transactionsPage"}>
                                 <Link to="/budget/all_transactions/" className="nav-link">
                                     <img src={whichTransactions} className="homeIMG" /> Transactions
                                 </Link>
                             </li>
-                            <li className={this.state.whichPage === 4 ? "active" : "categories"}>
+                            <li className={this.state.whichPage === 4 ? "active" : "categoriesPage"}>
                                 <Link to="/category" className="nav-link">
                                     <img src={whichCategories} className="categoryIMG" /> Categories
                                 </Link>

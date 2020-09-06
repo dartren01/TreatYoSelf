@@ -3,6 +3,7 @@
     font-weight: bold;
     font-size:34px;
 }
+
 .overview h4 {
     font-family: Quicksand;
     font-weight: bolder;
@@ -33,7 +34,7 @@
 .overview .topButton{
     position: relative;
     outline: none;
-    left: 500px;
+    left: 540px;
     top: 10px;
     justify-content: center;
     width: 39px;
@@ -52,7 +53,7 @@
   .overview .dropdown {
     position: absolute;
     top: 52px;
-    right: -640px;
+    left: 415px;
     width: 300px;
     transform: translateX(-45%);
     -webkit-box-shadow: 0 0 15px rgb(216, 216, 216);
@@ -68,7 +69,7 @@
 .overview .opened {
   position: relative;
   outline: none;
-  left: 500px;
+  left: 540px;
   top: 10px;
   justify-content: center;
   width: 39px;
@@ -110,8 +111,11 @@
     right: 0;
     margin-top: 20px;
     z-index: 1;
-
 }
+
+.overview .topButton:hover {
+  filter: brightness(0.9);  
+  }
 
 @media only screen and (min-width: 500px) {
   .overview .dropdown {
@@ -137,6 +141,22 @@
     left: 455px;
     top: 10px;
   }
+  .overview .dropdown {
+    position: absolute;
+    top: 52px;
+    left: 415px;
+}
+.overview .topButton{
+  position: relative;
+  left: 540px;
+  top: 10px;
+
+}
+  .overview .opened {
+    position: relative;
+    left: 540px;
+    top: 10px;
+  }
 }
 
 
@@ -160,6 +180,19 @@
   .overview h4 {
     margin-right: 50px;
   }
+  .overview .topButton{
+    left: 500px;
+    top: 10px;
+  
+  }
+    .overview .opened {
+      left: 500px;
+      top: 10px;
+    }
+    .overview .dropdown {
+      top: 52px;
+      left: 370px;
+  }
 }
   
 
@@ -175,6 +208,23 @@
       display: flex;
       margin-left: 5px;
   }
+  .overview .dropdown {
+    position: absolute;
+    top: 52px;
+    left: 415px;
+}
+
+.overview .topButton{
+  position: relative;
+  left: 540px;
+  top: 10px;
+
+}
+  .overview .opened {
+    position: relative;
+    left: 540px;
+    top: 10px;
+  }
 }
 
 @media only screen and (min-width: 1510px) {
@@ -189,4 +239,41 @@
     display: flex;
     margin-left: 5px;
 }
+.overview .dropdown {
+  position: absolute;
+  top: 52px;
+  left: 415px;
+}
+
+.overview .topButton{
+position: relative;
+left: 540px;
+top: 10px;
+
+}
+.overview .opened {
+  position: relative;
+  left: 540px;
+  top: 10px;
+}
+}
+
+@media only screen and (min-width: 1610px) {
+  .overview .dropdown {
+    position: absolute;
+    top: 52px;
+    left: 515px;
+}
+
+.overview .topButton{
+  position: relative;
+  left: 640px;
+  top: 10px;
+
+}
+  .overview .opened {
+    position: relative;
+    left: 640px;
+    top: 10px;
+  }
 }

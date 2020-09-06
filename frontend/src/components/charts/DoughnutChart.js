@@ -57,7 +57,7 @@ class DoughnutChart extends Component {
         const colorScaleIncome = d3.interpolate("white", "mediumseagreen");
         let dataLengthIncome = incomeDataset.length;
         const colorRangeInfo = {
-            colorStart: 0.6,
+            colorStart: 0.4,
             colorEnd: 1,
             useEndAsStart: false,
         };
@@ -88,7 +88,7 @@ class DoughnutChart extends Component {
          * FOR EXPENSE
          */
 
-        const colorScaleExpense = d3.interpolateReds;
+        const colorScaleExpense = d3.interpolate("white", "rgb(255, 27, 27)");
         let dataLengthExpense = expenseDataset.length;
         const colorRangeInfo2 = {
             colorStart: 0.3,

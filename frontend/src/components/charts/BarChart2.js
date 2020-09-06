@@ -34,11 +34,11 @@ class BarChart2 extends Component {
         let incomeBarData = {
             datasets: [{
                 data: incomeBudgets,
-                backgroundColor: "#12A874",
+                backgroundColor: 'rgb(79, 141, 223)',
                 label: 'Goal',
             }, {
                 data: incomeSpending,
-                backgroundColor: "#FFBE5B",
+                backgroundColor: "#12A874",
                 label: 'Income',
             }],
             labels: incomeBudgetLabels,

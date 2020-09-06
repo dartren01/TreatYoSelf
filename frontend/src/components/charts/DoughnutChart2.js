@@ -31,12 +31,11 @@ class DoughnutChart2 extends Component {
         // get total income from each category for the year
         for (let key in incomeCategories) {
             let catSum = 0;
-            for(let month in incomeCategories[key]){
-                if(month.includes(year)){
+            for (let month in incomeCategories[key]) {
+                if (month.includes(year)) {
                     catSum += incomeCategories[key][month];
                 }
             }
-            console.log("cat ", catSum);
             incomeDataset.push(catSum);
             incomeLabels.push(key);
             totalCatIncome += catSum;
@@ -45,8 +44,8 @@ class DoughnutChart2 extends Component {
         //check if total for year matches total income from monthly data
         //if not, assign the remaining as unassigned categories.
         let incomeTotalYear = 0;
-        for(let key in this.props.totalObject.monthly_data){
-            if(key.includes(year)){
+        for (let key in this.props.totalObject.monthly_data) {
+            if (key.includes(year)) {
                 incomeTotalYear += this.props.totalObject.monthly_data[key]["monthly_gained"];
             }
         }
@@ -59,8 +58,8 @@ class DoughnutChart2 extends Component {
         let totalCatExpense = 0;
         for (let key in expenseCategories) {
             let catSum = 0;
-            for(let month in expenseCategories[key]){
-                if(month.includes(year)){
+            for (let month in expenseCategories[key]) {
+                if (month.includes(year)) {
                     catSum += expenseCategories[key][month];
                 }
             }
@@ -69,8 +68,8 @@ class DoughnutChart2 extends Component {
             totalCatExpense += catSum;
         }
         let expenseTotalYear = 0;
-        for(let key in this.props.totalObject.monthly_data){
-            if(key.includes(year)){
+        for (let key in this.props.totalObject.monthly_data) {
+            if (key.includes(year)) {
                 expenseTotalYear += this.props.totalObject.monthly_data[key]["monthly_spent"];
             }
         }
@@ -86,7 +85,7 @@ class DoughnutChart2 extends Component {
         const colorScaleIncome = d3.interpolate("white", "mediumseagreen");
         let dataLengthIncome = incomeDataset.length;
         const colorRangeInfo = {
-            colorStart: 0.6,
+            colorStart: 0.4,
             colorEnd: 1,
             useEndAsStart: false,
         };
@@ -117,7 +116,7 @@ class DoughnutChart2 extends Component {
          * FOR EXPENSE
          */
 
-        const colorScaleExpense = d3.interpolateReds;
+        const colorScaleExpense = d3.interpolate("white", "rgb(255, 27, 27)");
         let dataLengthExpense = expenseDataset.length;
         const colorRangeInfo2 = {
             colorStart: 0.3,
@@ -167,14 +166,14 @@ class DoughnutChart2 extends Component {
         return (
             <Fragment>
                 <div className="doughnutGraphs">
-                    <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
+                    <div className="doughnut" style={this.props.donut}>
                         <Doughnut
                             data={incomeData}
                             width={110}
                             height={110}
                             options={incomeOptions} />
                     </div>
-                    <div className="doughnut" style={{ position: "relative", height: "25vh", width: "12vw" }}>
+                    <div className="doughnut" style={this.props.donut}>
                         <Doughnut
                             data={expenseData}
                             width={110}

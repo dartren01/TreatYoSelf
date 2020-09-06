@@ -44,9 +44,6 @@ class SpendingChart extends Component {
 
 
     render() {
-        if (this.props.loading) {
-            return (<div>Loading...</div>)
-        }
         let budgetValues = this.getTotalBudget();
         let totalBudget = budgetValues[0];
         let isBudgetZero = budgetValues[1];

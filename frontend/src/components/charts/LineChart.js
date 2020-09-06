@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import {Line} from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
 /**
  * Total spent over one year? chart
@@ -17,31 +17,33 @@ class LineChart extends Component {
         let monthlyData = this.props.totalObject.monthly_data;
         let monthLabels = [], monthlySpent = [], monthlyGained = [];
         let monthCount = 0;
-        for (let key in monthlyData){
+        for (let key in monthlyData) {
             let splitIndex = key.length - 4;
             monthLabels.push(key.substring(0, splitIndex) + "/" + key.substring(splitIndex));
             monthlyGained.push(monthlyData[key]['monthly_gained']);
             monthlySpent.push(monthlyData[key]['monthly_spent']);
-            monthCount+=1;
-            if(monthCount > 11){
+            monthCount += 1;
+            if (monthCount > 11) {
                 break;
             }
         }
 
-        
+
         let totalLineData = {
             datasets: [{
                 data: monthlySpent,
-                borderColor: "rgba(232, 187, 39, 1)",
+                borderColor: "red",
                 fill: false,
-                label: 'Amount Spent',
+                backgroundColor: "red",
+                label: 'Expenses',
                 pointRadius: 5,
                 pointHitRadius: 5
             }, {
                 data: monthlyGained,
-                borderColor: "green",
+                borderColor: "#12A874",
                 fill: false,
-                label: 'Amount Gained',
+                backgroundColor: "#12A874",
+                label: 'Income',
                 pointRadius: 5,
                 pointHitRadius: 5
             }],
@@ -50,16 +52,33 @@ class LineChart extends Component {
         }
         let lineOptions = {
             legend: {
-                display: true
+                display: true,
+                position: 'bottom',
+                labels: {
+                    fontColor: "black",
+                }
             },
-            maintainAspectRatio: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: "black",
+                        beginAtZero: true,
+                        maxTicksLimit: 10,
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: "black",
+
+                    }
+                }]
+            },
+            maintainAspectRatio: false,
             aspectRatio: 2.5,
             responsive: true,
             title: {
-                display: true,
-                fontSize: 32,
-                text: "1 Year Spending And Gain"
-            },
+                display: false,
+            }
         }
 
         return ([
@@ -70,8 +89,8 @@ class LineChart extends Component {
 
 
     render() {
-        if(this.props.loading){
-            return(<div></div>)
+        if (this.props.loading) {
+            return (<div></div>)
         }
         let totalLineData = {}, totalLineOptions;
         [totalLineData, totalLineOptions] = this.createLineChart();
@@ -80,8 +99,6 @@ class LineChart extends Component {
             <Fragment>
                 <Line
                     data={totalLineData}
-                    width={100}
-                    height={100}
                     options={totalLineOptions} />
             </Fragment>)
     }

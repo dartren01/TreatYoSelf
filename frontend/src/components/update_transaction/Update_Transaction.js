@@ -65,7 +65,7 @@ class Update_Transaction extends Component {
                     prev_category: res.data.category,
                     source: res.data.source,
                     amount: res.data.amount,
-                    prev_amount:res.data.amount,
+                    prev_amount: res.data.amount,
                     date: res.data.date_posted,
                     prev_date: res.data.date_posted,
                     notes: res.data.notes,
@@ -77,21 +77,23 @@ class Update_Transaction extends Component {
                 console.log("transaction get error: " + err)
             })
 
-            //Get categories
-            axios.get( "budget/category/get/", {headers: {
+        //Get categories
+        axios.get("budget/category/get/", {
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${Cookies.get("token")}`
-            }})
-                .then(res => {
-                        this.setState({
-                            income_categories: res.data[0].income_categories,
-                            expense_categories: res.data[0].expense_categories,
-                        })
-                    
+            }
+        })
+            .then(res => {
+                this.setState({
+                    income_categories: res.data[0].income_categories,
+                    expense_categories: res.data[0].expense_categories,
                 })
-                .catch(err => {
-                    console.log("Update Transaction, get Category Error " + err)
-                })
+
+            })
+            .catch(err => {
+                console.log("Update Transaction, get Category Error " + err)
+            })
 
     };
 
@@ -154,18 +156,18 @@ class Update_Transaction extends Component {
 
                             <Form.Group controlId="formCategorySelect">
                                 <Form.Label>Category</Form.Label>
-                                <Form.Control 
-                                        as="select"
-                                        name = "category"
-                                        value = {this.state.category}
-                                        onChange = {(e) => this.handleChange(e)}>
-                                    {this.state.t_type === "Income" ? 
+                                <Form.Control
+                                    as="select"
+                                    name="category"
+                                    value={this.state.category}
+                                    onChange={(e) => this.handleChange(e)}>
+                                    {this.state.t_type === "Income" ?
                                         Object.keys(this.state.income_categories).map((cat) =>
-                                        <option key = {cat}>{cat}</option>) :
-                                        Object.keys(this.state.expense_categories).map((cat) => 
-                                        <option key = {cat}>{cat}</option>)
-                                        }
-                                    
+                                            <option key={cat}>{cat}</option>) :
+                                        Object.keys(this.state.expense_categories).map((cat) =>
+                                            <option key={cat}>{cat}</option>)
+                                    }
+
 
                                 </Form.Control>
                             </Form.Group>

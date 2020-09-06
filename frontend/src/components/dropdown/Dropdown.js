@@ -15,7 +15,6 @@ const NavItem = (props) => {
     }, []);
     const handleClick = e => {
         if (!node.current.contains(e.target)) {
-            console.log("hi", props.closeOnClick)
             setOpen(false);
             setColor(false);
         }
@@ -42,7 +41,7 @@ const DropdownMenu = (props) => {
 
 const DropdownItem = (props) => {
     return (
-        <a href='#' className={props.className} onClick={props.onClick}>
+        <a className={props.className} onClick={props.onClick} style={{ cursor: "pointer" }}>
             <span className="icon-button">{props.leftIcon}</span>
             {props.children}
             <span className="icon-right">{props.rightIcon}</span>

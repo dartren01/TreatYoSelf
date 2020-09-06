@@ -12,35 +12,35 @@ class Transaction extends Component {
                     {this.props.curTrans.map((transaction) => (
                         <Fragment key={transaction.id}>
                             <li className="list-group-item-t flex-grow-1 align-items-stretch">
-                                <div className="row">
-                                    <div className="col-sm font-to-lato">
-                                        <h1>{transaction.source}</h1>
+                                <div className="row one">
+                                    <div className="col-sm">
+                                        {transaction.source}
                                     </div>
-                                    <div className="col-sm text-center font-to-lato">
-                                        <h1>{transaction.category}</h1>
+                                    <div className="col-sm text-center">
+                                        {transaction.category}
                                     </div>
-                                    <div className="col-sm text-right font-to-lato">
+                                    <div className="col-sm text-right">
                                         {transaction.t_type === "Expense" ?
                                             <h1 style={{ color: "red" }}>-${transaction.amount}</h1>
                                             :
                                             <h1 style={{ color: "#12A874" }}>+${transaction.amount}</h1>}
                                     </div>
                                 </div>
-                                <div className="row">
-                                    <div className="col-sm text-black-50 font-to-lato">
+                                <div className="row two">
+                                    <div className="col-sm">
                                         {transaction.date_posted}
                                     </div>
-                                    <div className="col-sm text-right text-black-50 font-to-lato">
+                                    <div className="col-sm text-right">
                                         {transaction.t_type}
                                     </div>
                                 </div>
-                                <div className="row pt-2">
-                                    <div className="col-lg text-black-50 text-wrap font-to-lato">
-                                        Notes: {transaction.notes}
+                                <div className="row three">
+                                    <div className="col-lg text-wrap">
+                                        Notes: <span>{transaction.notes}</span>
                                     </div>
                                     <div className="trans-buttons">
-                                        <button onClick={() => this.props.handleUpdateRedirect(transaction.id)} className="btn btn-info font-to-lato">Update</button>
-                                        <button onClick={() => this.props.handleDelete(transaction.id)} className="btn btn-danger font-to-lato">Delete</button>
+                                        <button onClick={() => this.props.handleUpdateRedirect(transaction.id)} className="updateButton">Update</button>
+                                        <button onClick={() => this.props.handleDelete(transaction.id)} className="deleteButton">Delete</button>
                                     </div>
                                 </div>
                             </li>

@@ -131,7 +131,6 @@ class Overview extends Component {
             this.setState({ donut: { position: "relative", height: "200px", width: "200px" } })
 
         }
-        console.log(this.state.donutHeight, this.state.donutWidth)
     }
     chartTextSet = () => {
         Chart.pluginService.register({
