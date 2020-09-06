@@ -129,7 +129,6 @@ class App extends Component {
     if (!this.state.loadPage) {
       return <div>Loading . . .</div>
     }
-
     return (
       <AlertProvider template={AlertTemplate} {...this.options}>
         <Router>

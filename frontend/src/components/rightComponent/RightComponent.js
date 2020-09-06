@@ -104,19 +104,27 @@ class RightComponent extends Component {
             toggleRight = "rightbar opened";
 
         }
+        let isTotal;
+        if (this.props.history.location.pathname === "/total") {
+            return (<React.Fragment>
+            </React.Fragment>)
+        }
         return (
-            <div className={toggleRight} id="rightbar">
+            <React.Fragment>
+                {isTotal}
+                <div className={toggleRight} id="rightbar">
 
-                {this.state.buttonExists ? <button onClick={() => this.setState({
-                    isButtonOpen: !this.state.isButtonOpen
-                })}
-                    className="toggleButton"> <img src={arrowRight ? closeTab : openTab} className="openTab"></img> </button> : <div></div>}
-                <div className="spending">
-                    <SpendingChart {...this.state}
-                        monthName={this.props.monthName}
-                    />
+                    {this.state.buttonExists ? <button onClick={() => this.setState({
+                        isButtonOpen: !this.state.isButtonOpen
+                    })}
+                        className="toggleButton"> <img src={arrowRight ? closeTab : openTab} className="openTab"></img> </button> : <div></div>}
+                    <div className="spending">
+                        <SpendingChart {...this.state}
+                            monthName={this.props.monthName}
+                        />
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         )
     }
 
