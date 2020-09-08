@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { withAlert } from 'react-alert';
+import "./Create_Transaction.css"
 
 class Create_Transaction extends Component {
     constructor(props) {
@@ -114,21 +115,33 @@ class Create_Transaction extends Component {
     };
 
     render() {
+        let placeholder1;
+        let placeholder2;
+        let placeholder3;
+        if (this.state.transactionType === "Expense") {
+            placeholder1 = "e.g. \"Chick-fil-A\""
+            placeholder2 = "e.g. \"10.99\""
+            placeholder3 = "e.g. \"Ordered the deluxe meal 🍔🍟\""
+        } else {
+            placeholder1 = "e.g. \"Tesla Stock\""
+            placeholder2 = "e.g. \"20000\""
+            placeholder3 = "e.g. \"Took money out of Tesla to buy a Tesla 🚗\""
+        }
         return (
-            <div>
+            <div className="createTransaction">
                 <h1>
                     Create A Transaction
                 </h1>
                 <h2>
                     {this.props.transactionType}
                 </h2>
-                <Form className="col-sm-8">
+                <Form className="col-sm-12">
                     <Form.Group controlId="formSource">
                         <Form.Label>Title</Form.Label>
                         <Form.Control
                             type="text"
                             name="source"
-                            placeholder="title"
+                            placeholder={placeholder1}
                             onChange={(e) => this.handleChange(e)} />
                     </Form.Group>
 
@@ -161,12 +174,12 @@ class Create_Transaction extends Component {
                     </Form.Group>
 
                     <Form.Group controlId="formAmount">
-                        <Form.Label>Amount</Form.Label>
+                        <Form.Label>Amount ($)</Form.Label>
                         <Form.Control
                             type="number"
                             step={"0.01"}
                             name="amount"
-                            placeholder="amount"
+                            placeholder={placeholder2}
                             onChange={(e) => this.handleChange(e)} />
                     </Form.Group>
 
@@ -185,12 +198,12 @@ class Create_Transaction extends Component {
                             as="textarea"
                             rows="3"
                             name="notes"
-                            placeholder="notes"
+                            placeholder={placeholder3}
                             onChange={(e) => this.handleChange(e)} />
                     </Form.Group>
 
-                    <Button
-                        variant="outline-secondary"
+                    <Button className="createButton"
+                        variant="outline-dark"
                         onClick={(e) => this.handleCreate(e)}>
                         Create
                     </Button>

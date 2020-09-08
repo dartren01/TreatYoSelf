@@ -112,7 +112,7 @@ class Navbar extends Component {
                     $ {this.state.totalAmount}
                 </p>
                 <Link to="/budget/create/">
-                    <button className="tranButtonStyling">
+                    <button className="tranButtonStyling btn btn-outline-dark">
                         New Transaction
                             </button>
                 </Link>
@@ -155,9 +155,9 @@ class Navbar extends Component {
                 <div className="topbar">
                     <nav className="navbar navbar-expand-xl navbar-dark" >
                         <div className="container-fluid">
-                            <div className="navbar-brand">
+                            <Link to="/" className="navbar-brand" >
                                 <img src={logo} className="logo" /> Treat Yo'Self
-                            </div>
+                            </Link>
                             <ul className="navbar-nav ml-auto">
                                 <NavItem
                                     className="profile"

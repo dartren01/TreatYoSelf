@@ -43,7 +43,7 @@ class SpendingChart extends Component {
     }
 
 
-    render() {
+    render() {  
         let budgetValues = this.getTotalBudget();
         let totalBudget = budgetValues[0];
         let isBudgetZero = budgetValues[1];

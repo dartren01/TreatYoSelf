@@ -123,6 +123,7 @@
 .updateButton:hover {
     filter: brightness(1.2); 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
 }
 
 .deleteButton {
@@ -143,6 +144,7 @@
 .deleteButton:hover {
     filter: brightness(1.2); 
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
 }
 
 .list-group-item-t:before {

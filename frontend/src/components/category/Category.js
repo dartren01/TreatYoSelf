@@ -258,18 +258,24 @@ class Category extends Component {
     render() {
         console.log("Category Render")
         let budgetGoal;
+        let type;
+        let placeholder;
         if (this.state.categoryType === "Income") {
             budgetGoal = "Income Goal"
+            type = "Income"
+            placeholder = "e.g. \"Dividends\""
         } else {
-            budgetGoal = "Spending Budget"
+            budgetGoal = "Expense Budget"
+            type = "Expense"
+            placeholder = "e.g. \"Home\""
         }
         return (
-            <div>
+            <div className="categories">
                 <h1>Categories</h1>
 
-                <Form className="form-group name1 col-md-12 CategoryChoice">
+                <Form className="CategoryChoice  ">
                     <Form.Group controlId="formCategoryType">
-                        <Form.Label>Transaction Type</Form.Label>
+                        <Form.Label><h2>Choose a Transaction Type</h2></Form.Label>
                         <Form.Control
                             as="select"
                             type="categoryType"
@@ -282,69 +288,63 @@ class Category extends Component {
                             )}
                         </Form.Control>
                     </Form.Group>
-
                 </Form>
 
 
-                <Form >
-                    <div className="form-group name1 col-md-12 AddCategory">
-                        <Form.Group controlId="formAddCategory">
-                            <Form.Label>Add Category</Form.Label>
-                            <Form.Control
-                                type="new_category"
-                                name="new_category"
-                                placeholder="New Category"
-                                value={`${this.state.new_category}`}
-                                onChange={(e) => this.handleChange(e)} />
-                        </Form.Group>
-                        <Button className="categoryButton"
-                            variant="outline-primary"
-                            onClick={(e) => this.handleAddCategory(e)}>
-                            Add
+                <Form className="AddCategory  ">
+                    <Form.Group controlId="formAddCategory">
+                        <Form.Label>Add {type} Category</Form.Label>
+                        <Form.Control
+                            type="new_category"
+                            name="new_category"
+                            placeholder={placeholder}
+                            value={`${this.state.new_category}`}
+                            onChange={(e) => this.handleChange(e)} />
+                    </Form.Group>
+                    <Button className="categoryButton1 btn btn-success"
+                        // variant="outline-primary"
+                        onClick={(e) => this.handleAddCategory(e)}>
+                        Add
                     </Button>
-                    </div>
                 </Form>
 
-                <Form>
-                    <div className="form-group name1 col-md-12">
-                        <Form.Group controlId="formCategoryBudget">
-                            <Form.Label>Change {budgetGoal}</Form.Label>
-                            <Form.Control
-                                as="select"
-                                type="budget_category"
-                                name="budget_category"
-                                value={this.state.budget_category}
-                                onChange={(e) => this.changebudgetCategory(e)}>
-                                {Object.keys(this.state.categories_budget).map((cat) =>
-                                    <Fragment key={cat}>
-                                        <option>{cat}</option>
-                                    </Fragment>
-                                )}
-                            </Form.Control>
-                        </Form.Group>
-                    </div>
-
-                    <div className="form-group name1 col-md-12 Category">
-                        <Form.Group controlId="formBasicBudget">
-                            <Form.Control
-                                type="budget"
-                                name="budget"
-                                value={`${this.state.budget}`}
-                                onChange={(e) => this.handleChange(e)} />
-                        </Form.Group>
-                        <Button
-                            className="categoryButton"
-                            variant="outline-secondary"
-                            onClick={(e) => this.handleAddBudget(e)}>
-                            Change
+                <Form className="Change  ">
+                    <Form.Group controlId="formCategoryBudget">
+                        <Form.Label>Change {budgetGoal}</Form.Label>
+                        <Form.Control
+                            as="select"
+                            type="budget_category"
+                            name="budget_category"
+                            value={this.state.budget_category}
+                            onChange={(e) => this.changebudgetCategory(e)}>
+                            {Object.keys(this.state.categories_budget).map((cat) =>
+                                <Fragment key={cat}>
+                                    <option>{cat}</option>
+                                </Fragment>
+                            )}
+                        </Form.Control>
+                    </Form.Group>
+                </Form>
+                <Form className="Change2 ">
+                    <Form.Group controlId="formBasicBudget">
+                        <Form.Control
+                            type="budget"
+                            name="budget"
+                            value={`${this.state.budget}`}
+                            onChange={(e) => this.handleChange(e)} />
+                    </Form.Group>
+                    <Button
+                        className="categoryButton2 btn btn-dark"
+                        // variant="outline-secondary"
+                        onClick={(e) => this.handleAddBudget(e)}>
+                        Change
                         </Button>
-                    </div>
 
                 </Form>
 
-                <div className="form-group name1 col-md-12 Category">
+                <Form className="DeleteCategory  ">
                     <Form.Group controlId="formCategoryDelete">
-                        <Form.Label>Delete Category</Form.Label>
+                        <Form.Label>Delete {type} Category</Form.Label>
                         <Form.Control
                             as="select"
                             type="delete_category"
@@ -356,17 +356,17 @@ class Category extends Component {
                                 </Fragment>
                             )}
                         </Form.Control>
-
-                        <Button
-                            className="categoryButton"
-                            variant="outline-danger"
-                            onClick={(e) => this.handleDeleteCategory(e)}>
-                            Delete
-                        </Button>
                     </Form.Group>
-                </div>
+                    <Button
+                        className="categoryButton3 btn btn-danger"
+                        // variant="outline-danger"
+                        onClick={(e) => this.handleDeleteCategory(e)}>
+                        Delete
+                        </Button>
 
-            </div>
+                </Form>
+
+            </div >
 
 
 

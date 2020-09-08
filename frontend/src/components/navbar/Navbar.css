@@ -223,15 +223,18 @@ z-index: 90;
   border: 1px solid white;
   background-color: #12A874;
   transition: all 0.3s ease 0s; 
-  box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  /* box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1); */
+  border-radius: 18px;
   text-align: center;
 }
 .sidebar .sidebar-header .tranButtonStyling:hover{
-  border:1px solid transparent;
+  /* border:1px solid transparent;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   color: black;
-  background-color: #FFBE5B;
+  background-color: #FFBE5B; */
+  filter: brightness(1.1); 
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1  );
+  border: 1px solid transparent;
 } 
 
 .sidebar .nav-link {
