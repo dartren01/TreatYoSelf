@@ -57,13 +57,16 @@ class Analytics extends Component {
                 //figure out how to get monthly to object
                 let date = new Date();
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
-                console.log("hello", profileObj)
                 let yearlySpent = 0;
                 let yearlyGained = 0;
                 for (let obj in profileObj.monthly_data) {
-                    console.log(obj)
-                    yearlyGained += parseFloat(profileObj.monthly_data[obj]["monthly_gained"]);
-                    yearlySpent += parseFloat(profileObj.monthly_data[obj]["monthly_spent"]);
+                    let newObj = obj.toString();
+                    newObj = newObj.substr(newObj.length - 4)
+                    newObj = parseInt(newObj)
+                    if (newObj === this.props.year) {
+                        yearlyGained += parseFloat(profileObj.monthly_data[obj]["monthly_gained"]);
+                        yearlySpent += parseFloat(profileObj.monthly_data[obj]["monthly_spent"]);
+                    }
                 }
                 console.log(yearlySpent, yearlyGained)
                 this.setState({
@@ -184,7 +187,8 @@ class Analytics extends Component {
                     <h4>Budget vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Expense Category)</span></h4>
                     <div className="charts">
                         <div className="chartContainer" style={this.state.bar}>
-                            <LineChart {...this.state} />
+                            <LineChart {...this.state}
+                                year={this.props.year} />
                         </div>
                         <div >
                             <DoughnutChart2 {...this.state} />
@@ -203,7 +207,8 @@ class Analytics extends Component {
                     <h4> Goal vs. Income in {this.props.year} <span className="spendingCategory">($ Per Income Category)</span></h4>
                     <div className="charts">
                         <div className="chartContainer" style={this.state.bar}>
-                            <LineChart {...this.state} />
+                            <LineChart {...this.state}
+                                year={this.props.year} />
                         </div>
                         <div >
                             <DoughnutChart2 {...this.state} />
@@ -229,7 +234,8 @@ class Analytics extends Component {
                 <h4>Income vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Month)</span></h4>
                 <div className="charts">
                     <div className="chartContainer" style={this.state.bar}>
-                        <LineChart {...this.state} />
+                        <LineChart {...this.state}
+                            year={this.props.year} />
                     </div>
                     <div >
                         <DoughnutChart2 {...this.state} />

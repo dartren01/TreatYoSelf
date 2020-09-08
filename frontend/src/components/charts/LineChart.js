@@ -17,14 +17,21 @@ class LineChart extends Component {
         let monthlyData = this.props.totalObject.monthly_data;
         let monthLabels = [], monthlySpent = [], monthlyGained = [];
         let monthCount = 0;
+        console.log(monthlyData)
         for (let key in monthlyData) {
-            let splitIndex = key.length - 4;
-            monthLabels.push(key.substring(0, splitIndex) + "/" + key.substring(splitIndex));
-            monthlyGained.push(monthlyData[key]['monthly_gained']);
-            monthlySpent.push(monthlyData[key]['monthly_spent']);
-            monthCount += 1;
-            if (monthCount > 11) {
-                break;
+            let newObj = key.toString();
+            newObj = newObj.substr(newObj.length - 4)
+            newObj = parseInt(newObj)
+            if (this.props.year === newObj) {
+                let splitIndex = key.length - 4;
+                console.log("splitindex", key, splitIndex)
+                monthLabels.push(key.substring(0, splitIndex) + "/" + key.substring(splitIndex));
+                monthlyGained.push(monthlyData[key]['monthly_gained']);
+                monthlySpent.push(monthlyData[key]['monthly_spent']);
+                monthCount += 1;
+                if (monthCount > 11) {
+                    break;
+                }
             }
         }
 
