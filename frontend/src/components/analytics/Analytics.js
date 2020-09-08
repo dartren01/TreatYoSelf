@@ -5,6 +5,7 @@ import axios from "axios";
 import DoughnutChart2 from "../charts/DoughnutChart2";
 import LineChart from "../charts/LineChart";
 import CashFlow from "../charts/CashFlow";
+import BarChart3 from "../charts/BarChart3";
 import './Analytics.css';
 
 import dropArrow from "./images/dropArrow.svg";
@@ -298,6 +299,11 @@ class Analytics extends Component {
                                 <CashFlow {...this.state}
                                     year={this.props.year}>
                                 </CashFlow>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="flex-fill">
+                                <BarChart3 {...this.state}/>
                             </div>
                         </div>
                     </Fragment>

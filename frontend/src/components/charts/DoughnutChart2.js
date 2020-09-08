@@ -108,7 +108,7 @@ class DoughnutChart2 extends Component {
             aspectRatio: 2.5,
             cutoutPercentage: 70,
             responsive: true,
-            title: "Yearly Income",
+            title: `${year} Income`,
             amount: `$ ${incomeTotalYear}`,
         }
 
@@ -142,7 +142,7 @@ class DoughnutChart2 extends Component {
             aspectRatio: 2.5,
             cutoutPercentage: 70,
             responsive: true,
-            title: "Yearly Expenses",
+            title: `${year} Expenses`,
             amount: `$ ${expenseTotalYear}`,
         }
 

@@ -15,6 +15,11 @@ import income from "./images/income.svg";
 import expense from "./images/expense.svg";
 
 
+const MONTHNAMES = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+
 class Overview extends Component {
     constructor(props) {
         super(props)
@@ -261,7 +266,7 @@ class Overview extends Component {
             <div className="overview">
                 <div className="row">
                     <h1>
-                        Monthly Overview
+                        {this.props.monthName} Overview
                     </h1>
                 </div>
                 {this.state.loading === true ?
