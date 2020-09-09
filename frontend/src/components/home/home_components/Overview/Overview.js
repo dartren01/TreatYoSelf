@@ -280,7 +280,7 @@ class Overview extends Component {
             <div className="overview">
                 <div className="row">
                     <h1>
-                        {this.props.monthName} Overview
+                        Monthly Overview
                     </h1>
                 </div>
                 {this.state.loading === true ?

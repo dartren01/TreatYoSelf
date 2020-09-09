@@ -187,7 +187,7 @@ class Analytics extends Component {
         this.setState({
             renderGraph:
                 <Fragment>
-                    <h4>Budget vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Expense Category)</span></h4>
+                    <h4>Budget vs. Expense in {this.props.year} <span className="spendingCategory">($ per month)</span></h4>
                     <div className="charts">
                         <div className="chartContainer" style={this.state.bar}>
                             <LineChart {...this.state}
@@ -207,10 +207,10 @@ class Analytics extends Component {
         this.setState({
             renderGraph:
                 <Fragment>
-                    <h4> Goal vs. Income in {this.props.year} <span className="spendingCategory">($ Per Income Category)</span></h4>
+                    <h4> Total Expenses in {this.props.year} <span className="spendingCategory">($ Per Expense Category)</span></h4>
                     <div className="charts">
                         <div className="chartContainer" style={this.state.bar}>
-                            <LineChart {...this.state}
+                            <BarChart3 {...this.state}
                                 year={this.props.year} />
                         </div>
                         <div >
@@ -298,11 +298,6 @@ class Analytics extends Component {
                                 <CashFlow {...this.state}
                                     year={this.props.year}>
                                 </CashFlow>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="flex-fill">
-                                <BarChart3 {...this.state} />
                             </div>
                         </div>
                     </Fragment>

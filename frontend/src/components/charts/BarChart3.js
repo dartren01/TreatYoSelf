@@ -98,7 +98,6 @@ class BarChart3 extends Component {
         let year = this.props.monthYearDate.toString().slice(-4);
         return (
             <Fragment>
-                <h2>{year} Total Spent</h2>
                 <Bar
                     data={expenseBarData}
                     options={expenseBudgetOptions} />
