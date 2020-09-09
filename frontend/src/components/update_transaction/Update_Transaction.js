@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { withAlert } from 'react-alert';
+import "./Update_Transaction.css"
 
 class Update_Transaction extends Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Update_Transaction extends Component {
             }
         })
             .then(res => {
+                console.log(res)
                 this.setState({
                     transactions: res.data,
                     t_type: res.data.t_type,
@@ -132,19 +134,19 @@ class Update_Transaction extends Component {
 
     render() {
         return (
-            <div>
-                <h1>
+            <div className="updateTrans">
+                <h1 className="main-header">
                     Update Transaction
-                </h1>
+            </h1>
                 {this.state.loading === true ?
-                    <h1>
-                        Loading
-                    </h1> :
+                    <h2>
+                        Loading Transactions . . .
+                </h2> :
                     <div>
                         <h2>
                             {this.state.transactions.t_type}
                         </h2>
-                        <Form className="col-sm-8">
+                        <Form className="col-sm-12">
                             <Form.Group controlId="formSource">
                                 <Form.Label>Title</Form.Label>
                                 <Form.Control
@@ -202,7 +204,8 @@ class Update_Transaction extends Component {
                             </Form.Group>
 
                             <Button
-                                variant="outline-secondary"
+                                className="updateButton"
+                                variant="outline-dark"
                                 onClick={(e) => this.handleUpdate(e)}>
                                 Update
                             </Button>

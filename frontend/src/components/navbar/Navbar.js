@@ -20,6 +20,10 @@ import bell from "./images/bell.svg";
 import dropArrow from "./images/dropArrow.svg";
 
 import rightArrow from "./images/rightArrow.svg";
+import leftArrow from "./images/leftArrow.svg";
+import change from "./images/change.svg";
+import contact from "./images/contact.svg";
+import faq from "./images/faq.svg";
 import logout from "./images/logout.svg";
 import settings from "./images/settings.svg";
 import help from "./images/help.svg";
@@ -40,6 +44,7 @@ class Navbar extends Component {
             totalAmount: "",
             whichPage: 1,
             open: false,
+            activeMenu: "main",
         };
     }
     getPage = () => {
@@ -70,7 +75,6 @@ class Navbar extends Component {
         })
             .then(res => {
                 let profileObj = res.data[0];
-                console.log(profileObj)
                 this.setState({
                     totalAmount: profileObj.total_amount,
                     loading: false,
@@ -97,7 +101,10 @@ class Navbar extends Component {
 
     setOpen = () => {
         this.setState({ open: !this.state.open })
-        console.log(this.state.open)
+    }
+
+    setActiveMenu = (menu) => {
+        this.setState({ activeMenu: menu })
     }
 
     render() {
@@ -184,37 +191,98 @@ class Navbar extends Component {
                                     imageName="dropArrow"
                                     opened="opened"
                                 >
-                                    <DropdownMenu>
-                                        <DropdownItem
-                                            className="big-menu-item">
-                                            <img className="bigPfp" src={pfp}></img>
-                                            <h2>{this.props.firstname + " " + this.props.lastname}</h2>
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            className="menu-item"
-                                            leftIcon={<img src={settings}></img>}
-                                            rightIcon={<img src={rightArrow}></img>}>
-                                            <p>
-                                                Settings &amp; Privacy
+                                    <DropdownMenu
+                                        activeMenu={this.state.activeMenu}
+                                        main={
+                                            <React.Fragment>
+                                                <DropdownItem
+                                                    className="big-menu-item">
+                                                    <img className="bigPfp" src={pfp}></img>
+                                                    <h2>{this.props.firstname + " " + this.props.lastname}</h2>
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={settings}></img>}
+                                                    rightIcon={<img src={rightArrow}></img>}
+                                                    onClick={() => this.setActiveMenu("settings")}
+                                                    goToMenu="settings">
+                                                    <p>
+                                                        Settings &amp; Privacy
                                             </p>
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            className="menu-item"
-                                            leftIcon={<img src={help}></img>}
-                                            rightIcon={<img src={rightArrow}></img>}>
-                                            <p>
-                                                Help &amp; Support
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={help}></img>}
+                                                    rightIcon={<img src={rightArrow}></img>}
+                                                    onClick={() => this.setActiveMenu("help")}
+                                                    goToMenu="help">
+                                                    <p>
+                                                        Help &amp; Support
                                             </p>
-                                        </DropdownItem>
-                                        <DropdownItem
-                                            className="menu-item"
-                                            leftIcon={<img src={logout}></img>}
-                                            onClick={this.handleLogout}>
-                                            <p>
-                                                Logout
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={logout}></img>}
+                                                    onClick={this.handleLogout}>
+                                                    <p>
+                                                        Logout
                                             </p>
-                                        </DropdownItem>
-                                    </DropdownMenu>
+                                                </DropdownItem>
+                                            </React.Fragment>}
+                                        settings={
+                                            <React.Fragment>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={leftArrow}></img>}
+                                                    onClick={() => this.setActiveMenu("main")}
+                                                    goToMenu="main">
+                                                    <p>
+                                                        Back to Main Menu
+                                                    </p>
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={change}></img>}
+                                                // onClick={}
+                                                >
+                                                    <p>
+                                                        Change Account Information
+                                                    </p>
+                                                </DropdownItem>
+                                            </React.Fragment>
+                                        }
+                                        help={
+                                            <React.Fragment>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={leftArrow}></img>}
+                                                    onClick={() => this.setActiveMenu("main")}
+                                                    goToMenu="main">
+                                                    <p>
+                                                        Back to Main Menu
+                                                    </p>
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={faq}></img>}
+                                                // onClick={}
+                                                >
+                                                    <p>
+                                                        FAQs
+                                                    </p>
+                                                </DropdownItem>
+                                                <DropdownItem
+                                                    className="menu-item"
+                                                    leftIcon={<img src={contact}></img>}
+                                                // onClick={}
+                                                >
+                                                    <p>
+                                                        Contact us
+                                                    </p>
+                                                </DropdownItem>
+                                            </React.Fragment>
+                                        }
+                                    />
                                 </NavItem>
 
                             </ul>

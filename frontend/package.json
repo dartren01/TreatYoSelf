@@ -48,6 +48,7 @@
     "react-modal-login": "^1.4.5",
     "react-portal": "^4.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scroll": "^1.8.1"
+    "react-scroll": "^1.8.1",
+    "react-transition-group": "^4.4.1"
   }
 }

@@ -39,7 +39,6 @@ class RightComponent extends Component {
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
                 //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
                 //let monthData = JSON.parse(profileObj.monthly_data);
-                console.log(profileObj)
                 this.setState({
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
@@ -66,8 +65,6 @@ class RightComponent extends Component {
                     categoryObj: res.data[0],
                     loading: false,
                 });
-                console.log(this.state.categoryObj)
-                console.log("category obj: ", res.data[0]);
             })
             .catch(err => {
                 console.log("category get error: " + err)
@@ -79,7 +76,6 @@ class RightComponent extends Component {
     };
 
     getDimensions = () => {
-        console.log(window.innerWidth, window.innerHeight)
         if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
             this.setState({ buttonExists: true })
             // } else if (window.innerWidth >= 1200) {

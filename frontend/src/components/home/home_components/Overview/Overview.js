@@ -61,6 +61,7 @@ class Overview extends Component {
         })
             .then(res => {
                 let profileObj = res.data[0];
+
                 //figure out how to get monthly to object
                 let date = new Date();
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
@@ -90,11 +91,11 @@ class Overview extends Component {
             }
         })
             .then(res => {
+                console.log(res.data[0])
                 this.setState({
                     categoryObj: res.data[0],
                     loading: false,
                 });
-                console.log("category obj: ", res.data[0]);
             })
             .catch(err => {
                 console.log("category get error: " + err)
@@ -116,6 +117,26 @@ class Overview extends Component {
             .catch(err => {
                 console.log("transaction get error: " + err)
             })
+
+        //TESTING PLS
+        axios.get(`/api/auth/user`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${Cookies.get("token")}`
+            }
+        })
+            .then(res => {
+                console.log(res.data)
+                // this.setState({
+                //     categoryObj: res.data[0],
+                //     loading: false,
+                // });
+            })
+            .catch(err => {
+                console.log("category get error: " + err)
+            })
+
+
     };
 
     componentWillUnmount() {

@@ -58,7 +58,6 @@ class Navbar2 extends Component {
     }
 
     render() {
-        console.log(this.props.history.location.pathname);
         let leftNavbar;
         leftNavbar = <React.Fragment>
             <ScrLink
