@@ -93,7 +93,7 @@
     font-weight: 600;
     padding: 6px 14px;
     border: 1px solid white;
-    background-color: #000000;
+    background-color: rgb(102, 102, 255);
     transition: all 0.3s ease 0s;
     /* box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1); */
     border-radius: 20px;

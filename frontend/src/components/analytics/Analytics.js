@@ -106,7 +106,7 @@ class Analytics extends Component {
                 console.log("category get error: " + err)
             })
 
-
+        this.chartTextSet();
         // get transactions, pass to recent transactions js
     }
     componentWillUnmount() {
@@ -138,6 +138,8 @@ class Analytics extends Component {
                 let width = chart.chart.width,
                     height = chart.chart.height,
                     ctx = chart.chart.ctx;
+
+                chart.clear();
 
                 ctx.restore();
                 let fontSize = (height / 200).toFixed(2);
@@ -225,9 +227,6 @@ class Analytics extends Component {
         let totalText;
         if (this.state.loading) {
             totalText = <h1>Loading</h1>;
-        } else {
-            totalText =
-                this.chartTextSet();
         }
         let rendered;
         if (!this.state.rendered) {
@@ -303,7 +302,7 @@ class Analytics extends Component {
                         </div>
                         <div className="row">
                             <div className="flex-fill">
-                                <BarChart3 {...this.state}/>
+                                <BarChart3 {...this.state} />
                             </div>
                         </div>
                     </Fragment>

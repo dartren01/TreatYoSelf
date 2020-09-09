@@ -14,12 +14,6 @@ import { DropdownItem, DropdownMenu, NavItem } from "../../../dropdown/Dropdown"
 import income from "./images/income.svg";
 import expense from "./images/expense.svg";
 
-
-const MONTHNAMES = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-
-
 class Overview extends Component {
     constructor(props) {
         super(props)
@@ -136,7 +130,7 @@ class Overview extends Component {
                 console.log("category get error: " + err)
             })
 
-
+        this.chartTextSet();
     };
 
     componentWillUnmount() {
@@ -167,6 +161,8 @@ class Overview extends Component {
                 let width = chart.chart.width,
                     height = chart.chart.height,
                     ctx = chart.chart.ctx;
+
+                chart.clear();
 
                 ctx.restore();
                 let fontSize = (height / 200).toFixed(2);
@@ -262,9 +258,6 @@ class Overview extends Component {
         let totalText;
         if (this.state.loading) {
             totalText = <h1>Loading</h1>;
-        } else {
-            totalText =
-                this.chartTextSet();
         }
         let rendered;
         if (!this.state.rendered) {

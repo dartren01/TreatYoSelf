@@ -113,7 +113,7 @@
     margin-top: 2px;
     border: 1px solid white;
     /* background-color: #12A874; */
-    background-color: black;
+    background-color: rgb(102, 102, 255);
     transition: all 0.3s ease 0s;
     /* box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.1); */
     border-radius: 22px;
