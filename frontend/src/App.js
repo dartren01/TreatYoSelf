@@ -76,6 +76,26 @@ class App extends Component {
     })
   };
 
+  getName = () => {
+    axios.get("/api/auth/user", {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Token ${Cookies.get("token")}`
+      }
+    })
+      .then(res => {
+        console.log("this get name is called")
+        this.setState({
+          username: res.data.username,
+          firstname: res.data.first_name,
+          lastname: res.data.last_name,
+        });
+      })
+      .catch(err => {
+        console.log("getName" + err)
+      })
+  }
+
 
   checkLogin = () => {
     if (Cookies.get("token") && !this.state.isLoggedIn) {
@@ -248,6 +268,7 @@ class App extends Component {
                     )} />
                     <Route path="/account" render={props => (
                       <UserForm {...props}
+                          getName = {this.getName}
                       />
                     )} />
                   </Switch>

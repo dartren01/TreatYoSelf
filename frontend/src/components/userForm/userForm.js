@@ -70,6 +70,7 @@ class UserForm extends Component {
                 const alert = this.props.alert;
                 alert.success('User Info Updated');
                 this.props.history.push("/");
+                this.props.getName()
             })
             .catch(err => {
                 console.log("user update error: " + err)
