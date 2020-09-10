@@ -244,13 +244,17 @@ class Overview extends Component {
         let rendered;
         if (!this.state.rendered) {
             rendered = <Fragment>
-                <h4>Budget vs. Expense in {this.props.monthName} <span className="spendingCategory">($ Per Expense Category)</span></h4>
-                <div className="charts">
-                    <div className="chartContainer" style={this.state.bar}>
-                        <BarChart {...this.state} />
-                    </div>
-                    <div >
-                        <DoughnutChart {...this.state} />
+                <div className="row">
+                    <h4>Budget vs. Expense in {this.props.monthName} <span className="spendingCategory">($ Per Expense Category)</span></h4>
+                </div>
+                <div className="row">
+                    <div className="charts">
+                        <div className="chartContainer" style={this.state.bar}>
+                            <BarChart {...this.state} />
+                        </div>
+                        <div >
+                            <DoughnutChart {...this.state} />
+                        </div>
                     </div>
                 </div>
             </Fragment>
@@ -304,9 +308,8 @@ class Overview extends Component {
                                 </DropdownMenu>
                             </NavItem>
                             {/* {this.handleClose} */}
-                            {rendered}
-
                         </div>
+                        {rendered}
                         <div className="row">
                             <div className="flex-fill">
                                 <h2>Recent Transactions</h2>

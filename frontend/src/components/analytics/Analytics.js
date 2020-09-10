@@ -187,18 +187,22 @@ class Analytics extends Component {
         this.setState({
             renderGraph:
                 <Fragment>
-                    <h4>Budget vs. Expense in {this.props.year} <span className="spendingCategory">($ per month)</span></h4>
-                    <div className="charts">
-                        <div className="chartContainer" style={this.state.bar}>
-                            <LineChart {...this.state}
-                                year={this.props.year} />
-                        </div>
-                        <div >
-                            <DoughnutChart2 {...this.state} />
+                    <div className="row">
+                        <h4>Income vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Month)</span></h4>
+                    </div>
+                    <div className="row">
+                        <div className="charts">
+                            <div className="chartContainer" style={this.state.bar}>
+                                <LineChart {...this.state}
+                                    year={this.props.year} />
+                            </div>
+                            <div >
+                                <DoughnutChart2 {...this.state} />
+                            </div>
                         </div>
                     </div>
-                </Fragment>,
-            rendered: true,
+
+                </Fragment>
         });
     }
 
@@ -207,14 +211,18 @@ class Analytics extends Component {
         this.setState({
             renderGraph:
                 <Fragment>
-                    <h4> Total Expenses in {this.props.year} <span className="spendingCategory">($ Per Expense Category)</span></h4>
-                    <div className="charts">
-                        <div className="chartContainer" style={this.state.bar}>
-                            <BarChart3 {...this.state}
-                                year={this.props.year} />
-                        </div>
-                        <div >
-                            <DoughnutChart2 {...this.state} />
+                    <div className="row">
+                        <h4> Total Expenses in {this.props.year} <span className="spendingCategory">($ Per Expense Category)</span></h4>
+                    </div>
+                    <div className="row">
+                        <div className="charts">
+                            <div className="chartContainer" style={this.state.bar}>
+                                <BarChart3 {...this.state}
+                                    year={this.props.year} />
+                            </div>
+                            <div >
+                                <DoughnutChart2 {...this.state} />
+                            </div>
                         </div>
                     </div>
                 </Fragment>,
@@ -231,16 +239,21 @@ class Analytics extends Component {
         let rendered;
         if (!this.state.rendered) {
             rendered = <Fragment>
-                <h4>Income vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Month)</span></h4>
-                <div className="charts">
-                    <div className="chartContainer" style={this.state.bar}>
-                        <LineChart {...this.state}
-                            year={this.props.year} />
-                    </div>
-                    <div >
-                        <DoughnutChart2 {...this.state} />
+                <div className="row">
+                    <h4>Income vs. Expense in {this.props.year} <span className="spendingCategory">($ Per Month)</span></h4>
+                </div>
+                <div className="row">
+                    <div className="charts">
+                        <div className="chartContainer" style={this.state.bar}>
+                            <LineChart {...this.state}
+                                year={this.props.year} />
+                        </div>
+                        <div >
+                            <DoughnutChart2 {...this.state} />
+                        </div>
                     </div>
                 </div>
+
             </Fragment>
         } else {
             rendered = this.state.renderGraph;
@@ -290,9 +303,8 @@ class Analytics extends Component {
                                     </DropdownItem>
                                 </DropdownMenu>
                             </NavItem>
-                            {rendered}
-
                         </div>
+                        {rendered}
                         <div className="row">
                             <div className="flex-fill">
                                 <CashFlow {...this.state}
