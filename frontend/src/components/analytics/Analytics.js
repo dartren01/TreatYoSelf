@@ -166,7 +166,7 @@ class Analytics extends Component {
             },
 
             afterDraw: function (chart) {
-                if (chart.data.datasets.length === 0) {
+                if (chart.data.labels.length === 0) {
                     // No data is present
                     let ctx = chart.chart.ctx;
                     let width = chart.chart.width;
