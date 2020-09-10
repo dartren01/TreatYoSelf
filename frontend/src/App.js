@@ -35,7 +35,8 @@ class App extends Component {
       firstname: "",
       lastname: "",
       isLoggedIn: false,
-      loadPage: null
+      loadPage: null,
+      totalAmount: 0,
     };
     this.options = {
       // you can also just use 'bottom center'
@@ -74,6 +75,7 @@ class App extends Component {
     })
   };
 
+
   checkLogin = () => {
     if (Cookies.get("token") && !this.state.isLoggedIn) {
       console.log("Cookie has been found and User is not logged in")
@@ -107,9 +109,32 @@ class App extends Component {
     }
   };
 
+  getTotalAmount = () => {
+    if (Cookies.get("token")){
+        console.log("getTotalAmount")
+        axios.get(`/api/total/get`, {
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Token ${Cookies.get("token")}`
+          }
+        })
+          .then(res => {
+              let profileObj = res.data[0];
+              this.setState({
+                  totalAmount: profileObj.total_amount,
+              });
+          })
+          .catch(err => {
+              console.log("total get error: " + err)
+          })
+    }
+    
+}
+
   componentDidMount = () => {
     console.log("App Component componentDidMount");
     this.checkLogin();
+    this.getTotalAmount();
   };
 
 
@@ -168,6 +193,7 @@ class App extends Component {
                   lastname={this.state.lastname}
                   nextPath={this.nextPath}
                   deleteLogin={this.deleteLogin}
+                  totalAmount = {this.state.totalAmount}
                 />
                 <RightComponent
                   {...this.props}
@@ -184,16 +210,19 @@ class App extends Component {
                         monthName={monthName} />
                     )} />
                     <Route exact path="/budget/all_transactions" render={props => (
-                      <All_Transactions {...props} />
+                      <All_Transactions {...props} 
+                        getTotalAmount = {this.getTotalAmount}/>
                     )} />
 
                     <Route exact path="/budget/create" render={props => (
-                      <Create_Transaction {...props} />
+                      <Create_Transaction {...props} 
+                        getTotalAmount = {this.getTotalAmount} />
                     )} />
 
                     <Route exact path="/budget/update" render={props => (
                       <Update_Transaction {...props}
-                        isLoggedIn={this.state.isLoggedIn} />
+                        isLoggedIn={this.state.isLoggedIn}
+                        getTotalAmount = {this.getTotalAmount} />
                     )} />
 
                     <Route path="/register" render={props => (
@@ -204,6 +233,7 @@ class App extends Component {
 
                     <Route path="/total" render={props => (
                       <Total {...props}
+                        getTotalAmount = {this.getTotalAmount}
                       />
                     )} />
                     <Route path="/analytics" render={props => (

@@ -125,6 +125,7 @@ class Update_Transaction extends Component {
                 const alert = this.props.alert;
                 alert.success('Transaction Successfully Updated');
                 this.props.history.push("/budget/all_transactions/");
+                this.props.getTotalAmount()
             })
             .catch(err => {
                 console.log("transaction update error: " + err)

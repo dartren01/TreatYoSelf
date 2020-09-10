@@ -41,7 +41,6 @@ class Navbar extends Component {
         this.getPage = this.getPage.bind(this);
         this.state = {
             loading: true,
-            totalAmount: "",
             whichPage: 1,
             open: false,
             activeMenu: "main",
@@ -63,29 +62,37 @@ class Navbar extends Component {
             this.setState({ whichPage: 4 })
         }
     }
+
+    // getTotalAmount = () => {
+    //     axios.get(`/api/total/get`, {
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": `Token ${Cookies.get("token")}`
+    //         }
+    //     })
+    //         .then(res => {
+    //             let profileObj = res.data[0];
+    //             this.setState({
+    //                 totalAmount: profileObj.total_amount,
+    //                 loading: false,
+    //             });
+    //         })
+    //         .catch(err => {
+    //             console.log("total get error: " + err)
+    //             this.setState({
+    //                 loading: false,
+    //             });
+    //         })
+    // }
+
     componentDidMount = () => {
         console.log("Navbar componentDidMount");
         this.getPage();
         window.addEventListener("hashchange", this.getPage);
-        axios.get(`/api/total/get`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
+        this.setState({
+            loading: false
         })
-            .then(res => {
-                let profileObj = res.data[0];
-                this.setState({
-                    totalAmount: profileObj.total_amount,
-                    loading: false,
-                });
-            })
-            .catch(err => {
-                console.log("total get error: " + err)
-                this.setState({
-                    loading: false,
-                });
-            })
+        
 
     }
     componentWillUnmount = () => {
@@ -116,7 +123,7 @@ class Navbar extends Component {
                     Balance
                     </h4>
                 <p>
-                    $ {this.state.totalAmount}
+                    $ {this.props.totalAmount}
                 </p>
                 <Link to="/budget/create/">
                     <button className="tranButtonStyling btn btn-outline-dark">

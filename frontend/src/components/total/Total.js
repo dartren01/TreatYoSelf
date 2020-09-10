@@ -51,8 +51,8 @@ class Total extends Component {
         axios.post("budget/create/category/", categoryObj, header)
             .then(res => {
                 console.log("Category Added")
+                this.props.getTotalAmount()
                 this.props.history.push("/")
-                window.location.reload(false)
 
             })
             .catch(err => {
