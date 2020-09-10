@@ -6,12 +6,21 @@ import bannerIMG from "../images/banner.png";
 import laptopIMG from "../images/laptop.png";
 import piggyIMG from "../images/piggy.svg";
 import piggyPhoneIMG from "../images/piggy2.svg";
+import RegisterModal from "../../../../register/RegisterModal"
 
 class Main extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            showRegister: false,
         }
+    }
+    showRegisterModal = () => {
+        this.setState((prev) => {
+            return {
+                showRegister: !prev.showRegister
+            }
+        })
     }
     render() {
         return (
@@ -22,11 +31,15 @@ class Main extends Component {
                         <h4>A simple, rewarding, and powerful budgeting tool for the casual spender</h4>
                         <h5>Professional budgeting, made <span className="simpleWord">simple </span></h5>
                         <p> Treat Yo'Self is a simple, rewarding, and powerful budgeting tool for the casual spender.</p>
-                        <Link to="/register">
-                            <button className="get_started">
-                                Get Started Free
+                        <button className="get_started"
+                            onClick={(e) => this.showRegisterModal()}>
+                            Get Started Free
                             </button>
-                        </Link>
+                        <RegisterModal
+                            onClose={this.showRegisterModal}
+                            showRegister={this.state.showRegister}
+                            redirectTotalPage={this.props.redirectTotalPage}
+                        />
                         <Link to="/login">
                             <button className="login">
                                 Sign in
@@ -43,7 +56,7 @@ class Main extends Component {
                             Our beautiful UI will allow you to keep track of your transactions and finally acheive your financial goals.</p>
                     </article>
                 </div>
-            </div>
+            </div >
         )
     }
 }

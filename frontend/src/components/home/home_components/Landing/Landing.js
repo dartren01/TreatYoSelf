@@ -16,7 +16,7 @@ class Landing extends Component {
 
     }
 
-    redirectTotalPage = () =>{
+    redirectTotalPage = () => {
         this.props.history.push("/total")
     }
 
@@ -25,8 +25,8 @@ class Landing extends Component {
 
         return (
             <div className="Landing">
-                <Navbar2 redirectTotalPage = {this.redirectTotalPage} />
-                <Main />
+                <Navbar2 redirectTotalPage={this.redirectTotalPage} />
+                <Main redirectTotalPage={this.redirectTotalPage} />
                 <Features />
                 <HowItWorks />
                 <Team />
