@@ -88,6 +88,9 @@ class RightComponent extends Component {
 
 
     render() {
+        if (this.state.loading) {
+            return (<div></div>);
+        }
         let toggleRight;
         let arrowRight;
         if (this.state.buttonExists && this.state.isButtonOpen) {
