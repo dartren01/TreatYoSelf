@@ -105,6 +105,7 @@ class App extends Component {
 
   getCatRightComponent = () => {
     if (Cookies.get("token")){
+      console.log("getCatRightComponent is being called")
         axios.get(`/api/total/get`, {
           headers: {
               "Content-Type": "application/json",
@@ -299,14 +300,14 @@ class App extends Component {
                     <Route exact path="/budget/create" render={props => (
                       <Create_Transaction {...props} 
                         getTotalAmount = {this.getTotalAmount}
-                        getCatRightComponent = {this.getRightComponent} />
+                        getCatRightComponent = {this.getCatRightComponent} />
                     )} />
 
                     <Route exact path="/budget/update" render={props => (
                       <Update_Transaction {...props}
                         isLoggedIn={this.state.isLoggedIn}
                         getTotalAmount = {this.getTotalAmount}
-                        getRightComponent = {this.getCatRightComponent} />
+                        getCatRightComponent = {this.getCatRightComponent} />
                     )} />
 
                     <Route path="/register" render={props => (
