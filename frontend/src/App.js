@@ -23,6 +23,7 @@ import Update_Transaction from "./components/update_transaction/Update_Transacti
 import Category from "./components/category/Category";
 import Analytics from "./components/analytics/Analytics";
 import RightComponent from "./components/rightComponent/RightComponent";
+import UserForm from "./components/userForm/userForm";
 
 
 
@@ -243,6 +244,10 @@ class App extends Component {
                     )} />
                     <Route path="/category" render={props => (
                       <Category {...props}
+                      />
+                    )} />
+                    <Route path="/account" render={props => (
+                      <UserForm {...props}
                       />
                     )} />
                   </Switch>

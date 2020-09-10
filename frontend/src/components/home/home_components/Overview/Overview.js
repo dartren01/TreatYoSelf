@@ -112,24 +112,6 @@ class Overview extends Component {
                 console.log("transaction get error: " + err)
             })
 
-        //TESTING PLS
-        axios.get(`/api/auth/user`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
-        })
-            .then(res => {
-                console.log(res.data)
-                // this.setState({
-                //     categoryObj: res.data[0],
-                //     loading: false,
-                // });
-            })
-            .catch(err => {
-                console.log("category get error: " + err)
-            })
-
         this.chartTextSet();
     };
 

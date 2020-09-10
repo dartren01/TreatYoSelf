@@ -115,9 +115,9 @@ class RightComponent extends Component {
                     })}
                         className="toggleButton"> <img src={arrowRight ? closeTab : openTab} className="openTab"></img> </button> : <div></div>}
                     <div className="spending">
-                        <SpendingChart {...this.state}
+                        {/* <SpendingChart {...this.state}
                             monthName={this.props.monthName}
-                        />
+                        /> */}
                     </div>
                 </div>
             </React.Fragment>

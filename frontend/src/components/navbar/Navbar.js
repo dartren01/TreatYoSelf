@@ -114,6 +114,12 @@ class Navbar extends Component {
         this.setState({ activeMenu: menu })
     }
 
+    handleAccountRedirect = () => {
+        this.props.history.push({
+            pathname: '/account',
+        })
+    }
+
     render() {
         let header;
 
@@ -250,7 +256,7 @@ class Navbar extends Component {
                                                 <DropdownItem
                                                     className="menu-item"
                                                     leftIcon={<img src={change}></img>}
-                                                // onClick={}
+                                                    onClick={this.handleAccountRedirect}
                                                 >
                                                     <p>
                                                         Change Account Information

@@ -42,7 +42,7 @@ class LoginAPI(generics.GenericAPIView):
         })
 
 
-class UserAPI(generics.RetrieveAPIView):
+class UserAPI(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
     permission_classes = [
@@ -51,6 +51,16 @@ class UserAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+    # update user information
+    def update(self, request, *args, **kwargs):
+        # update transaction
+        instance = self.get_object()
+        serializer = self.get_serializer(
+            instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class CreateProfileAPI(generics.GenericAPIView):
@@ -65,9 +75,9 @@ class CreateProfileAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         total = serializer.save()
         return Response({
-            #Reponse is not necessary.
+            # Reponse is not necessary.
         })
-    
+
 
 class ProfileAPI(generics.ListAPIView):
     serializer_class = ProfileSerializer

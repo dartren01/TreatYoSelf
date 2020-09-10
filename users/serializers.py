@@ -8,7 +8,8 @@ from datetime import datetime
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', "first_name", "last_name", 'username', 'email', 'password')
+        fields = ('id', "first_name", "last_name",
+                  'username', 'email', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -33,8 +34,16 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'first_name', 'last_name', 'username', 'email')
 
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get("first_name")
+        instance.last_name = validated_data.get("last_name")
+        # instance.email = validated_data.get("email")
+        instance.username = validated_data.get("username")
+        instance.save()
+        return instance
 
 # Profile Serializer contains total and monthly data
+
 
 class CreateProfileSerializer(serializers.ModelSerializer):
     # user = serializers.SerializerMethodField('get_user')
@@ -58,15 +67,16 @@ class CreateProfileSerializer(serializers.ModelSerializer):
                                                             "monthly_gained": 0.0,
                                                             "monthly_spent": 0.0
                                                         }}
-                                                   )
+                                                    )
         return instance
-    
+
     def update(self, instance, validated_data):
         instance.initial_amount = validated_data.get("initial_amount")
         instance.total_amount = validated_data.get("total_amount")
-        instance.total_amount_gained = validated_data.get("total_amount_gained")
+        instance.total_amount_gained = validated_data.get(
+            "total_amount_gained")
         instance.total_amount_spent = validated_data.get("total_amount_spent")
-        
+
         instance.save()
         return instance
 
