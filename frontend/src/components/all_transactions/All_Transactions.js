@@ -64,6 +64,7 @@ class All_Transactions extends Component {
                 const alert = this.props.alert;
                 alert.success('Transaction Successfully Deleted');
                 this.props.getTotalAmount()
+                this.props.getCatRightComponent()
             })
             .catch(err => {
                 console.log("transaction delete error: " + err)

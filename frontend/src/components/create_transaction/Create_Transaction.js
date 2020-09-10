@@ -74,6 +74,7 @@ class Create_Transaction extends Component {
                 alert.success('Successfully created income transaction');
                 this.props.history.push("/budget/all_transactions/")
                 this.props.getTotalAmount()
+                this.props.getCatRightComponent()
             })
             .catch(err => {
                 console.log("transaction post error: " + err)

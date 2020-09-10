@@ -292,18 +292,21 @@ class App extends Component {
                     )} />
                     <Route exact path="/budget/all_transactions" render={props => (
                       <All_Transactions {...props} 
-                        getTotalAmount = {this.getTotalAmount}/>
+                        getTotalAmount = {this.getTotalAmount}
+                        getCatRightComponent = {this.getCatRightComponent}/>
                     )} />
 
                     <Route exact path="/budget/create" render={props => (
                       <Create_Transaction {...props} 
-                        getTotalAmount = {this.getTotalAmount} />
+                        getTotalAmount = {this.getTotalAmount}
+                        getCatRightComponent = {this.getRightComponent} />
                     )} />
 
                     <Route exact path="/budget/update" render={props => (
                       <Update_Transaction {...props}
                         isLoggedIn={this.state.isLoggedIn}
-                        getTotalAmount = {this.getTotalAmount} />
+                        getTotalAmount = {this.getTotalAmount}
+                        getRightComponent = {this.getCatRightComponent} />
                     )} />
 
                     <Route path="/register" render={props => (

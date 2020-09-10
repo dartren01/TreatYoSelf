@@ -126,6 +126,7 @@ class Update_Transaction extends Component {
                 alert.success('Transaction Successfully Updated');
                 this.props.history.push("/budget/all_transactions/");
                 this.props.getTotalAmount()
+                this.props.getCatRightComponent()
             })
             .catch(err => {
                 console.log("transaction update error: " + err)
