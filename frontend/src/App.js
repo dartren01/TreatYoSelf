@@ -209,6 +209,7 @@ class App extends Component {
     console.log("App Component componentDidMount");
     this.checkLogin();
     this.getTotalAmount();
+    this.getCatRightComponent()
   };
 
 
