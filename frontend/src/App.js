@@ -38,6 +38,13 @@ class App extends Component {
       isLoggedIn: false,
       loadPage: null,
       totalAmount: 0,
+
+
+      totalObject: "",
+      monthlySpent: "",
+      monthlyGained: "",
+      monthYearDate: "",
+      categoryObj: "",
     };
     this.options = {
       // you can also just use 'bottom center'
@@ -94,6 +101,52 @@ class App extends Component {
       .catch(err => {
         console.log("getName" + err)
       })
+  }
+
+  getCatRightComponent = () => {
+    if (Cookies.get("token")){
+        axios.get(`/api/total/get`, {
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Token ${Cookies.get("token")}`
+          }
+      })
+          .then(res => {
+              let profileObj = res.data[0];
+              //figure out how to get monthly to object
+              let date = new Date();
+              let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
+              //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
+              //let monthData = JSON.parse(profileObj.monthly_data);
+              this.setState({
+                  totalObject: profileObj,
+                  totalAmount: profileObj.total_amount,
+                  monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
+                  monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
+                  monthYearDate: parseInt(thisMonthYear),
+              });
+          })
+          .catch(err => {
+              console.log("total get error: " + err)
+          })
+      // get categories
+      axios.get("budget/category/get/", {
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Token ${Cookies.get("token")}`
+          }
+      })
+          .then(res => {
+              this.setState({
+                  categoryObj: res.data[0],
+                  loading: false,
+              });
+          })
+          .catch(err => {
+              console.log("category get error: " + err)
+          })
+    }
+   
   }
 
 
@@ -219,6 +272,12 @@ class App extends Component {
                 <RightComponent
                   {...this.props}
                   monthName={monthName}
+                  totalObject = {this.state.totalObject}
+                  monthlySpent = {this.state.monthlySpent}
+                  monthlyGained = {this.state.monthlyGained}
+                  monthYearDate = {this.state.monthYearDate}
+                  categoryObj = {this.state.categoryObj}
+
                 />
                 <div className="main_container">
 
@@ -264,6 +323,7 @@ class App extends Component {
                     )} />
                     <Route path="/category" render={props => (
                       <Category {...props}
+                        getCatRightComponent = {this.getCatRightComponent}
                       />
                     )} />
                     <Route path="/account" render={props => (

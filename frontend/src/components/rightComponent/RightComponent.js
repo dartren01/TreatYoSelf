@@ -26,49 +26,9 @@ class RightComponent extends Component {
         this.getDimensions();
         window.addEventListener("resize", this.getDimensions);
         console.log("RightComponent componentDidMount");
-        axios.get(`/api/total/get`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
+        this.setState({
+           loading: false
         })
-            .then(res => {
-                let profileObj = res.data[0];
-                //figure out how to get monthly to object
-                let date = new Date();
-                let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
-                //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
-                //let monthData = JSON.parse(profileObj.monthly_data);
-                this.setState({
-                    totalObject: profileObj,
-                    totalAmount: profileObj.total_amount,
-                    monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
-                    monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
-                    monthYearDate: parseInt(thisMonthYear),
-                });
-            })
-            .catch(err => {
-                console.log("total get error: " + err)
-                this.setState({
-                    loading: false,
-                });
-            })
-        // get categories
-        axios.get("budget/category/get/", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${Cookies.get("token")}`
-            }
-        })
-            .then(res => {
-                this.setState({
-                    categoryObj: res.data[0],
-                    loading: false,
-                });
-            })
-            .catch(err => {
-                console.log("category get error: " + err)
-            })
     }
 
     componentWillUnmount = () => {
@@ -118,9 +78,9 @@ class RightComponent extends Component {
                     })}
                         className="toggleButton"> <img src={arrowRight ? closeTab : openTab} className="openTab"></img> </button> : <div></div>}
                     <div className="spending">
-                        {/* <SpendingChart {...this.state}
+                        <SpendingChart {...this.props}
                             monthName={this.props.monthName}
-                        /> */}
+                        />
                     </div>
                 </div>
             </React.Fragment>

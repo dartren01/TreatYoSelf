@@ -242,7 +242,7 @@ class Category extends Component {
                         delete_category: Object.keys(res.data.expense_categories_budget)[0],
                     })
                 }
-
+                this.props.getCatRightComponent()
                 console.log("Category has been Updated")
             })
             .catch(err => {
