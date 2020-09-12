@@ -7,7 +7,6 @@ import laptopIMG from "../images/laptop.png";
 import piggyIMG from "../images/piggy.svg";
 import piggyPhoneIMG from "../images/piggy2.svg";
 import RegisterModal from "../../../../register/RegisterModal"
-
 class Main extends Component {
     constructor(props) {
         super(props)
@@ -50,6 +49,13 @@ class Main extends Component {
                     <img src={bannerIMG} className="bannerBG"></img>
                     <img src={piggyIMG} className="piggyBG"></img>
                     <img src={piggyPhoneIMG} className="piggyPhoneBG"></img>
+
+                    {/* <slider>
+                        <slide> <img src="slide1.png"></img> </slide>
+                        <slide></slide>
+                        <slide></slide>
+                        <slide></slide>
+                    </slider> */}
                     <article className="promo2">
                         <h4>Take back control</h4>
                         <p>Say goodbye to cluttered receipts and hello to secure virtual transactions.

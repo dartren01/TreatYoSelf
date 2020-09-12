@@ -146,17 +146,17 @@
 
 @media only screen and (min-width: 1201px) {
   .analytics .topButton{
-    left: 420px;
+    left: 240px;
     top: 10px;
   
   }
     .analytics .opened {
-      left: 420px;
+      left: 240px;
       top: 10px;
     }
     .analytics .dropdown {
       top: 52px;
-      left: 294px;
+      left: 113px;
   }
   .analytics {
     margin: 0 auto;

@@ -92,7 +92,7 @@ class Navbar extends Component {
         this.setState({
             loading: false
         })
-        
+
 
     }
     componentWillUnmount = () => {
@@ -117,6 +117,12 @@ class Navbar extends Component {
     handleAccountRedirect = () => {
         this.props.history.push({
             pathname: '/account',
+        })
+    }
+
+    handleContactRedirect = () => {
+        this.props.history.push({
+            pathname: '/contact',
         })
     }
 
@@ -287,7 +293,7 @@ class Navbar extends Component {
                                                 <DropdownItem
                                                     className="menu-item"
                                                     leftIcon={<img src={contact}></img>}
-                                                // onClick={}
+                                                    onClick={this.handleContactRedirect}
                                                 >
                                                     <p>
                                                         Contact us

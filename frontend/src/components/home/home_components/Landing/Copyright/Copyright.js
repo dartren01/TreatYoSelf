@@ -15,7 +15,7 @@ class Copyright extends Component {
                 <div className="wrapper">
                     <article className="promo">
                         <img src={piggyIMG} className="piggyIMG"></img>
-                        <Link to="">
+                        <Link to="/contact">
                             <button className="contactButton">
                                 Contact us
                             </button>

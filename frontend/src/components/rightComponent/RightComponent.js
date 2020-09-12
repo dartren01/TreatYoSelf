@@ -27,7 +27,7 @@ class RightComponent extends Component {
         window.addEventListener("resize", this.getDimensions);
         console.log("RightComponent componentDidMount");
         this.setState({
-           loading: false
+            loading: false
         })
     }
 
@@ -36,7 +36,7 @@ class RightComponent extends Component {
     };
 
     getDimensions = () => {
-        if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
+        if (window.innerWidth <= 1200 && window.innerHeight <= 1366) {
             this.setState({ buttonExists: true })
             // } else if (window.innerWidth >= 1200) {
             //     this.setState({ donutWidth:  })
