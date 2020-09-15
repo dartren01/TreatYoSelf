@@ -73,6 +73,8 @@ class DoughnutChart extends Component {
             labels: incomeLabels,
             borderWidth: 1,
         }
+        let monthlyGained = parseFloat(this.props.monthlyGained)
+        monthlyGained = monthlyGained.toFixed(2)
         let incomeOptions = {
             legend: {
                 display: false,
@@ -82,7 +84,7 @@ class DoughnutChart extends Component {
             cutoutPercentage: 70,
             responsive: true,
             title: "Income",
-            amount: `$ ${this.props.monthlyGained}`,
+            amount: `$ ${monthlyGained}`,
         }
 
         /**
@@ -107,6 +109,8 @@ class DoughnutChart extends Component {
             labels: expenseLabel,
             borderWidth: 1,
         }
+        let monthlySpent = parseFloat(this.props.monthlySpent)
+        monthlySpent = monthlySpent.toFixed(2)
         let expenseOptions = {
             legend: {
                 display: false
@@ -116,7 +120,7 @@ class DoughnutChart extends Component {
             cutoutPercentage: 70,
             responsive: true,
             title: "Expenses",
-            amount: `$ ${this.props.monthlySpent}`,
+            amount: `$ ${monthlySpent}`,
         }
 
 
