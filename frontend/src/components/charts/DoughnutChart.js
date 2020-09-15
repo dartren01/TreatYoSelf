@@ -14,6 +14,7 @@ class DoughnutChart extends Component {
     }
 
     componentDidMount = () => {
+
     };
 
     createDonutChart = () => {

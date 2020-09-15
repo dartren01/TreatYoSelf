@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Main.css";
 import bannerIMG from "../images/banner.png";
-import laptopIMG from "../images/laptop.png";
+import laptopIMG from "./images/laptop.png";
 import piggyIMG from "../images/piggy.svg";
 import piggyPhoneIMG from "../images/piggy2.svg";
 import RegisterModal from "../../../../register/RegisterModal"
@@ -49,6 +49,10 @@ class Main extends Component {
                     <img src={bannerIMG} className="bannerBG"></img>
                     <img src={piggyIMG} className="piggyBG"></img>
                     <img src={piggyPhoneIMG} className="piggyPhoneBG"></img>
+                    <iframe className="video" src="https://www.youtube.com/embed/9kfS3dBtQO4"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true">
+
+                    </iframe>
 
                     {/* <slider>
                         <slide> <img src="slide1.png"></img> </slide>
