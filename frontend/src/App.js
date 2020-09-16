@@ -24,6 +24,7 @@ import Category from "./components/category/Category";
 import Analytics from "./components/analytics/Analytics";
 import RightComponent from "./components/rightComponent/RightComponent";
 import UserForm from "./components/userForm/userForm";
+import Contact from "./components/contact/Contact";
 
 
 
@@ -104,50 +105,50 @@ class App extends Component {
   }
 
   getCatRightComponent = () => {
-    if (Cookies.get("token")){
+    if (Cookies.get("token")) {
       console.log("getCatRightComponent is being called")
-        axios.get(`/api/total/get`, {
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Token ${Cookies.get("token")}`
-          }
+      axios.get(`/api/total/get`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${Cookies.get("token")}`
+        }
       })
-          .then(res => {
-              let profileObj = res.data[0];
-              //figure out how to get monthly to object
-              let date = new Date();
-              let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
-              //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
-              //let monthData = JSON.parse(profileObj.monthly_data);
-              this.setState({
-                  totalObject: profileObj,
-                  totalAmount: profileObj.total_amount,
-                  monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
-                  monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
-                  monthYearDate: parseInt(thisMonthYear),
-              });
-          })
-          .catch(err => {
-              console.log("total get error: " + err)
-          })
+        .then(res => {
+          let profileObj = res.data[0];
+          //figure out how to get monthly to object
+          let date = new Date();
+          let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
+          //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
+          //let monthData = JSON.parse(profileObj.monthly_data);
+          this.setState({
+            totalObject: profileObj,
+            totalAmount: profileObj.total_amount,
+            monthlySpent: profileObj.monthly_data[thisMonthYear]['monthly_spent'],
+            monthlyGained: profileObj.monthly_data[thisMonthYear]['monthly_gained'],
+            monthYearDate: parseInt(thisMonthYear),
+          });
+        })
+        .catch(err => {
+          console.log("total get error: " + err)
+        })
       // get categories
       axios.get("budget/category/get/", {
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Token ${Cookies.get("token")}`
-          }
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${Cookies.get("token")}`
+        }
       })
-          .then(res => {
-              this.setState({
-                  categoryObj: res.data[0],
-                  loading: false,
-              });
-          })
-          .catch(err => {
-              console.log("category get error: " + err)
-          })
+        .then(res => {
+          this.setState({
+            categoryObj: res.data[0],
+            loading: false,
+          });
+        })
+        .catch(err => {
+          console.log("category get error: " + err)
+        })
     }
-   
+
   }
 
 
@@ -185,26 +186,26 @@ class App extends Component {
   };
 
   getTotalAmount = () => {
-    if (Cookies.get("token")){
-        console.log("getTotalAmount")
-        axios.get(`/api/total/get`, {
-          headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Token ${Cookies.get("token")}`
-          }
+    if (Cookies.get("token")) {
+      console.log("getTotalAmount")
+      axios.get(`/api/total/get`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${Cookies.get("token")}`
+        }
+      })
+        .then(res => {
+          let profileObj = res.data[0];
+          this.setState({
+            totalAmount: profileObj.total_amount,
+          });
         })
-          .then(res => {
-              let profileObj = res.data[0];
-              this.setState({
-                  totalAmount: profileObj.total_amount,
-              });
-          })
-          .catch(err => {
-              console.log("total get error: " + err)
-          })
+        .catch(err => {
+          console.log("total get error: " + err)
+        })
     }
-    
-}
+
+  }
 
   componentDidMount = () => {
     console.log("App Component componentDidMount");
@@ -256,6 +257,11 @@ class App extends Component {
                     setLogin={this.setLogin}
                   />
                 )} />
+                <Route exact path="/contact" render={props => (
+                  <Contact {...props}
+                    isLoggedIn={this.state.isLoggedIn}
+                  />
+                )} />
               </Switch>
             </React.Fragment>
             :
@@ -269,16 +275,16 @@ class App extends Component {
                   lastname={this.state.lastname}
                   nextPath={this.nextPath}
                   deleteLogin={this.deleteLogin}
-                  totalAmount = {this.state.totalAmount}
+                  totalAmount={this.state.totalAmount}
                 />
                 <RightComponent
                   {...this.props}
                   monthName={monthName}
-                  totalObject = {this.state.totalObject}
-                  monthlySpent = {this.state.monthlySpent}
-                  monthlyGained = {this.state.monthlyGained}
-                  monthYearDate = {this.state.monthYearDate}
-                  categoryObj = {this.state.categoryObj}
+                  totalObject={this.state.totalObject}
+                  monthlySpent={this.state.monthlySpent}
+                  monthlyGained={this.state.monthlyGained}
+                  monthYearDate={this.state.monthYearDate}
+                  categoryObj={this.state.categoryObj}
 
                 />
                 <div className="main_container">
@@ -292,22 +298,22 @@ class App extends Component {
                         monthName={monthName} />
                     )} />
                     <Route exact path="/budget/all_transactions" render={props => (
-                      <All_Transactions {...props} 
-                        getTotalAmount = {this.getTotalAmount}
-                        getCatRightComponent = {this.getCatRightComponent}/>
+                      <All_Transactions {...props}
+                        getTotalAmount={this.getTotalAmount}
+                        getCatRightComponent={this.getCatRightComponent} />
                     )} />
 
                     <Route exact path="/budget/create" render={props => (
-                      <Create_Transaction {...props} 
-                        getTotalAmount = {this.getTotalAmount}
-                        getCatRightComponent = {this.getCatRightComponent} />
+                      <Create_Transaction {...props}
+                        getTotalAmount={this.getTotalAmount}
+                        getCatRightComponent={this.getCatRightComponent} />
                     )} />
 
                     <Route exact path="/budget/update" render={props => (
                       <Update_Transaction {...props}
                         isLoggedIn={this.state.isLoggedIn}
-                        getTotalAmount = {this.getTotalAmount}
-                        getCatRightComponent = {this.getCatRightComponent} />
+                        getTotalAmount={this.getTotalAmount}
+                        getCatRightComponent={this.getCatRightComponent} />
                     )} />
 
                     <Route path="/register" render={props => (
@@ -318,7 +324,7 @@ class App extends Component {
 
                     <Route path="/total" render={props => (
                       <Total {...props}
-                        getTotalAmount = {this.getTotalAmount}
+                        getTotalAmount={this.getTotalAmount}
                       />
                     )} />
                     <Route path="/analytics" render={props => (
@@ -328,12 +334,17 @@ class App extends Component {
                     )} />
                     <Route path="/category" render={props => (
                       <Category {...props}
-                        getCatRightComponent = {this.getCatRightComponent}
+                        getCatRightComponent={this.getCatRightComponent}
                       />
                     )} />
                     <Route path="/account" render={props => (
                       <UserForm {...props}
-                          getName = {this.getName}
+                        getName={this.getName}
+                      />
+                    )} />
+                    <Route exact path="/contact" render={props => (
+                      <Contact {...props}
+                        isLoggedIn={this.state.isLoggedIn}
                       />
                     )} />
                   </Switch>

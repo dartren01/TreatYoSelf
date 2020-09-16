@@ -1,4 +1,7 @@
 
+.video {
+    display: none;
+}
 .mainSection .bannerBG {
     display: none;
 }
@@ -12,6 +15,9 @@
     display: none;
 }
 .mainSection .promo2 {
+    display: none;
+}
+.mainSection slider {
     display: none;
 }
 .mainSection .piggyPhoneBG {
@@ -99,7 +105,11 @@ button:focus {
     outline: none;
 }
 
+
 @media only screen and (min-width: 768px) {
+    .video {
+        display: none;
+    }
     .mainSection .wrapper {
         width: 100%;  
     }
@@ -116,6 +126,9 @@ button:focus {
 }
 
 @media only screen and (min-width: 1024px) {
+    .video {
+        display: none;
+    }
     .mainSection .piggyPhoneBG {
         top: 28%;
     }
@@ -220,19 +233,36 @@ button:focus {
     }
     .mainSection .laptopBG {
         display: block;
-        width: 65%;
+        width: 60%;
         left: 0;
         position: absolute;
-        z-index: 1;
-        margin-top: -60px;
+        z-index: 3;
+        margin-top: -100px;
     }
     .mainSection .promo2 {
         display: block;
     }
-   
-    
+    .video {
+        display: block;
+        position: absolute;
+        z-index: 4;
+        margin-top: -60px;
+        width: 46%;
+        height: 38%;
+        left: 7.4%;
+      
+    }
+}
+
+@media only screen and (min-width: 1242px) {
+    .video {
+        height: 40.3%;
+    }
 }
 @media only screen and (min-width: 1366px) {
+    .video {
+        margin-top: -100px;
+    }
     .mainSection .promo h5 {
         font-size: 45px;
         margin-right: 60%;
@@ -262,142 +292,75 @@ button:focus {
     }
     .mainSection .laptopBG {
         display: block;
-        width: 65%;
+        width: 60%;
         left: 0;
         position: absolute;
         z-index: 1;
-        margin-top: -110px;
+        margin-top: -150px;
+    }
+    .mainSection .test {
+        position: absolute;
+        z-index: 100;
+        width: 50%;
+         height: 50%;
     }
 }
-/* @media only screen and (min-width: 1440px) {
-    .mainSection .promo2 h4 {
-        font-family: Quicksand;
-        text-align: left;
-        font-size: 25px;
-        color: white;
-        line-height: 35px;
-        margin: 435px -100px 10px 840px;
-        position: relative;
-        z-index: 2;
-    }
-    .mainSection .promo2 p {
-        padding: 0px 30px;
-        font-family: Source Sans Pro;
-        text-align: left;
-        font-size: 15px;
-        font-weight: 500;
-        color: white;    
-        line-height: 27px;
-        margin: 0px -90px 10px 840px;
-        position: relative;
-        z-index: 2;
-        padding-bottom: 18%;
-    }
-} */
-/* @media only screen and (min-width: 1580px) {
-    .mainSection .wrapper {
-        width: 1400px;
-        margin: -25px auto;  
-    }
-    .mainSection .promo h2 {
-        padding-right: 900px;
-    }
-    .mainSection .promo2 h4 {
-        font-family: Quicksand;
-        text-align: left;
-        font-size: 25px;
-        color: white;
-        line-height: 35px;
-        margin: 445px -100px 10px 960px;
-        position: relative;
-        z-index: 2;
-    }
-    .mainSection .promo2 p {
-        padding: 0px 30px;
-        font-family: Source Sans Pro;
-        text-align: left;
-        font-size: 15px;
-        font-weight: 500;
-        color: white;    
-        line-height: 27px;
-        margin: 0px 30px 0px 960px;
-        position: relative;
-        z-index: 2;
-        padding-bottom: 20%;
+@media only screen and (min-width: 1414px) {
+    .video {
+        height: 44%;
     }
 }
-@media only screen and (min-width: 1750px) {
-    .mainSection .wrapper {
-        width: 1550px;
-        margin: -25px auto;  
-    }
-    .mainSection .promo2 h4 {
-        font-family: Quicksand;
-        text-align: left;
-        font-size: 25px;
-        color: white;
-        line-height: 35px;
-        margin: 500px -150px 10px 1090px;
-        position: relative;
-        z-index: 2;
-    }
-    .mainSection .promo2 p {
-        padding: 0px 30px;
-        font-family: Source Sans Pro;
-        text-align: left;
-        font-size: 15px;
-        font-weight: 500;
-        color: white;    
-        line-height: 27px;
-        margin: 0px 50px 10px 1090px;
-        position: relative;
-        z-index: 2;
-        padding-bottom: 20%;
+
+
+@media only screen and (min-width: 1515px) {
+    .video {
+        height: 45%;
     }
 }
-@media only screen and (min-width: 1920px) {
-    .mainSection .wrapper {
-        width: 1550px;
-        margin: -25px auto;  
+@media only screen and (min-width: 1580px) {
+    .video {
+        /* height: 50%; */
     }
-    .mainSection .promo h2 {
-        padding-right: 980px;
+}
+@media only screen and (min-width: 1591px) {
+    .video {
+        height: 47%;
     }
-    .mainSection .promo2 h4 {
-        font-family: Quicksand;
-        text-align: left;
-        font-size: 25px;
-        color: white;
-        line-height: 35px;
-        margin: 600px -150px 10px 1050px;
-        position: relative;
-        z-index: 2;
+}
+@media only screen and (min-width: 1660px) {
+    .video {
+        height: 48%;
     }
-    .mainSection .promo2 p {
-        padding: 0px 30px;
-        font-family: Source Sans Pro;
-        text-align: left;
-        font-size: 15px;
-        font-weight: 500;
-        color: white;    
-        line-height: 27px;
-        margin: 0px -140px 10px 1050px;
-        position: relative;
-        z-index: 2;
-        padding-bottom: 25%;
+}
+@media only screen and (min-width: 1735px) {
+    .video {
+        margin-top: -90px;
+        /* height: 49%; */
     }
-    .mainSection .laptopBG {
-        width: 62%;
-        padding: 0;
-        left: 2%;
-        margin: 150px -20px 0px 0px;
+}
+@media only screen and (min-width: 1820px) {
+    .video {
+        margin-top: -88px;
+        height: 49%;
     }
-    .mainSection .bannerBG {
-        top: 330px;
+}
+@media only screen and (min-width: 1930px) {
+    .video {
+        margin-top: -85px;
+        height: 50%;
     }
-    .mainSection .piggyBG {
-        top: 240px;
-        width: 30%;
-        right: 4%;
+}
+
+@media only screen and (min-width: 2050px) {
+    .video {
+        margin-top: -75px;
+        height: 51%;
     }
-} */
+}
+
+@media only screen and (min-width: 2196px) {
+    .video {
+        margin-top: -70px;
+        height: 54%;
+    }
+}
