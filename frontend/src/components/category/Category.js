@@ -50,7 +50,6 @@ class Category extends Component {
     }
 
     componentDidMount = () => {
-        console.log("Category componentDidMount2")
         axios.get("budget/category/get/", {
             headers: {
                 "Content-Type": "application/json",
@@ -121,7 +120,6 @@ class Category extends Component {
 
     handleAddCategory = (e) => {
         e.preventDefault()
-        console.log("Adding New Category 6")
         if (this.state.new_category != "" && this.state.id != "" && !(this.state.new_category in this.state.categories)) {
             this.setState({
                 adding: 1,
@@ -175,7 +173,6 @@ class Category extends Component {
 
 
     updateCategoryAxios = () => {
-        console.log("Category Axios5")
         let categoryBody = {
             "categoryType": this.state.categoryType,
             "new_category": this.state.new_category,
@@ -243,7 +240,6 @@ class Category extends Component {
                     })
                 }
                 this.props.getCatRightComponent()
-                console.log("Category has been Updated")
             })
             .catch(err => {
                 console.log("Error for category added" + err)
@@ -256,7 +252,6 @@ class Category extends Component {
 
 
     render() {
-        console.log("Category Render")
         let budgetGoal;
         let type;
         let placeholder;

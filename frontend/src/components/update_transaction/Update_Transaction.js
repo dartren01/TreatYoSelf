@@ -38,7 +38,6 @@ class Update_Transaction extends Component {
     };
 
     componentDidMount = () => {
-        console.log("Create transaction mount");
         // check authentication. currently it calls this after render
         //THIS WILL GIVE AN ERROR WHEN THE USER REFRESHES
         try {
@@ -59,7 +58,6 @@ class Update_Transaction extends Component {
             }
         })
             .then(res => {
-                console.log(res)
                 this.setState({
                     transactions: res.data,
                     t_type: res.data.t_type,
@@ -102,7 +100,6 @@ class Update_Transaction extends Component {
     // calls a put to backend, sending updated info for transaction.
     // on success, go back to all transactions.
     handleUpdate = () => {
-        console.log("Update transaction ", this.state.id);
         const transactionObj = {
             category: this.state.category,
             prev_category: this.state.prev_category,
@@ -121,7 +118,6 @@ class Update_Transaction extends Component {
             }
         })
             .then(res => {
-                console.log("transaction update success");
                 const alert = this.props.alert;
                 alert.success('Transaction Successfully Updated');
                 this.props.history.push("/budget/all_transactions/");

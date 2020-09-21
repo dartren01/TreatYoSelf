@@ -25,7 +25,6 @@ class RightComponent extends Component {
     componentDidMount = () => {
         this.getDimensions();
         window.addEventListener("resize", this.getDimensions);
-        console.log("RightComponent componentDidMount");
         this.setState({
             loading: false
         })

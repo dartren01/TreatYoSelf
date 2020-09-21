@@ -69,7 +69,6 @@ class Create_Transaction extends Component {
         };
         axios.post(`/budget/create/${this.state.transactionType.toLowerCase()}/`, transactionObj, headerObj)
             .then(res => {
-                console.log("transaction success");
                 const alert = this.props.alert;
                 alert.success('Successfully created transaction');
                 this.props.history.push("/budget/all_transactions/")
@@ -84,11 +83,9 @@ class Create_Transaction extends Component {
 
 
     componentDidMount = () => {
-        console.log("Create_Transaction ComoponentDidMount");
         // check authentication. currently it calls this after render
         try {
             if (Cookies.get("token")) {
-                console.log("Authorized");
                 axios.get("budget/category/get/", {
                     headers: {
                         "Content-Type": "application/json",

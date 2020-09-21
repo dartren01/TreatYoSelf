@@ -48,17 +48,13 @@ class Navbar extends Component {
     }
     getPage = () => {
         if (this.props.history.location.pathname === "/") {
-            console.log("home")
             this.setState({ whichPage: 1 })
         } else if (this.props.history.location.pathname === "/analytics") {
-            console.log("analytics")
             this.setState({ whichPage: 2 })
 
         } else if (this.props.history.location.pathname === "/budget/all_transactions/") {
-            console.log("transactions")
             this.setState({ whichPage: 3 })
         } else if (this.props.history.location.pathname === "/category") {
-            console.log("category")
             this.setState({ whichPage: 4 })
         }
     }
@@ -86,7 +82,6 @@ class Navbar extends Component {
     // }
 
     componentDidMount = () => {
-        console.log("Navbar componentDidMount");
         this.getPage();
         window.addEventListener("hashchange", this.getPage);
         this.setState({

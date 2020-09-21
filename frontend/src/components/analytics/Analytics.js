@@ -44,7 +44,6 @@ class Analytics extends Component {
     }
 
     componentDidMount = () => {
-        console.log("Analytics componentDidMount");
         this.getDimensions();
         window.addEventListener("resize", this.getDimensions);
         axios.get(`/api/total/get`, {
@@ -69,7 +68,6 @@ class Analytics extends Component {
                         yearlySpent += parseFloat(profileObj.monthly_data[obj]["monthly_spent"]);
                     }
                 }
-                console.log(yearlySpent, yearlyGained)
                 this.setState({
                     yearlySpent: yearlySpent,
                     yearlyGained: yearlyGained,
@@ -81,7 +79,6 @@ class Analytics extends Component {
                 });
             })
             .catch(err => {
-                console.log("total get error: " + err)
                 this.setState({
                     loading: false,
                 });
@@ -100,7 +97,6 @@ class Analytics extends Component {
                     categoryObj: res.data[0],
                     loading: false,
                 });
-                console.log("category obj: ", res.data[0]);
             })
             .catch(err => {
                 console.log("category get error: " + err)

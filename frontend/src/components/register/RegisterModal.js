@@ -45,7 +45,6 @@ class RegisterModal extends Component{
             axios.post("api/auth/register", registerUser, { "Content-Type": "application/json" })
                 .then(res => {
                     Cookies.set("token", res.data.token, { expires: 7 })
-                    console.log("Registration Success")
                     //window.location.reload(false) // Reloads page for app the render again
                     this.props.onClose() //Closes Login Modal
                     this.props.redirectTotalPage()

@@ -33,7 +33,6 @@ class Team extends Component {
         }
     }
     getDimensions() {
-        console.log(window.innerWidth, window.innerHeight)
         if (window.innerWidth >= 568 && window.innerWidth <= 1200 && window.innerHeight <= 1366 && window.innerHeight > 300) {
             this.setState({ colType: "row row-cols-3" })
         } else if (window.innerWidth >= 1200) {

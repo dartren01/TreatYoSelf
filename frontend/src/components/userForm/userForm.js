@@ -27,7 +27,6 @@ class UserForm extends Component {
     };
 
     componentDidMount = () => {
-        console.log("User Form mount");
         // gets the transaction by passed id, then updates state variables to transaction.
         //TESTING PLS
         axios.get(`/api/auth/user`, {
@@ -53,7 +52,6 @@ class UserForm extends Component {
     // calls a put to backend, sending updated info for transaction.
     // on success, go back to all transactions.
     handleUpdate = () => {
-        console.log("Update transaction ");
         const userObj = {
             first_name: this.state.first_name,
             last_name: this.state.last_name,
@@ -66,7 +64,6 @@ class UserForm extends Component {
             }
         })
             .then(res => {
-                console.log("User Info Updated");
                 const alert = this.props.alert;
                 alert.success('User Info Updated');
                 this.props.history.push("/");

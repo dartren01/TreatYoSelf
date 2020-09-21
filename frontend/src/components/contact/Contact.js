@@ -17,7 +17,6 @@ class Contact extends Component {
         e.preventDefault();
         emailjs.sendForm('gmail', 'template_1flf15c', e.target, 'user_vbJZHXgzHOSDygmE3iWDl')
             .then((result) => {
-                console.log("Email Sent");
                 const alert = this.props.alert;
                 alert.success('Email Sent');
                 this.props.history.push("/");
@@ -30,7 +29,6 @@ class Contact extends Component {
     render() {
         let header;
         let container;
-        console.log(this.props.isLoggedIn)
         if (this.props.isLoggedIn) {
             header = "main-header"
             container = "none"

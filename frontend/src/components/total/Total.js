@@ -10,7 +10,6 @@ class Total extends Component {
         }
 
         this.totalChange = this.totalChange.bind(this)
-        console.log(`Token ${Cookies.get("token")}`);
     }
 
 
@@ -22,7 +21,6 @@ class Total extends Component {
 
     handleTotal = (e) => {
         e.preventDefault()
-        console.log("New Handle Total");
         const header = {
             headers: {
                 "Content-Type": "application/json",
@@ -35,10 +33,8 @@ class Total extends Component {
             total_amount_gained: "0",
             total_amount_spent: "0"
         };
-        console.log(totalBudget);
         axios.post("api/total", totalBudget, header)
             .then(res => {
-                console.log(res)
             })
             .catch(err => {
                 console.log("Budgeting Total Error ", err);
@@ -50,7 +46,6 @@ class Total extends Component {
         }
         axios.post("budget/create/category/", categoryObj, header)
             .then(res => {
-                console.log("Category Added")
                 this.props.getTotalAmount()
                 this.props.history.push("/")
 

@@ -35,8 +35,6 @@ class LoginModal extends Component{
         axios.post("api/auth/login", loginUser,{"Content-Type": "application/json"})
             .then(res => {
                 Cookies.set("token", res.data.token, {expires:1})
-                console.log("Login Success")
-                console.log(res)
                 window.location.reload(false) // Reloads page for app the render again
                 this.props.onClose() //Closes Login Modal
             })

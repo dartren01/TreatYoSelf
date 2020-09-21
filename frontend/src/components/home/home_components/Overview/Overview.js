@@ -44,7 +44,6 @@ class Overview extends Component {
     }
 
     componentDidMount = () => {
-        console.log("Home componentDidMount");
         this.getDimensions();
         window.addEventListener("resize", this.getDimensions);
         axios.get(`/api/total/get`, {
@@ -61,7 +60,6 @@ class Overview extends Component {
                 let thisMonthYear = `${date.getMonth() + 1}${date.getFullYear()}`;
                 //let rep = profileObj.monthly_data.replace(/\'/g, "\"");
                 //let monthData = JSON.parse(profileObj.monthly_data);
-                console.log(profileObj)
                 this.setState({
                     totalObject: profileObj,
                     totalAmount: profileObj.total_amount,
@@ -85,7 +83,6 @@ class Overview extends Component {
             }
         })
             .then(res => {
-                console.log(res.data[0])
                 this.setState({
                     categoryObj: res.data[0],
                     loading: false,
@@ -237,7 +234,6 @@ class Overview extends Component {
 
 
     render() {
-        console.log("hi", this.state.monthlyGained)
         let totalText;
         if (this.state.loading) {
             totalText = <h1>Loading</h1>;

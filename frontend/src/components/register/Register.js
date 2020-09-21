@@ -50,7 +50,6 @@ class Register extends Component {
             axios.post("api/auth/register", registerUser, { "Content-Type": "application/json" })
                 .then(res => {
                     Cookies.set("token", res.data.token, { expires: 7 })
-                    console.log("Registration Success")
                     this.props.setLogin(res)
                     this.props.history.push("/total")
 
@@ -73,7 +72,6 @@ class Register extends Component {
         return (
             <div>
                 <div className = "registerPage">
-                    {console.log("Register Render")}
                     <Form className="col-sm-8">
                         <h1 className = "registerTitle">Register</h1>
                         <Form.Group controlId="formFirstName">
