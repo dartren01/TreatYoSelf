@@ -92,7 +92,6 @@ class App extends Component {
       }
     })
       .then(res => {
-        console.log("this get name is called")
         this.setState({
           username: res.data.username,
           firstname: res.data.first_name,
@@ -106,7 +105,6 @@ class App extends Component {
 
   getCatRightComponent = () => {
     if (Cookies.get("token")) {
-      console.log("getCatRightComponent is being called")
       axios.get(`/api/total/get`, {
         headers: {
           "Content-Type": "application/json",
@@ -154,7 +152,6 @@ class App extends Component {
 
   checkLogin = () => {
     if (Cookies.get("token") && !this.state.isLoggedIn) {
-      console.log("Cookie has been found and User is not logged in")
       axios.get("/api/auth/user", {
         headers: {
           "Content-Type": "application/json",
@@ -187,7 +184,6 @@ class App extends Component {
 
   getTotalAmount = () => {
     if (Cookies.get("token")) {
-      console.log("getTotalAmount")
       axios.get(`/api/total/get`, {
         headers: {
           "Content-Type": "application/json",
@@ -208,7 +204,6 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    console.log("App Component componentDidMount");
     this.checkLogin();
     this.getTotalAmount();
     this.getCatRightComponent()
@@ -217,7 +212,6 @@ class App extends Component {
 
   // Maybe we can use private routes
   render() {
-    console.log("App Rendering")
     const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
@@ -240,7 +234,6 @@ class App extends Component {
           <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
           <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
           <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"></link>
-          {console.log("App Component Render")}
           {this.state.isLoggedIn === false ?
             <React.Fragment>
               <Switch>

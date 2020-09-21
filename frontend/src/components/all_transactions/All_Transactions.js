@@ -24,7 +24,6 @@ class All_Transactions extends Component {
     }
 
     componentDidMount = () => {
-        console.log("all transactions componentDidMount");
         axios.get(`/budget/all_transactions`, {
             headers: {
                 "Content-Type": "application/json",
@@ -32,7 +31,6 @@ class All_Transactions extends Component {
             }
         })
             .then(res => {
-                console.log(res.data)
                 this.setState({
                     transactions: res.data,
                     loading: false
@@ -41,14 +39,12 @@ class All_Transactions extends Component {
             .catch(err => {
                 console.log("transaction get error: " + err)
             })
-        console.log(this.state.transactions);
     };
 
     // calls delete, passing in transaction id.
     // on success, sets state with new transaction array with the 
     // deleted transaction removed from array
     handleDelete = (id) => {
-        console.log("Delete transaction ", id);
         axios.delete(`/budget/transaction/delete/${id}`, {
             headers: {
                 "Content-Type": "application/json",
@@ -82,44 +78,37 @@ class All_Transactions extends Component {
     }
 
     handleSortChange = (e) => {
-        console.log(e.target.value);
         let arrCopy = [...this.state.transactions]
         if (e.target.value === "Date") {
             arrCopy.sort((a, b) => (a.date_posted <= b.date_posted) ? 1 : -1);
             this.setState({
                 transactions: arrCopy
             })
-            console.log(arrCopy);
         }
         else if (e.target.value === "Title") {
             arrCopy.sort((a, b) => (a.source > b.source) ? 1 : (a.source === b.source) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
-            console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
         else if (e.target.value === "Category") {
             arrCopy.sort((a, b) => (a.category > b.category) ? 1 : (a.category === b.category) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
-            console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
         else if (e.target.value === "Income") {
             arrCopy.sort((a, b) => (a.t_type < b.t_type) ? 1 : (a.t_type === b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
-            console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
         else if (e.target.value === "Expense") {
             arrCopy.sort((a, b) => (a.t_type > b.t_type) ? 1 : (a.t_type > b.t_type) ? ((a.date_posted <= b.date_posted) ? 1 : -1) : -1);
-            console.log(arrCopy);
             this.setState({
                 transactions: arrCopy
             })
         }
-        console.log("sort transactions");
     }
 
     // Pagination Functions
@@ -134,7 +123,6 @@ class All_Transactions extends Component {
         const indexOfLastPost = this.state.currentPage * this.state.transactionsPerPage;
         const indexOfFirstPost = indexOfLastPost - this.state.transactionsPerPage;
         const currentTransactions = this.state.transactions.slice(indexOfFirstPost, indexOfLastPost);
-        console.log("rerender")
         return (
             <div className="alltrans">
                 <h1 className="main-header">
