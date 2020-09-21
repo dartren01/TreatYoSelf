@@ -27,7 +27,7 @@ SECRET_KEY = '$3mh0$nqy!ipnwu31pcizxc1z)c0s_i9ac94g15a$nxk*^rj!)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['treatyoselfapp.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -90,14 +90,12 @@ WSGI_APPLICATION = 'budgeting_project.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    # 'HOST': 'mongodb+srv://burger:burgercheese@treatyoself-8nrgu.mongodb.net/test?retryWrites=true&w=majority',
 
     'default': {
         'ENGINE':   'djongo',
         'NAME':     'TreatYoSelf',
         'CLIENT': {
-            # 'host': "mongodb+srv://burger:burgercheese@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE",
-            'host': "mongodb+srv://burger:burgercheese@treatyoself-8nrgu.mongodb.net/test?retryWrites=true&w=majority"
+            'host': "mongodb+srv://burger:acheeseburger@treatyoself.fwlxw.mongodb.net/TreatYoSelf?retryWrites=true&w=majority"
         },
     }
 }
@@ -142,6 +140,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
