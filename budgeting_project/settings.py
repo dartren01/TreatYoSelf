@@ -97,7 +97,7 @@ DATABASES = {
         'NAME':     'TreatYoSelf',
         'CLIENT': {
             # 'host': "mongodb+srv://burger:burgercheese@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE",
-            'host': "mongodb+srv://Timmichi:Timmyfs1@treatyoself.fwlxw.mongodb.net/test?retryWrites=true&w=majority&ssl=true&ssl_cert_reqs=CERT_NONE"
+            'host': "mongodb+srv://burger:burgercheese@treatyoself-8nrgu.mongodb.net/test?retryWrites=true&w=majority"
         },
     }
 }
@@ -142,10 +142,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
-STATICFILES_DIRS = [
-    os.path.join(REACT_APP_DIR, 'build', 'static'),
-]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
