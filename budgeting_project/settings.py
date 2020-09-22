@@ -27,7 +27,7 @@ SECRET_KEY = '$3mh0$nqy!ipnwu31pcizxc1z)c0s_i9ac94g15a$nxk*^rj!)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['treatyoselfapp.herokuapp.com']
+ALLOWED_HOSTS = ['treatyoselfapp.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -142,12 +142,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
 STATICFILES_DIRS = [
     os.path.join(REACT_APP_DIR, 'build', 'static'),
 ]
 
-REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
