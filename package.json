@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
     "name": "budgeting_project",
-=======
-    "name": "Treatyoself",
->>>>>>> 3f096629f3f3f15417bd7d7ea8dbfa13a4b63d60
     "version": "1.0.0",
     "main": "index.js",
     "repository": "",
@@ -11,11 +7,7 @@
     "license": "",
     "private": true,
     "scripts": {
-<<<<<<< HEAD
       "heroku-prebuild": "NODE_ENV=production cd frontend/ && npm install && npm run build && cd .."
-=======
-      "heroku-prebuild": "NODE_ENV=production cd frontend/ && yarn install && yarn build && cd .."
->>>>>>> 3f096629f3f3f15417bd7d7ea8dbfa13a4b63d60
     },
     "cacheDirectories": [
       "frontend/node_modules"
