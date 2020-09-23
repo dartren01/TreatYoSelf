@@ -6,18 +6,29 @@ import bannerIMG from "../images/banner.png";
 import laptopIMG from "./images/laptop.png";
 import piggyIMG from "../images/piggy.svg";
 import piggyPhoneIMG from "../images/piggy2.svg";
-import RegisterModal from "../../../../register/RegisterModal"
+import RegisterModal from "../../../../register/RegisterModal";
+import LoginModal from "../../../../login/LoginModal";
+
+
 class Main extends Component {
     constructor(props) {
         super(props)
         this.state = {
             showRegister: false,
+            showLogin: false,
         }
     }
     showRegisterModal = () => {
         this.setState((prev) => {
             return {
                 showRegister: !prev.showRegister
+            }
+        })
+    }
+    showLoginModal = () => {
+        this.setState((prev) => {
+            return {
+                showLogin: !prev.showLogin
             }
         })
     }
@@ -39,11 +50,15 @@ class Main extends Component {
                             showRegister={this.state.showRegister}
                             redirectTotalPage={this.props.redirectTotalPage}
                         />
-                        <Link to="/login">
-                            <button className="login">
-                                Sign in
+                        <button className="login"
+                            onClick={(e) => this.showLoginModal()}>
+                            Sign in
                             </button>
-                        </Link>
+                        <LoginModal
+                            onClose={this.showLoginModal}
+                            showLogin={this.state.showLogin}
+                            redirectTotalPage={this.props.redirectTotalPage}
+                        />
                     </article>
                     <img src={laptopIMG} className="laptopBG"></img>
                     <img src={bannerIMG} className="bannerBG"></img>
@@ -66,7 +81,7 @@ class Main extends Component {
                             Our beautiful UI will allow you to keep track of your transactions and finally acheive your financial goals.</p>
                     </article>
 
-                    
+
                 </div>
             </div >
         )
