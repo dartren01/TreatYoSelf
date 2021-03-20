@@ -21,7 +21,7 @@ hvac==0.10.5
 idna==2.10
 image==1.5.32
 isort==4.3.21
-Jinja2==2.11.2
+Jinja2==2.11.3
 knox==0.1.0
 lazy-object-proxy==1.4.3
 loguru==0.5.1
